@@ -1,13 +1,14 @@
 import { readFile } from 'fs/promises';
 
-function search(pattern) {
-	const { length } = pattern;
+function search(list, predicate) {
+	const { length } = list;
+
 	let left = 0;
 	let right = Math.pow(2, length) - 1;
 	let middle;
 
 	for (let i = 0; i < length; i++) {
-		if (pattern[i]) {
+		if (predicate(list[i])) {
 			left += (right - left + 1) / 2;
 			middle = left;
 		} else {
@@ -20,20 +21,10 @@ function search(pattern) {
 }
 
 function getSeatId(pattern) {
-	const row = pattern
-		.substr(0, 7)
-		.split('')
-		.map((x) => (x === 'F' ? 0 : 1));
+	const row = search(pattern.substr(0, 7), (x) => x === 'B');
+	const col = search(pattern.substr(7, 3), (x) => x === 'R');
 
-	const col = pattern
-		.substr(7, 3)
-		.split('')
-		.map((x) => (x === 'L' ? 0 : 1));
-
-	const rowValue = search(row);
-	const colValue = search(col);
-
-	return rowValue * 8 + colValue;
+	return row * 8 + col;
 }
 
 async function main() {

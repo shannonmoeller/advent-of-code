@@ -11,7 +11,6 @@ async function main() {
 			const b = numbers[j];
 
 			if (a + b === 2020) {
-				console.log({ a, b });
 				return a * b;
 			}
 		}
