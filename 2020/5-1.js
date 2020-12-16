@@ -8,7 +8,7 @@ function search(list, predicate) {
 	let middle;
 
 	for (let i = 0; i < length; i++) {
-		if (predicate(list[i])) {
+		if (predicate(list[i], i, list)) {
 			left += (right - left + 1) / 2;
 			middle = left;
 		} else {
