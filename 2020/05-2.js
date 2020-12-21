@@ -36,7 +36,7 @@ function getSeatId(seat) {
 }
 
 async function main() {
-	const data = await readFile('5.txt', 'utf8');
+	const data = await readFile('05.txt', 'utf8');
 	const seats = data.trim().split('\n');
 	const seatIds = seats.map(getSeatId).sort((a, b) => a - b);
 	const min = seatIds[0];

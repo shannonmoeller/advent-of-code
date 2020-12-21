@@ -10,7 +10,7 @@ function checkPassport(passport) {
 }
 
 async function main() {
-	const data = await readFile('4.txt', 'utf8');
+	const data = await readFile('04.txt', 'utf8');
 	const passports = data.trim().split('\n\n');
 
 	return passports.filter(checkPassport).length;

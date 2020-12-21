@@ -5,7 +5,7 @@ function union(a, b) {
 }
 
 async function main() {
-	const data = await readFile('6.txt', 'utf8');
+	const data = await readFile('06.txt', 'utf8');
 	const groups = data.trim().split('\n\n');
 
 	return groups

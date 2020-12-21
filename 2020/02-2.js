@@ -21,7 +21,7 @@ function isValid(row) {
 }
 
 async function main() {
-	const data = await readFile('2.txt', 'utf8');
+	const data = await readFile('02.txt', 'utf8');
 	const rows = data.trim().split('\n');
 
 	return rows.filter(isValid).length;

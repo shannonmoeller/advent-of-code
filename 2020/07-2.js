@@ -44,7 +44,7 @@ function readDeps(deps, parentId, ids = new Set()) {
 }
 
 async function main() {
-	const data = await readFile('7.txt', 'utf8');
+	const data = await readFile('07.txt', 'utf8');
 	const rules = data.trim().split('\n');
 	const deps = parseDeps(rules);
 

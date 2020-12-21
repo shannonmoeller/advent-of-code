@@ -1,16 +1,25 @@
 import { readFile } from 'fs/promises';
 
-function run(instructions) {
+function run(instructions, attempt = 1) {
 	const visited = new Set();
+	let counter = 0;
 	let acc = 0;
 
 	for (let i = 0; i < instructions.length; ) {
-		const [key, value] = instructions[i];
+		let [key, value] = instructions[i];
+
+		if (key === 'nop' || key === 'jmp') {
+			counter += 1;
+
+			if (counter === attempt) {
+				key = key === 'nop' ? 'jmp' : 'nop';
+			}
+		}
 
 		i += key === 'jmp' ? value : 1;
 
 		if (visited.has(i)) {
-			return acc;
+			return run(instructions, attempt + 1);
 		}
 
 		visited.add(i);
@@ -22,7 +31,7 @@ function run(instructions) {
 }
 
 async function main() {
-	const data = await readFile('8.txt', 'utf8');
+	const data = await readFile('08.txt', 'utf8');
 	const lines = data.trim().split('\n');
 
 	const instructions = lines.map((x) => {

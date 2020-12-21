@@ -26,11 +26,34 @@ function findFib(numbers, count) {
 	}
 }
 
+function findSeries(numbers, value) {
+	const { length } = numbers;
+
+	for (let i = 0; i < length; i++) {
+		let sum = numbers[i];
+
+		for (let j = i + 1; j < length; j++) {
+			sum += numbers[j];
+
+			if (sum === value) {
+				return numbers.slice(i, j);
+			}
+
+			if (sum > value) {
+				break;
+			}
+		}
+	}
+}
+
 async function main() {
-	const data = await readFile('9.txt', 'utf8');
+	const data = await readFile('09.txt', 'utf8');
 	const numbers = data.trim().split('\n').map(Number);
 
-	return findFib(numbers, 25);
+	const fib = findFib(numbers, 25);
+	const series = findSeries(numbers, fib);
+
+	return Math.min(...series) + Math.max(...series);
 }
 
 main().then(console.log).catch(console.error);
