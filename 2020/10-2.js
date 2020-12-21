@@ -8,19 +8,21 @@ async function main() {
 		.map(Number)
 		.sort((a, b) => a - b);
 
-	let nodes = { 0: 1 };
+	const paths = { 0: 1 };
 
 	for (const a of adapters) {
-		nodes[a] = 0;
+		paths[a] = 0;
 
 		for (const d of [1, 2, 3]) {
-			if (a - d in nodes) {
-				nodes[a] += nodes[a - d];
+			const b = a - d;
+
+			if (b in paths) {
+				paths[a] += paths[b];
 			}
 		}
 	}
 
-	return nodes[adapters.pop()];
+	return paths[adapters.pop()];
 }
 
 main().then(console.log).catch(console.error);
