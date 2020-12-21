@@ -22,7 +22,7 @@ function parseDeps(rules) {
 	return deps;
 }
 
-function readParents(deps, parentId, ids = new Set()) {
+function readDeps(deps, parentId, ids = new Set()) {
 	const childIds = deps[parentId];
 
 	if (!childIds) {
@@ -35,7 +35,7 @@ function readParents(deps, parentId, ids = new Set()) {
 		}
 
 		ids.add(childId);
-		readParents(deps, childId, ids);
+		readDeps(deps, childId, ids);
 	}
 
 	return ids;
@@ -46,7 +46,7 @@ async function main() {
 	const rules = data.trim().split('\n');
 	const deps = parseDeps(rules);
 
-	return readParents(deps, 'shiny gold').size;
+	return readDeps(deps, 'shiny gold').size;
 }
 
 main().then(console.log).catch(console.error);
