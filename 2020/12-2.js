@@ -7,19 +7,16 @@ function move(instructions) {
 	let dy = -1;
 
 	function turn(deg) {
-		switch (deg) {
-			case 90:
-			case -270: {
+		switch ((360 + deg) % 360) {
+			case 90: {
 				[dx, dy] = [-dy, dx];
 				break;
 			}
-			case 180:
-			case -180: {
+			case 180: {
 				[dx, dy] = [-dx, -dy];
 				break;
 			}
-			case 270:
-			case -90: {
+			case 270: {
 				[dx, dy] = [dy, -dx];
 				break;
 			}
