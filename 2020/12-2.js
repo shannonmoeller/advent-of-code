@@ -6,11 +6,6 @@ function move(instructions) {
 
 	function turn(deg) {
 		switch (deg) {
-			case -90:
-			case 270: {
-				[vec[0], vec[1]] = [vec[1], -vec[0]];
-				break;
-			}
 			case 90:
 			case -270: {
 				[vec[0], vec[1]] = [-vec[1], vec[0]];
@@ -19,6 +14,11 @@ function move(instructions) {
 			case 180:
 			case -180: {
 				[vec[0], vec[1]] = [-vec[0], -vec[1]];
+				break;
+			}
+			case 270:
+			case -90: {
+				[vec[0], vec[1]] = [vec[1], -vec[0]];
 				break;
 			}
 		}
