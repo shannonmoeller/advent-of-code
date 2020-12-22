@@ -9,7 +9,7 @@ async function main() {
 
 	const height = rows.length;
 	const width = rows[0].length;
-	const slopes = [
+	const deltas = [
 		[1, 1],
 		[3, 1],
 		[5, 1],
@@ -19,20 +19,20 @@ async function main() {
 
 	function seek([dx, dy]) {
 		let trees = 0;
-		let pos = 0;
+		let x = 0;
 
-		for (let i = 0; i < height; i += dy) {
-			if (rows[i][pos] === '#') {
+		for (let y = 0; y < height; y += dy) {
+			if (rows[y][x] === '#') {
 				trees++;
 			}
 
-			pos = (pos + dx) % width;
+			x = (x + dx) % width;
 		}
 
 		return trees;
 	}
 
-	return slopes.map(seek).reduce((a, b) => a * b);
+	return deltas.map(seek).reduce((a, b) => a * b);
 }
 
 main().then(console.log).catch(console.error);

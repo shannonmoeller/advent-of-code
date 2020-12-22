@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 
-const slopes = [
+const deltas = [
 	[-1, -1],
 	[0, -1],
 	[1, -1],
@@ -14,6 +14,7 @@ const slopes = [
 function resolve(before) {
 	const height = before.length;
 	const width = before[0].length;
+
 	const after = Array(height)
 		.fill()
 		.map(() => Array(width));
@@ -21,9 +22,9 @@ function resolve(before) {
 	for (let y = 0; y < height; y++) {
 		for (let x = 0; x < width; x++) {
 			const cell = before[y][x];
-			const neighbors = slopes
+			const neighbors = deltas
 				.map(([dx, dy]) => before[y + dy]?.[x + dx])
-				.filter((x) => x === '#');
+				.filter((c) => c === '#');
 
 			switch (cell) {
 				case 'L': {
