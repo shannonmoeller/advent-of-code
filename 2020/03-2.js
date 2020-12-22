@@ -17,7 +17,7 @@ async function main() {
 		[1, 2],
 	];
 
-	function checkSlope([dx, dy]) {
+	function seek([dx, dy]) {
 		let trees = 0;
 		let pos = 0;
 
@@ -32,7 +32,7 @@ async function main() {
 		return trees;
 	}
 
-	return slopes.map(checkSlope).reduce((a, b) => a * b);
+	return slopes.map(seek).reduce((a, b) => a * b);
 }
 
 main().then(console.log).catch(console.error);
