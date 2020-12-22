@@ -1,39 +1,41 @@
 import { readFile } from 'fs/promises';
 
 function move(instructions) {
-	const point = [0, 0];
-	const vec = [10, -1];
+	let x = 0;
+	let y = 0;
+	let dx = 10;
+	let dy = -1;
 
 	function turn(deg) {
 		switch (deg) {
 			case 90:
 			case -270: {
-				[vec[0], vec[1]] = [-vec[1], vec[0]];
+				[dx, dy] = [-dy, dx];
 				break;
 			}
 			case 180:
 			case -180: {
-				[vec[0], vec[1]] = [-vec[0], -vec[1]];
+				[dx, dy] = [-dx, -dy];
 				break;
 			}
 			case 270:
 			case -90: {
-				[vec[0], vec[1]] = [vec[1], -vec[0]];
+				[dx, dy] = [dy, -dx];
 				break;
 			}
 		}
 	}
 
 	const fns = {
-		N: (steps) => (vec[1] -= steps),
-		E: (steps) => (vec[0] += steps),
-		S: (steps) => (vec[1] += steps),
-		W: (steps) => (vec[0] -= steps),
+		N: (steps) => (dy -= steps),
+		E: (steps) => (dx += steps),
+		S: (steps) => (dy += steps),
+		W: (steps) => (dx -= steps),
 		L: (deg) => turn(-deg),
 		R: (deg) => turn(deg),
 		F: (steps) => {
-			point[0] += vec[0] * steps;
-			point[1] += vec[1] * steps;
+			x += dx * steps;
+			y += dy * steps;
 		},
 	};
 
@@ -41,7 +43,7 @@ function move(instructions) {
 		fns[key](value);
 	}
 
-	return point;
+	return [x, y];
 }
 
 async function main() {

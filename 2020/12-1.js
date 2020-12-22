@@ -1,14 +1,19 @@
 import { readFile } from 'fs/promises';
 
-const DIR = ['N', 'E', 'S', 'W'];
+const DIR = {
+	0: 'N',
+	90: 'E',
+	180: 'S',
+	270: 'W',
+};
 
 function move(instructions) {
 	let x = 0;
 	let y = 0;
-	let a = 1;
+	let a = 90;
 
 	function turn(deg) {
-		a = (a + 4 + (deg / 360) * 4) % 4;
+		a = (a + 360 + deg) % 360;
 	}
 
 	const fns = {
@@ -25,7 +30,7 @@ function move(instructions) {
 		fns[key](value);
 	}
 
-	return [x, y, a];
+	return [x, y];
 }
 
 async function main() {
