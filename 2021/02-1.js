@@ -1,31 +1,32 @@
 import { readFile } from 'fs/promises';
 
 async function main() {
-	const data = await readFile('02.txt', 'utf8');
-	const instructions = data.trim().split('\n');
+	let data = await readFile('02.txt', 'utf8');
+	let instructions = data.trim().split('\n');
 
 	let depth = 0;
 	let distance = 0;
 
-	for (const instruction of instructions) {
-		const [command, number] = instruction.split(' ');
-		const value = Number(number);
+	for (let instruction of instructions) {
+		let [command, number] = instruction.split(' ');
+
+		number = Number(number);
 
 		switch (command) {
 			case 'forward': {
-				distance += value;
+				distance += number;
 				break;
 			}
 			case 'up': {
-				depth -= value;
+				depth -= number;
 				break;
 			}
 			case 'down': {
-				depth += value;
+				depth += number;
 				break;
 			}
 			default: {
-				console.log('oops', command, value);
+				console.log('oops', command, number);
 				break;
 			}
 		}
