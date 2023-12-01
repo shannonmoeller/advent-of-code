@@ -18,7 +18,7 @@ const digitsMap = {
 };
 
 function getDigit(line, rx) {
-	const digit = line.match(rx)[1];
+	const [, digit] = line.match(rx);
 
 	return digitsMap[digit] ?? digit;
 }
