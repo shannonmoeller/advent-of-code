@@ -1,10 +1,11 @@
 import { open } from 'node:fs/promises';
 
-const file = await open('./01.txt');
+let file = await open('./01.txt');
+let value = 0;
 
-const firstRx = /(\d|zero|one|two|three|four|five|six|seven|eight|nine)/;
-const lastRx = /^.*(\d|zero|one|two|three|four|five|six|seven|eight|nine)/;
-const digitsMap = {
+let firstRx = /(\d|zero|one|two|three|four|five|six|seven|eight|nine)/;
+let lastRx = /^.*(\d|zero|one|two|three|four|five|six|seven|eight|nine)/;
+let digitsMap = {
 	'zero': '0',
 	'one': '1',
 	'two': '2',
@@ -18,17 +19,15 @@ const digitsMap = {
 };
 
 function getDigit(line, rx) {
-	const [, digit] = line.match(rx);
+	let [, digit] = line.match(rx);
 
 	return digitsMap[digit] ?? digit;
 }
 
-let value = 0;
-
-for await (const line of file.readLines()) {
-	const first = getDigit(line, firstRx);
-	const last = getDigit(line, lastRx);
-	const number = Number(first + last);
+for await (let line of file.readLines()) {
+	let first = getDigit(line, firstRx);
+	let last = getDigit(line, lastRx);
+	let number = Number(first + last);
 
 	console.log(line, first, last, number);
 
