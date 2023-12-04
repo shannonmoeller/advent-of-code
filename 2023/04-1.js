@@ -8,7 +8,7 @@ for await (let line of file.readLines()) {
 	let winners = left.match(/\d+/g);
 	let matches = right.match(/\d+/g).filter((x) => winners.includes(x)).length;
 
-	value += Math.floor(Math.pow(2, matches - 1));
+	value += Math.floor(2 ** (matches - 1));
 }
 
 console.log(value);
