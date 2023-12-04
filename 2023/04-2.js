@@ -7,8 +7,8 @@ let cards = [];
 
 for await (let line of file.readLines()) {
 	let [, left, right] = line.split(/[:|]/);
-	let winners = new Set(left.match(/\d+/g));
-	let matches = right.match(/\d+/g).filter((x) => winners.has(x)).length;
+	let winners = left.match(/\d+/g);
+	let matches = right.match(/\d+/g).filter((x) => winners.includes(x)).length;
 
 	cards.push(matches);
 }
