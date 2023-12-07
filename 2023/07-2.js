@@ -5,19 +5,11 @@ let value = 0;
 
 let hands = [];
 let values = {
-	2: '1',
-	3: '2',
-	4: '3',
-	5: '4',
-	6: '5',
-	7: '6',
-	8: '7',
-	9: '8',
-	T: '9',
+	T: 'a',
 	J: '0',
-	Q: 'b',
-	K: 'c',
-	A: 'd',
+	Q: 'c',
+	K: 'd',
+	A: 'e',
 };
 
 for (let line of lines) {
@@ -28,7 +20,7 @@ for (let line of lines) {
 	for (let card of cards) {
 		strength[card] ??= 0;
 		strength[card] += 1;
-		power += values[card];
+		power += values[card] ?? card;
 	}
 
 	let j = strength.J;
@@ -52,14 +44,14 @@ for (let line of lines) {
 		power: Number(power),
 	});
 }
-hands.sort((a, b) =>
+
+hands.sort((a, b) => (
 	a.strength - b.strength ||
 	a.power - b.power
-);
+));
 
-value = hands.reduce(
-	(acc, { bet }, rank) => acc + bet * (rank + 1),
-	0
-);
+value = hands.reduce((acc, { bet }, rank) => {
+	return acc + bet * (rank + 1);
+}, 0);
 
 console.log(value);
