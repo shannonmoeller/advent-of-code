@@ -38,8 +38,8 @@ hands.sort((a, b) => (
 	a.power - b.power
 ));
 
-value = hands.reduce((acc, { bet }, rank) => {
-	return acc + bet * (rank + 1);
-}, 0);
+value = hands.reduce((acc, { bet }, rank) => (
+	acc + bet * (rank + 1)
+), 0);
 
 console.log(value);
