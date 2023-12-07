@@ -2,7 +2,9 @@ import { log, readLines } from './utils.js';
 
 let lines = readLines('./06.txt');
 
-// Binary search would be better, but this is less code
+// Good: this code
+// Better: Binary search
+// Best: Algebra
 let [time, dist] = lines.map((x) => Number(x.replace(/\D/g, '')));
 let d;
 

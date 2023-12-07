@@ -5,7 +5,9 @@ let value = 1;
 
 let [times, dists] = lines.map((x) => x.match(/\d+/g).map(Number));
 
-// Binary search would be better, but this is less code
+// Good: this code
+// Better: Binary search
+// Best: Algebra
 for (let i = 0; i < times.length; i++) {
 	let time = times[i];
 	let dist = dists[i];
