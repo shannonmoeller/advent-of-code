@@ -4,7 +4,7 @@ let lines = readLines('./07.txt');
 let value = 0;
 
 let hands = [];
-let values = {
+let hex = {
 	T: 'a',
 	J: '0',
 	Q: 'c',
@@ -20,7 +20,7 @@ for (let line of lines) {
 	for (let card of cards) {
 		strength[card] ??= 0;
 		strength[card] += 1;
-		power += values[card] ?? card;
+		power += hex[card] ?? card;
 	}
 
 	let j = strength.J;
