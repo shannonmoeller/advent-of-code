@@ -8,15 +8,15 @@ let map = {};
 let key = 'AAA';
 
 for (let node of nodes) {
-	let [key, left, right] = node.match(/\w{3}/g);
+	let [key, L, R] = node.match(/\w{3}/g);
 
-	map[key] = [left, right];
+	map[key] = { L, R };
 }
 
 forever: while (true) {
 	for (let turn of turns) {
 		value++;
-		key = map[key][turn === 'L' ? 0 : 1];
+		key = map[key][turn];
 
 		if (key === 'ZZZ') {
 			break forever;

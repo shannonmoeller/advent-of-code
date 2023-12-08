@@ -8,13 +8,13 @@ let map = {};
 let keys = [];
 
 for (let node of nodes) {
-	let [key, left, right] = node.match(/\w{3}/g);
+	let [key, L, R] = node.match(/\w{3}/g);
 
 	if (key.endsWith('A')) {
 		keys.push(key);
 	}
 
-	map[key] = [left, right];
+	map[key] = { L, R };
 }
 
 function gcd(a, b) {
@@ -31,7 +31,7 @@ function getSteps(key) {
 	while (true) {
 		for (let turn of turns) {
 			steps++;
-			key = map[key][turn === 'L' ? 0 : 1];
+			key = map[key][turn];
 
 			if (key.endsWith('Z')) {
 				return steps;
