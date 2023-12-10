@@ -33,10 +33,13 @@ while (dir) {
 }
 
 for (let row of path) {
-	let line = row.join('').replace(/S/, 'F');
+	let line = row.join('');
 
 	for (let { index } of line.matchAll(/\./g)) {
-		let intersections = line.slice(index).match(/(\||L-*7|F-*J)/g)?.length ?? 0;
+		let intersections = line
+			.slice(index)
+			.match(/(\||L-*7|[FS]-*J)/g)
+			?.length ?? 0;
 
 		if (intersections % 2) {
 			value += 1;
