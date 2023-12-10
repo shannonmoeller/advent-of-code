@@ -15,7 +15,7 @@ let turns = {
 	w: { 'L': 'n', '-': 'w', 'F': 's' },
 };
 
-while (map[y][x] !== '#') {
+while (dir) {
 	value++;
 	map[y][x] = '#';
 
