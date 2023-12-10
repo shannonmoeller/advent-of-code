@@ -41,7 +41,7 @@ for (let row of path) {
 			?.length ?? 0;
 
 		if (intersections % 2) {
-			value += 1;
+			value++;
 			row[index] = 1
 		} else {
 			row[index] = 0;
