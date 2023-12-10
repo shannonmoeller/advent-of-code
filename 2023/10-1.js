@@ -29,4 +29,4 @@ while (dir) {
 	dir = turns[dir][map[y][x]];
 }
 
-console.log(value / 2);
+log(value / 2);

@@ -42,7 +42,7 @@ for (let row of path) {
 
 		if (intersections % 2) {
 			value++;
-			row[index] = 1
+			row[index] = 1;
 		} else {
 			row[index] = 0;
 		}
