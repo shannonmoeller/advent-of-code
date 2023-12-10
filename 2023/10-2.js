@@ -20,7 +20,6 @@ let turns = {
 
 while (dir) {
 	path[y][x] = map[y][x];
-	map[y][x] = '#';
 
 	switch (dir) {
 		case 'n': y--; break;
