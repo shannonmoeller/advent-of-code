@@ -1,6 +1,10 @@
 import { log, readLines } from './utils.js';
 
 let lines = readLines('./10.txt');
+let value = 0;
+
+let width = lines[0].length;
+let path = lines.map((line) => Array(width).fill('.'));
 
 let map = lines.map((line) => line.split(''));
 let y = map.findIndex((row) => row.includes('S'));
@@ -15,6 +19,7 @@ let turns = {
 };
 
 while (dir) {
+	path[y][x] = map[y][x];
 	map[y][x] = '#';
 
 	switch (dir) {
@@ -27,7 +32,20 @@ while (dir) {
 	dir = turns[dir][map[y][x]];
 }
 
-// initialize visual computation
-log(map.map((row) => row.join('')).join('\n'));
+for (let row of path) {
+	let line = row.join('').replace(/S/, 'F');
 
-// well, that's not helpful
+	for (let { index } of line.matchAll(/\./g)) {
+		let intersections = line.slice(index).match(/(\||L-*7|F-*J)/g)?.length ?? 0;
+
+		if (intersections % 2) {
+			value += 1;
+			row[index] = 1
+		} else {
+			row[index] = 0;
+		}
+	}
+}
+
+log(path.map((row) => row.join('')).join('\n'));
+log(value);
