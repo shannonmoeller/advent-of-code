@@ -4,18 +4,18 @@ let lines = readLines('./11.txt');
 let value = 0;
 
 let map = lines.map((line) => line.split(''));
+
 let emptyRows = [];
-let emptyCols = [];
-
-for (let x = map[0].length; x--;) {
-	if (map.every((row) => row[x] === '.')) {
-		emptyCols.push(x);
-	}
-}
-
 for (let y = map.length; y--;) {
 	if (map[y].every((col) => col === '.')) {
 		emptyRows.push(y);
+	}
+}
+
+let emptyCols = [];
+for (let x = map[0].length; x--;) {
+	if (map.every((row) => row[x] === '.')) {
+		emptyCols.push(x);
 	}
 }
 
@@ -33,7 +33,11 @@ let galaxies = map.flatMap((row, y) => {
 			return [];
 		}
 
-		return col === '#' ? { x: x + xo, y: y + yo } : [];
+		if (col !== '#') {
+			return [];
+		}
+
+		return { x: x + xo, y: y + yo };
 	});
 });
 
