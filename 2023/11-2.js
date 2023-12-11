@@ -41,8 +41,8 @@ let galaxies = map.flatMap((row, y) => {
 	});
 });
 
-for (let i = 0; i < galaxies.length - 1; i++) {
-	for (let j = i + 1; j < galaxies.length; j++) {
+for (let i = galaxies.length; i--;) {
+	for (let j = i; j--;) {
 		value +=
 			Math.abs(galaxies[i].x - galaxies[j].x) +
 			Math.abs(galaxies[i].y - galaxies[j].y);
