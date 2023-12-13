@@ -37,7 +37,10 @@ let galaxies = map.flatMap((row, y) => {
 			return [];
 		}
 
-		return { x: x + xo, y: y + yo };
+		return {
+			x: x + xo,
+			y: y + yo,
+		};
 	});
 });
 
