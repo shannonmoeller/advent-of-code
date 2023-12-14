@@ -43,13 +43,9 @@ function isPalindrome(list) {
 
 	for (let i = 0; i < Math.ceil(length / 2); i++) {
 		dist += compare(list[i], list[length - 1 - i]);
-
-		if (dist > 1) {
-			return false;
-		}
 	}
 
-	return true;
+	return dist === 1;
 }
 
 function compare(a, b) {
@@ -58,10 +54,6 @@ function compare(a, b) {
 	for (let i = 0; i < a.length; i++) {
 		if (a[i] !== b[i]) {
 			dist++;
-		}
-
-		if (dist > 1) {
-			return dist;
 		}
 	}
 
