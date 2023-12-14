@@ -1,3 +1,5 @@
+// Really slow, naive solution that just barely works.
+
 import { log, readLines } from './utils.js';
 
 let lines = readLines('./12.tst');
