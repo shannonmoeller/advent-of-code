@@ -19,22 +19,23 @@ function count(chars, sizes) {
 		}
 
 		if (ci >= chars.length) {
-			return si === sizes.length ? 1 : 0;
+			return Number(si >= sizes.length);
 		}
 
 		if (si >= sizes.length) {
-			return chars.includes('#', ci) ? 0 : 1;
+			return Number(!chars.includes('#', ci));
 		}
 
 		let result = 0;
 		let char = chars[ci];
 		let size = sizes[si];
-		let chunk = chars.slice(ci, ci + size);
-		let next = chars[ci + size];
 
 		if ('.?'.includes(char)) {
 			result += walk(ci + 1, si);
 		}
+
+		let chunk = chars.slice(ci, ci + size);
+		let next = chars[ci + size];
 
 		if (
 			'#?'.includes(char) &&

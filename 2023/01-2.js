@@ -25,13 +25,10 @@ function getDigit(line, rx) {
 }
 
 for await (let line of file.readLines()) {
-	let first = getDigit(line, firstRx);
-	let last = getDigit(line, lastRx);
-	let number = Number(first + last);
-
-	console.log(line, first, last, number);
-
-	value += number;
+	value += Number(
+		getDigit(line, firstRx) +
+		getDigit(line, lastRx)
+	);
 }
 
 console.log(value);
