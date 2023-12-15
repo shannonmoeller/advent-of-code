@@ -46,18 +46,14 @@ function tilt(xd, yd) {
 	}
 }
 
-function cycle() {
-	tilt(0, -1);
-	tilt(-1, 0);
-	tilt(0, 1);
-	tilt(1, 0);
-}
-
 let cycles = 1_000_000_000;
 let cache = [];
 
 for (let i = cycles; i--;) {
-	cycle();
+	tilt(0, -1);
+	tilt(-1, 0);
+	tilt(0, 1);
+	tilt(1, 0);
 
 	let next = joinMap(map);
 
