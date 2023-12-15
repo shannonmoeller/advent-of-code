@@ -17,7 +17,6 @@ let turns = {
 
 while (dir) {
 	value++;
-	map[y][x] = '#';
 
 	switch (dir) {
 		case 'n': y--; break;
