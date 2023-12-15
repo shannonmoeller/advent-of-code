@@ -33,10 +33,10 @@ function tilt(xd, yd) {
 			}
 
 			if (x2 !== x || y2 !== y) {
+				movement++;
 				[map[y2][x2], map[y][x]] = [map[y][x], map[y2][x2]];
 				rock.x = x2;
 				rock.y = y2;
-				movement++;
 			}
 		}
 
@@ -53,24 +53,25 @@ function cycle() {
 	tilt(1, 0);
 }
 
+let cycles = 1_000_000_000;
 let cache = [];
 
-for (let i = 1000000000; i--;) {
+for (let i = cycles; i--;) {
 	cycle();
 
 	let next = joinMap(map);
 
 	if (cache.includes(next)) {
 		break;
-	} else {
-		cache.push(next);
 	}
+
+	cache.push(next);
 }
 
 let index = cache.indexOf(joinMap(map));
 
 cache = cache.slice(index);
-map = splitMap(cache[(1000000000 - index - 1) % cache.length]);
+map = splitMap(cache[(cycles - index - 1) % cache.length]);
 
 for (let y = 0; y < height; y++) {
 	value += map[y]
