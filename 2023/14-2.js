@@ -48,6 +48,7 @@ function tilt(xd, yd) {
 
 let cycles = 1_000_000_000;
 let cache = [];
+let next;
 
 for (let i = cycles; i--;) {
 	tilt(0, -1);
@@ -55,7 +56,7 @@ for (let i = cycles; i--;) {
 	tilt(0, 1);
 	tilt(1, 0);
 
-	let next = joinMap(map);
+	next = joinMap(map);
 
 	if (cache.includes(next)) {
 		break;
@@ -64,7 +65,7 @@ for (let i = cycles; i--;) {
 	cache.push(next);
 }
 
-let index = cache.indexOf(joinMap(map));
+let index = cache.indexOf(next);
 
 cache = cache.slice(index);
 map = splitMap(cache[(cycles - index - 1) % cache.length]);
