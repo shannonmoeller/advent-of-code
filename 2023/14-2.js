@@ -8,8 +8,8 @@ let height = map.length;
 let width = map[0].length;
 let rocks = [];
 
-for (let y = 0; y < height; y++) {
-	for (let x = 0; x < width; x++) {
+for (let y = height; y--;) {
+	for (let x = width; x--;) {
 		if (map[y][x] === 'O') {
 			rocks.push({ x, y });
 		}
@@ -73,7 +73,7 @@ let index = cache.indexOf(joinMap(map));
 cache = cache.slice(index);
 map = splitMap(cache[(cycles - index - 1) % cache.length]);
 
-for (let y = 0; y < height; y++) {
+for (let y = height; y--;) {
 	value += map[y]
 		.filter((x) => x === 'O')
 		.length * (height - y);
