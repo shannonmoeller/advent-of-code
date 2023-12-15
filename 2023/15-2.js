@@ -7,7 +7,7 @@ function hash(str) {
 	let result = 0;
 
 	for (let char of str) {
-		result += char.charCodeAt(0);
+		result += char.codePointAt(0);
 		result *= 17;
 		result %= 256;
 	}
