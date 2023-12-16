@@ -51,6 +51,6 @@ while (beams.size) for (let beam of beams) {
 }
 
 logMap(map);
-logMap(energy.map((row) => row.map((col) => col.toString(16))));
+logMap(energy, (x) => x.toString(16));
 
 log(energy.flat().filter(Boolean).length);

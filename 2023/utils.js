@@ -6,9 +6,9 @@ export function log(...args) {
 	return args.at(-1);
 }
 
-export function joinMap(map) {
+export function joinMap(map, fn = (x) => x) {
 	if (typeof map[0] !== 'string') {
-		map = map.map((row) => row.join(''));
+		map = map.map((row) => row.map(fn).join(''));
 	}
 
 	return map.join('\n');
@@ -22,9 +22,9 @@ export function splitMap(map) {
 	return map.map((row) => row.split(''));
 }
 
-export function logMap(map) {
+export function logMap(map, fn) {
 	log('');
-	log(joinMap(map));
+	log(joinMap(map, fn));
 
 	return map;
 }
