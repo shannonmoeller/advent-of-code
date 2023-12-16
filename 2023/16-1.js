@@ -17,12 +17,12 @@ let energy = map.map(() => Array(width).fill(0));
 let beams = new Set([{ x: -1, y: 0, d: 'e' }]);
 
 while (beams.size) for (let beam of beams) {
-	if (map[beam.y]?.[beam.x]) {
-		if (energy[beam.y][beam.x] & power[beam.d]) {
-			beams.delete(beam);
-			continue;
-		}
+	if (energy[beam.y]?.[beam.x] & power[beam.d]) {
+		beams.delete(beam);
+		continue;
+	}
 
+	if (map[beam.y]?.[beam.x]) {
 		energy[beam.y][beam.x] |= power[beam.d];
 	}
 

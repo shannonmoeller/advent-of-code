@@ -20,12 +20,12 @@ function shine(x, y, d) {
 	let beams = new Set([{ x, y, d }]);
 
 	while (beams.size) for (let beam of beams) {
-		if (map[beam.y]?.[beam.x]) {
-			if (energy[beam.y][beam.x] & power[beam.d]) {
-				beams.delete(beam);
-				continue;
-			}
+		if (energy[beam.y]?.[beam.x] & power[beam.d]) {
+			beams.delete(beam);
+			continue;
+		}
 
+		if (map[beam.y]?.[beam.x]) {
 			energy[beam.y][beam.x] |= power[beam.d];
 		}
 
