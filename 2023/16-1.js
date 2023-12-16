@@ -33,10 +33,6 @@ while (beams.size) for (let beam of beams) {
 	beam.d = turns[beam.d][map[beam.y]?.[beam.x]];
 
 	switch (beam.d) {
-		case undefined: {
-			beams.delete(beam);
-			break;
-		}
 		case 'ns': {
 			beam.d = 'n';
 			beams.add({ ...beam, d: 's' });
@@ -47,9 +43,14 @@ while (beams.size) for (let beam of beams) {
 			beams.add({ ...beam, d: 'e' });
 			break;
 		}
+		case undefined: {
+			beams.delete(beam);
+			break;
+		}
 	}
 }
 
 logMap(map);
 logMap(energy.map((row) => row.map((col) => col.toString(16))));
+
 log(energy.flat().filter(Boolean).length);
