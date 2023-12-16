@@ -7,11 +7,19 @@ export function log(...args) {
 }
 
 export function joinMap(map) {
-	return map.map((row) => row.join('')).join('\n');
+	if (typeof map[0] !== 'string') {
+		map = map.map((row) => row.join(''));
+	}
+
+	return map.join('\n');
 }
 
 export function splitMap(map) {
-	return map.split('\n').map((row) => row.split(''));
+	if (typeof map === 'string') {
+		map = map.split('\n');
+	}
+
+	return map.map((row) => row.split(''));
 }
 
 export function logMap(map) {
