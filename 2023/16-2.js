@@ -20,15 +20,12 @@ function shine(x, y, d) {
 	let beams = new Set([{ x, y, d }]);
 
 	while (beams.size) for (let beam of beams) {
-		if (energy[beam.y]?.[beam.x] & power[beam.d]) {
-			beams.delete(beam);
-			continue;
-		}
+		if (map[beam.y]?.[beam.x]) {
+			if (energy[beam.y][beam.x] & power[beam.d]) {
+				beams.delete(beam);
+				continue;
+			}
 
-		if (
-			beam.y > -1 && beam.y < height &&
-			beam.x > -1 && beam.x < width
-		) {
 			energy[beam.y][beam.x] |= power[beam.d];
 		}
 
@@ -42,6 +39,10 @@ function shine(x, y, d) {
 		beam.d = turns[beam.d][map[beam.y]?.[beam.x]];
 
 		switch (beam.d) {
+			case undefined: {
+				beams.delete(beam);
+				break;
+			}
 			case 'ns': {
 				beam.d = 'n';
 				beams.add({ ...beam, d: 's' });
@@ -50,10 +51,6 @@ function shine(x, y, d) {
 			case 'we': {
 				beam.d = 'w';
 				beams.add({ ...beam, d: 'e' });
-				break;
-			}
-			case undefined: {
-				beams.delete(beam);
 				break;
 			}
 		}

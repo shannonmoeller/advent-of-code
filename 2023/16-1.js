@@ -4,9 +4,7 @@ let lines = readLines('./16.txt');
 
 let map = splitMap(lines);
 let width = map[0].length;
-let energy = map.map(() => Array(width).fill(0));
 
-let beams = new Set([{ x: -1, y: 0, d: 'e' }]);
 let power = { n: 1, s: 2, e: 4, w: 8 };
 let turns = {
 	n: { '.': 'n', '|': 'n', '\\': 'w', '/': 'e', '-': 'we' },
@@ -15,13 +13,18 @@ let turns = {
 	w: { '.': 'w', '-': 'w', '\\': 'n', '/': 's', '|': 'ns' },
 };
 
-while (beams.size) for (let beam of beams) {
-	if (energy[beam.y][beam.x] & power[beam.d]) {
-		beams.delete(beam);
-		continue;
-	}
+let energy = map.map(() => Array(width).fill(0));
+let beams = new Set([{ x: -1, y: 0, d: 'e' }]);
 
-	energy[beam.y][beam.x] |= power[beam.d];
+while (beams.size) for (let beam of beams) {
+	if (map[beam.y]?.[beam.x]) {
+		if (energy[beam.y][beam.x] & power[beam.d]) {
+			beams.delete(beam);
+			continue;
+		}
+
+		energy[beam.y][beam.x] |= power[beam.d];
+	}
 
 	switch (beam.d) {
 		case 'n': beam.y--; break;
@@ -33,6 +36,10 @@ while (beams.size) for (let beam of beams) {
 	beam.d = turns[beam.d][map[beam.y]?.[beam.x]];
 
 	switch (beam.d) {
+		case undefined: {
+			beams.delete(beam);
+			break;
+		}
 		case 'ns': {
 			beam.d = 'n';
 			beams.add({ ...beam, d: 's' });
@@ -41,10 +48,6 @@ while (beams.size) for (let beam of beams) {
 		case 'we': {
 			beam.d = 'w';
 			beams.add({ ...beam, d: 'e' });
-			break;
-		}
-		case undefined: {
-			beams.delete(beam);
 			break;
 		}
 	}
