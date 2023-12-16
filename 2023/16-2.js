@@ -25,7 +25,10 @@ function shine(x, y, d) {
 			continue;
 		}
 
-		if (beam.y >= 0 && beam.y < height && beam.x >= 0 && beam.x < width) {
+		if (
+			beam.y > -1 && beam.y < height &&
+			beam.x > -1 && beam.x < width
+		) {
 			energy[beam.y][beam.x] |= power[beam.d];
 		}
 
@@ -56,7 +59,10 @@ function shine(x, y, d) {
 		}
 	}
 
-	value = Math.max(value, energy.flat().filter(Boolean).length);
+	value = Math.max(
+		value,
+		energy.flat().filter(Boolean).length
+	);
 }
 
 for (let x = width; x--;) {
