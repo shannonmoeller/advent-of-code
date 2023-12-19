@@ -7,7 +7,7 @@ let x = 0;
 let y = 0;
 
 for (let line of lines) {
-	let [, dir, len] = line.match(/(\w) (\d+)/);
+	let [dir, len] = line.split(' ');
 
 	len = Number(len);
 
