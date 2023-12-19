@@ -1,0 +1,30 @@
+import { readLines, log } from './utils.js';
+
+let lines = readLines('./18.txt');
+let value = 0;
+
+let x = 0;
+let y = 0;
+let perimeter = 0;
+let dirs = ['R', 'D', 'L', 'U'];
+
+for (let line of lines) {
+	let [, len, dir] = line.match(/#(.{5})(.)/);
+
+	len = Number(`0x${len}`);
+	dir = dirs[dir];
+
+	let x0 = x;
+	let y0 = y;
+	switch (dir) {
+		case 'U': y -= len; break;
+		case 'D': y += len; break;
+		case 'L': x -= len; break;
+		case 'R': x += len; break;
+	}
+
+	value += x0 * y - x * y0;
+	perimeter += len;
+}
+
+log((value + perimeter) / 2 + 1);
