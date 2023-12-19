@@ -1,26 +1,87 @@
-import { readLines, log, logMap, splitMap } from './utils.js';
+import { readLines, log } from './utils.js';
 
 let lines = readLines('./17.tst');
 let value = 0;
 
-let graph = new Map(
-	splitMap(lines).flatMap((row, y) => (
-		row.map((col, x) => [key(x, y), { x, y, w: col }])
-	))
-);
-let height = lines.length;
-let width = lines[0].length;
+function createHeap(compare = (a, b) => b - a) {
+	let heap = [];
 
-function key(x, y) {
-	return `${x},${y}`;
+	function add(item) {
+		heap.push(item);
+		up(heap.length - 1);
+	}
+
+	function up(i) {
+		while (i > 0) {
+			let next = Math.floor((i + 1) / 2) - 1;
+
+			if (compare(heap[i], heap[next]) < 0) {
+				[heap[next], heap[i]] = [heap[i], heap[next]];
+			}
+
+			i = next;
+		}
+	}
+
+	function pop() {
+		let root = heap[0];
+		let last = heap.pop();
+
+		if (heap.length) {
+			heap[0] = last;
+			down(0);
+		}
+
+		return root;
+	}
+
+	function down(i) {
+		let { length } = heap;
+
+		while (true) {
+			let right = (i + 1) * 2;
+			let left = right - 1;
+			let next = i;
+
+			if (right < length && compare(heap[right], heap[next]) < 0) {
+				next = right;
+			}
+
+			if (left < length && compare(heap[left], heap[next]) < 0) {
+				next = left;
+			}
+
+			if (next === i) {
+				break;
+			}
+
+			[heap[next], heap[i]] = [heap[i], heap[next]];
+			i = next;
+		}
+	}
+
+	return {
+		add,
+		pop,
+
+		*[Symbol.iterator]() {
+			while (heap.length) {
+				yield pop();
+			}
+		},
+	};
 }
 
-function get(x, y) {
-	return graph.get(key(x, y));
+let nums = [6, 4, 7, 10, 9, 1, 2, 5, 8, 3];
+let heap = createHeap((a, b) => a.x - b.x);
+
+for (let num of nums) {
+	heap.add({ x: num });
 }
 
-let start = get(0, 0);
-let end = get(width - 1, height - 1);
-let visited = new Set();
+for (let item of heap) {
+	log(item);
+}
 
-// You know what? No. No, thanks. Pass.
+// Solving the puzzle may come later.
+// For now I'm content to have learned heaps.
