@@ -5,7 +5,6 @@ let value = 0;
 
 let x = 0;
 let y = 0;
-let perimeter = 0;
 
 for (let line of lines) {
 	let [, dir, len] = line.match(/(\w) (\d+)/);
@@ -21,8 +20,7 @@ for (let line of lines) {
 		case 'R': x += len; break;
 	}
 
-	value += x0 * y - x * y0;
-	perimeter += len;
+	value += x0 * y - x * y0 + len;
 }
 
-log((value + perimeter) / 2 + 1);
+log(value / 2 + 1);
