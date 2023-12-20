@@ -16,16 +16,12 @@ for (let line of lines.slice(0, delimiter)) {
 	});
 }
 
-function walk(key, path, bounds) {
-	path = [...path, key];
-
+function walk(key, bounds) {
 	if (key === 'R') {
 		return;
 	}
 
 	if (key === 'A') {
-		log(path);
-
 		value += Object.values(bounds)
 			.map(([a, b]) => b - a + 1)
 			.reduce((a, b) => a * b);
@@ -49,14 +45,14 @@ function walk(key, path, bounds) {
 				bounds[prop][1] = Math.min(bounds[prop][1], num);
 			}
 
-			walk(next, path, clone);
+			walk(next, clone);
 		} else {
-			walk(next, path, bounds);
+			walk(next, bounds);
 		}
 	}
 }
 
-walk('in', [], {
+walk('in', {
 	x: [1, 4000],
 	m: [1, 4000],
 	a: [1, 4000],

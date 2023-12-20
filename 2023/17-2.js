@@ -1,6 +1,3 @@
-// I couldn't figure this one out, so the following is based on
-// https://github.com/Prestaul/advent-of-code/blob/main/2023/day-17.js
-
 import { readLines, log, splitMap, createHeap } from './utils.js';
 
 let lines = readLines('./17.txt');
@@ -20,7 +17,7 @@ function visit(node) {
 	let { x, y, dir, ent, steps } = node;
 	let loss = Number(map[y]?.[x]);
 
-	if (!loss || steps > 3 || visits[y][x].includes(dir + steps)) {
+	if (!loss || steps > 10 || visits[y][x].includes(dir + steps)) {
 		return;
 	}
 
@@ -30,13 +27,33 @@ function visit(node) {
 
 for (let node of heap) {
 	let { x, y, dir, ent, steps } = node;
+	let next = steps + 1;
 
 	if (x === width - 1 && y === height - 1) {
 		value = ent;
 		break;
 	}
 
-	let next = steps + 1;
+	if (steps < 4) {
+		switch (dir) {
+			case 'n': {
+				visit({ ...node, y: y - 1, steps: next });
+				continue;
+			}
+			case 's': {
+				visit({ ...node, y: y + 1, steps: next });
+				continue;
+			}
+			case 'e': {
+				visit({ ...node, x: x + 1, steps: next });
+				continue;
+			}
+			case 'w': {
+				visit({ ...node, x: x - 1, steps: next });
+				continue;
+			}
+		}
+	}
 
 	if (dir !== 'n') {
 		visit({ ...node, y: y + 1, dir: 's', steps: dir === 's' ? next : 1 });
