@@ -35,27 +35,24 @@ function walk(key, path, bounds) {
 
 	for (let rule of workflows[key]) {
 		let { prop, op, num, next } = rule;
-		let clone = structuredClone(bounds);
 
-		if (op === '<') {
-			clone[prop][1] = Math.min(clone[prop][1], num - 1);
-			bounds[prop][0] = Math.max(bounds[prop][0], num);
+		if (prop) {
+			let clone = structuredClone(bounds);
+
+			if (op === '<') {
+				clone[prop][1] = Math.min(clone[prop][1], num - 1);
+				bounds[prop][0] = Math.max(bounds[prop][0], num);
+			}
+
+			if (op === '>') {
+				clone[prop][0] = Math.max(clone[prop][0], num + 1);
+				bounds[prop][1] = Math.min(bounds[prop][1], num);
+			}
 
 			walk(next, path, clone);
-
-			continue;
+		} else {
+			walk(next, path, bounds);
 		}
-
-		if (op === '>') {
-			clone[prop][0] = Math.max(clone[prop][0], num + 1);
-			bounds[prop][1] = Math.min(bounds[prop][1], num);
-
-			walk(next, path, clone);
-
-			continue;
-		}
-
-		walk(next, path, bounds);
 	}
 }
 
