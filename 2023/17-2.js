@@ -8,13 +8,13 @@ let height = map.length;
 let width = map[0].length;
 
 let visits = map.map(() => Array(width).fill(''));
-let heap = createHeap((a, b) => a.ent - b.ent);
+let heap = createHeap((a, b) => a.dist - b.dist);
 
-heap.add({ x: 0, y: 0, dir: 's', ent: 0, steps: 0 });
-heap.add({ x: 0, y: 0, dir: 'e', ent: 0, steps: 0 });
+heap.add({ x: 0, y: 0, dir: 's', dist: 0, steps: 0 });
+heap.add({ x: 0, y: 0, dir: 'e', dist: 0, steps: 0 });
 
 function visit(node) {
-	let { x, y, dir, ent, steps } = node;
+	let { x, y, dir, dist, steps } = node;
 	let loss = Number(map[y]?.[x]);
 
 	if (!loss || steps > 10 || visits[y][x].includes(dir + steps)) {
@@ -24,11 +24,11 @@ function visit(node) {
 	// I don't understand why this needs to be here instead
 	// of in the other loop like in 17-1.js, but it does
 	if (steps >= 4 && x === width - 1 && y === height - 1) {
-		value = ent;
+		value = dist;
 		return;
 	}
 
-	heap.add({ ...node, ent: ent + loss });
+	heap.add({ ...node, dist: dist + loss });
 	visits[y][x] += dir + steps;
 }
 
@@ -37,7 +37,7 @@ for (let node of heap) {
 		break;
 	}
 
-	let { x, y, dir, ent, steps } = node;
+	let { x, y, dir, dist, steps } = node;
 	let next = steps + 1;
 
 	if (steps < 4) {

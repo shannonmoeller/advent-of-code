@@ -11,28 +11,28 @@ let height = map.length;
 let width = map[0].length;
 
 let visits = map.map(() => Array(width).fill(''));
-let heap = createHeap((a, b) => a.ent - b.ent);
+let heap = createHeap((a, b) => a.dist - b.dist);
 
-heap.add({ x: 0, y: 0, dir: 's', ent: 0, steps: 0 });
-heap.add({ x: 0, y: 0, dir: 'e', ent: 0, steps: 0 });
+heap.add({ x: 0, y: 0, dir: 's', dist: 0, steps: 0 });
+heap.add({ x: 0, y: 0, dir: 'e', dist: 0, steps: 0 });
 
 function visit(node) {
-	let { x, y, dir, ent, steps } = node;
+	let { x, y, dir, dist, steps } = node;
 	let loss = Number(map[y]?.[x]);
 
 	if (!loss || steps > 3 || visits[y][x].includes(dir + steps)) {
 		return;
 	}
 
-	heap.add({ ...node, ent: ent + loss });
+	heap.add({ ...node, dist: dist + loss });
 	visits[y][x] += dir + steps;
 }
 
 for (let node of heap) {
-	let { x, y, dir, ent, steps } = node;
+	let { x, y, dir, dist, steps } = node;
 
 	if (x === width - 1 && y === height - 1) {
-		value = ent;
+		value = dist;
 		break;
 	}
 
