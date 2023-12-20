@@ -1,6 +1,6 @@
 import { readLines, log } from './utils.js';
 
-let lines = readLines('./19.tst');
+let lines = readLines('./19.txt');
 let value = 0;
 
 let delimiter = lines.indexOf('');
@@ -24,11 +24,10 @@ function walk(key, path, bounds) {
 	}
 
 	if (key === 'A') {
-		// TODO: Somehow make sure we don't count repeated parts
-		value += log(path.at(-2), Object.values(bounds)
-			.map(([a, b]) => log(b - a + 1))
-			.reduce((a, b) => a * b));
-
+		log(path);
+		value += Object.values(bounds)
+			.map(([a, b]) => b - a + 1)
+			.reduce((a, b) => a * b);
 		return;
 	}
 
@@ -38,13 +37,19 @@ function walk(key, path, bounds) {
 
 		if (op === '<') {
 			clone[prop][1] = Math.min(clone[prop][1], num - 1);
+			bounds[prop][0] = Math.max(bounds[prop][0], num);
+			walk(next, path, clone);
+			continue;
 		}
 
 		if (op === '>') {
 			clone[prop][0] = Math.max(clone[prop][0], num + 1);
+			bounds[prop][1] = Math.min(bounds[prop][1], num);
+			walk(next, path, clone);
+			continue;
 		}
 
-		walk(next, path, clone);
+		walk(next, path, bounds);
 	}
 }
 
@@ -55,6 +60,4 @@ walk('in', [], {
 	s: [1, 4000],
 });
 
-log('max   ', 4000 ** 4);
-log('target', 167409079868000);
-log('actual', value);
+log(value);
