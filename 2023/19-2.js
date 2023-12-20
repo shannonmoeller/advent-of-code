@@ -24,13 +24,10 @@ function walk(key, path, bounds) {
 	}
 
 	if (key === 'A') {
-		log(path);
-		log(bounds);
-
 		// TODO: Somehow make sure we don't count repeated parts
-		value += Object.values(bounds)
-			.map(([a, b]) => b - a + 1)
-			.reduce((a, b) => a * b);
+		value += log(path.at(-2), Object.values(bounds)
+			.map(([a, b]) => log(b - a + 1))
+			.reduce((a, b) => a * b));
 
 		return;
 	}
