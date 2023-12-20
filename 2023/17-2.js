@@ -21,18 +21,24 @@ function visit(node) {
 		return;
 	}
 
+	// I don't understand why this needs to be here instead
+	// of in the other loop like in 17-1.js, but it does
+	if (steps >= 4 && x === width - 1 && y === height - 1) {
+		value = ent;
+		return;
+	}
+
 	heap.add({ ...node, ent: ent + loss });
 	visits[y][x] += dir + steps;
 }
 
 for (let node of heap) {
-	let { x, y, dir, ent, steps } = node;
-	let next = steps + 1;
-
-	if (x === width - 1 && y === height - 1) {
-		value = ent;
+	if (value) {
 		break;
 	}
+
+	let { x, y, dir, ent, steps } = node;
+	let next = steps + 1;
 
 	if (steps < 4) {
 		switch (dir) {

@@ -98,9 +98,14 @@ export function createHeap(compare = (a, b) => b - a) {
 		}
 	}
 
+	function peek() {
+		return heap[0];
+	}
+
 	return {
 		add,
 		pop,
+		peek,
 
 		*[Symbol.iterator]() {
 			while (heap.length) {
