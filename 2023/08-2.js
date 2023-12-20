@@ -1,4 +1,4 @@
-import { log, readLines } from './utils.js';
+import { log, readLines, lcm } from './utils.js';
 
 let lines = readLines('./08.txt');
 let value = 0;
@@ -15,14 +15,6 @@ for (let node of nodes) {
 	}
 
 	map[key] = { L, R };
-}
-
-function gcd(a, b) {
-	return a ? gcd(b % a, a) : b;
-}
-
-function lcm(a, b) {
-	return a * b / gcd(a, b);
 }
 
 function getSteps(key) {

@@ -10,6 +10,14 @@ export function log(...args) {
 	return args.at(-1);
 }
 
+export function gcd(a, b) {
+	return a ? gcd(b % a, a) : b;
+}
+
+export function lcm(a, b) {
+	return a * b / gcd(a, b);
+}
+
 export function joinMap(map, fn = (x) => x) {
 	if (typeof map[0] !== 'string') {
 		map = map.map((row) => row.map(fn).join(''));
@@ -96,6 +104,29 @@ export function createHeap(compare = (a, b) => b - a) {
 
 		*[Symbol.iterator]() {
 			while (heap.length) {
+				yield pop();
+			}
+		},
+	};
+}
+
+export function createQueue() {
+	let queue = [];
+
+	function add(item) {
+		queue.push(item);
+	}
+
+	function pop() {
+		return queue.shift();
+	}
+
+	return {
+		add,
+		pop,
+
+		*[Symbol.iterator]() {
+			while (queue.length) {
 				yield pop();
 			}
 		},
