@@ -25,9 +25,11 @@ function walk(key, path, bounds) {
 
 	if (key === 'A') {
 		log(path);
+
 		value += Object.values(bounds)
 			.map(([a, b]) => b - a + 1)
 			.reduce((a, b) => a * b);
+
 		return;
 	}
 
@@ -38,14 +40,18 @@ function walk(key, path, bounds) {
 		if (op === '<') {
 			clone[prop][1] = Math.min(clone[prop][1], num - 1);
 			bounds[prop][0] = Math.max(bounds[prop][0], num);
+
 			walk(next, path, clone);
+
 			continue;
 		}
 
 		if (op === '>') {
 			clone[prop][0] = Math.max(clone[prop][0], num + 1);
 			bounds[prop][1] = Math.min(bounds[prop][1], num);
+
 			walk(next, path, clone);
+
 			continue;
 		}
 
