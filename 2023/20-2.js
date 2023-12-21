@@ -39,9 +39,9 @@ while (!Object.values(multiples).every(Boolean)) {
 				multiples[srcId] = count;
 			}
 
-			if (!(outId in modules)) continue;
-
 			let output = modules[outId];
+
+			if (!output) continue;
 
 			output.receipts[srcId] = pulse;
 

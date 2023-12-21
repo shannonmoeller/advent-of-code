@@ -36,9 +36,9 @@ for (let i = 0; i < 1000; i++) {
 		for (let outId of source.outputs) {
 			count[pulse]++;
 
-			if (!(outId in modules)) continue;
-
 			let output = modules[outId];
+
+			if (!output) continue;
 
 			output.receipts[srcId] = pulse;
 
