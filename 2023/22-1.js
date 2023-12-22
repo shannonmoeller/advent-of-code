@@ -1,107 +1,92 @@
 import { readLines, log, logMaps, createHeap } from './utils.js';
 
-let lines = readLines('./22-matt.txt');
+let lines = readLines('./22.txt');
 let value = 0;
 
+let id = 0;
+let layers = [];
+let bricks = [];
 let brickHeap = createHeap([], (a, b) => {
-	return a.z[0] - b.z[0] || a.y[0] - b.y[0] || a.x[0] - b.x[0];
+	return a.z0 - b.z0 || a.y0 - b.y0 || a.x0 - b.x0;
 });
+
+function getLayer(z) {
+	return (layers[z] ??= []);
+}
+
+function collide(a, b) {
+	return !(a.x0 > b.x1 || b.x0 > a.x1 || a.y0 > b.y1 || b.y0 > a.y1);
+}
 
 for (let line of lines) {
 	let [x0, y0, z0, x1, y1, z1] = line.split(/\D+/).map(Number);
 
 	let brick = {
-		x: [x0, x1],
-		y: [y0, y1],
-		z: [z0, z1],
-		above: new Set(),
-		below: new Set(),
+		x0, y0, z0, x1, y1, z1,
+		restsUpon: new Set(),
+		restsUnder: new Set(),
 	};
 
 	brickHeap.add(brick);
 }
 
-let bricks = new Set();
-let layers = [];
-
-function getLayer(z) {
-	return (layers[z] ??= new Set());
-}
-
-function collide(a, b) {
-	return (
-		!(a.x[0] > b.x[1] || b.x[0] > a.x[1]) &&
-		!(a.y[0] > b.y[1] || b.y[0] > a.y[1])
-	);
-}
-
-let id = 0;
 for (let brick of brickHeap) {
 	brick.id = id++;
-	bricks.add(brick);
+	bricks.push(brick);
+}
 
-	while (brick.z[0] > 0) {
-		if (brick.z[0] === 1) {
-			// log('brick', brick.id, 'layer', 1);
-			getLayer(1).add(brick);
+for (let brick of bricks) {
+	while (brick.z0 > 1) {
+		let lower = getLayer(brick.z0 - 1);
+
+		if (lower.some((b) => collide(brick, b))) {
 			break;
 		}
 
-		let layerBelow = getLayer([brick.z[0] - 1]);
+		brick.z0--;
+		brick.z1--;
+	}
 
-		if (!layerBelow.size) {
-			// log('falling empty', brick.id);
-			brick.z[0]--;
-			brick.z[1]--;
-			continue;
-		}
-
-		let isResting = false;
-
-		for (let brickBelow of layerBelow) {
-			if (collide(brick, brickBelow)) {
-				// log(brick.id, 'upon', brickBelow.id);
-				isResting = true;
-				brick.below.add(brickBelow);
-				brickBelow.above.add(brick);
-			}
-		}
-
-		if (!isResting) {
-			// log('falling miss', brick.id);
-			brick.z[0]--;
-			brick.z[1]--;
-			continue;
-		}
-
-		for (let z = brick.z[0]; z <= brick.z[1]; z++) {
-			// log('brick', brick.id, 'layer', z);
-			getLayer(z).add(brick);
-		}
-
-		break;
+	for (let z = brick.z0; z <= brick.z1; z++) {
+		getLayer(z).push(brick);
 	}
 }
 
 for (let brick of bricks) {
-	if (!brick.above.size) {
-		// log('holds nothing', brick.id);
-		value += 1;
-		continue;
+	let lower = getLayer(brick.z0 - 1);
+
+	for (let lowerBrick of lower) {
+		if (brick !== lowerBrick && collide(brick, lowerBrick)) {
+			brick.restsUpon.add(lowerBrick);
+		}
 	}
 
-	if ([...brick.above].every((upper) => upper.below.size > 1)) {
-		// log('has backup', brick.id);
-		value += 1;
+	let upper = getLayer(brick.z1 + 1);
+
+	for (let upperBrick of upper) {
+		if (brick !== upperBrick && collide(brick, upperBrick)) {
+			brick.restsUnder.add(upperBrick);
+		}
 	}
 }
 
-function getChar(brick) {
-	return String.fromCodePoint(brick.id + 48);
+for (let brick of bricks) {
+	let restsUnder = Array.from(brick.restsUnder);
+
+	if (
+		!restsUnder.length ||
+		restsUnder.every((b) => b.restsUpon.size > 1)
+	) {
+		value += 1;
+	}
 }
 
 let empty = '░';
 let maps = [];
+
+function getChar(brick) {
+	return String.fromCodePoint(brick.id + 48);
+}
 
 for (let z = 1; z <= 5; z++) {
 	let layer = layers[z];
@@ -112,15 +97,11 @@ for (let z = 1; z <= 5; z++) {
 	for (let brick of layer) {
 		let char = getChar(brick);
 
-		log(char, 'above', ...[...brick.above].map(getChar));
-		log(char, 'below', ...[...brick.below].map(getChar));
+		log(char, 'upon ', ...[...brick.restsUpon].map(getChar));
+		log(char, 'under', ...[...brick.restsUnder].map(getChar));
 
-		for (let x = brick.x[0]; x <= brick.x[1]; x++) {
-			for (let y = brick.y[0]; y <= brick.y[1]; y++) {
-				if (map[y][x] !== empty) {
-					log('crappa', map[y][x], char);
-				}
-
+		for (let x = brick.x0; x <= brick.x1; x++) {
+			for (let y = brick.y0; y <= brick.y1; y++) {
 				map[y][x] = char;
 			}
 		}
