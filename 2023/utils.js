@@ -15,7 +15,7 @@ export function gcd(a, b) {
 }
 
 export function lcm(a, b) {
-	return a * b / gcd(a, b);
+	return (a * b) / gcd(a, b);
 }
 
 export function joinMap(map, fn = (x) => x) {
@@ -41,9 +41,7 @@ export function logMap(map, fn) {
 	return map;
 }
 
-export function createHeap(compare = (a, b) => b - a) {
-	let heap = [];
-
+export function createHeap(heap = [], compare = (a, b) => b - a) {
 	function add(item) {
 		heap.push(item);
 		up(heap.length - 1);
@@ -115,9 +113,7 @@ export function createHeap(compare = (a, b) => b - a) {
 	};
 }
 
-export function createQueue() {
-	let queue = [];
-
+export function createQueue(queue = []) {
 	function add(item) {
 		queue.push(item);
 	}

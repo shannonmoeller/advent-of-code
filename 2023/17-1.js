@@ -11,10 +11,10 @@ let height = map.length;
 let width = map[0].length;
 
 let visits = map.map(() => Array(width).fill(''));
-let heap = createHeap((a, b) => a.dist - b.dist);
-
-heap.add({ x: 0, y: 0, dir: 's', dist: 0, steps: 0 });
-heap.add({ x: 0, y: 0, dir: 'e', dist: 0, steps: 0 });
+let heap = createHeap(
+	[{ x: 0, y: 0, dir: null, dist: 0, steps: 0 }],
+	(a, b) => a.dist - b.dist,
+);
 
 function visit(node) {
 	let { x, y, dir, dist, steps } = node;

@@ -11,7 +11,12 @@ let frontier = [[x, y]];
 map[y][x] = '.';
 
 function visit(x, y, next, mod) {
-	if (map[y]?.[x] !== '.') return;
+	if (!map[y]?.[x]) return;
+
+	if (map[y]?.[x] !== '.') {
+		map[y][x] = ' ';
+		return;
+	}
 
 	if (!mod) value++;
 
@@ -19,7 +24,7 @@ function visit(x, y, next, mod) {
 	next.push([x, y]);
 }
 
-for (let steps = 65; steps--; ) {
+for (let steps = 64; steps--; ) {
 	let next = [];
 	let mod = steps % 2;
 
