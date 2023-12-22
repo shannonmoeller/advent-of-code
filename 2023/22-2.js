@@ -21,10 +21,10 @@ function getLayer(z) {
 	return (layers[z] ??= []);
 }
 
-function collide(a, b) {
+function getCollides(a, b) {
 	return a !== b && !(
-		a.x0 > b.x1 || b.x0 > a.x1 ||
-		a.y0 > b.y1 || b.y0 > a.y1
+		a.x1 < b.x0 || b.x1 < a.x0 ||
+		a.y1 < b.y0 || b.y1 < a.y0
 	);
 }
 
@@ -34,7 +34,7 @@ for (let brick of brickHeap) {
 
 	while (
 		brick.z0 > 1 &&
-		!getLayer(brick.z0 - 1).some((b) => collide(brick, b))
+		!getLayer(brick.z0 - 1).some((b) => getCollides(brick, b))
 	) {
 		brick.z0--;
 		brick.z1--;
@@ -47,10 +47,10 @@ for (let brick of brickHeap) {
 
 for (let brick of bricks) {
 	brick.restsUpon = getLayer(brick.z0 - 1)
-		.filter((b) => collide(brick, b));
+		.filter((b) => getCollides(brick, b));
 
 	brick.restsUnder = getLayer(brick.z1 + 1)
-		.filter((b) => collide(brick, b));
+		.filter((b) => getCollides(brick, b));
 }
 
 function collapse(brick, collapsed = new Set()) {
@@ -62,11 +62,11 @@ function collapse(brick, collapsed = new Set()) {
 		}
 	}
 
-	return collapsed.size;
+	return collapsed;
 }
 
 for (let brick of bricks) {
-	value += collapse(brick) - 1;
+	value += collapse(brick).size - 1;
 }
 
 log(value);
