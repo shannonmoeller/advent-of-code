@@ -51,43 +51,19 @@ for (let brick of bricks) {
 	));
 }
 
-for (let brick of bricks) {
-	if (
-		!brick.restsUnder.length ||
-		brick.restsUnder.every((b) => b.restsUpon.length > 1)
-	) {
-		value += 1;
-	}
-}
-
-let empty = '░';
-let maps = [];
-
-function getChar(brick) {
-	return String.fromCodePoint(brick.id + 48);
-}
-
-for (let z = 1; z <= 5; z++) {
-	let layer = layers[z];
-	let map = Array(10)
-		.fill()
-		.map(() => Array(10).fill(empty));
-
-	for (let brick of layer) {
-		let char = getChar(brick);
-
-		log(char, 'upon ', ...[...brick.restsUpon].map(getChar));
-		log(char, 'under', ...[...brick.restsUnder].map(getChar));
-
-		for (let x = brick.x0; x <= brick.x1; x++) {
-			for (let y = brick.y0; y <= brick.y1; y++) {
-				map[y][x] = char;
-			}
+function collapse(brick, collapsed = new Set([brick])) {
+	for (let upperBrick of brick.restsUnder) {
+		if (upperBrick.restsUpon.every((lowerBrick) => collapsed.has(lowerBrick))) {
+			collapsed.add(upperBrick);
+			collapse(upperBrick, collapsed);
 		}
 	}
 
-	maps.push(map);
+	return collapsed.size;
 }
 
-logMaps(maps);
+for (let brick of bricks) {
+	value += collapse(brick) - 1;
+}
+
 log(value);

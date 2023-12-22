@@ -3,7 +3,7 @@
 
 import { readLines, log, createQueue, splitMap } from './utils.js';
 
-let lines = readLines('./21.txt');
+let lines = readLines('./21.tst');
 let value = 0;
 
 let map = splitMap(lines);
