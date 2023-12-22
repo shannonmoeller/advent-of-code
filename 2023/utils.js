@@ -37,8 +37,21 @@ export function splitMap(map) {
 export function logMap(map, fn) {
 	log('');
 	log(joinMap(map, fn));
+	log('');
 
 	return map;
+}
+
+export function logMaps(maps) {
+	let height = maps[0].length;
+
+	log('');
+	for (let y = 0; y < height; y++) {
+		log(maps.map((map) => map[y].join('')).join(' '));
+	}
+	log('');
+
+	return maps;
 }
 
 export function createHeap(heap = [], compare = (a, b) => b - a) {
@@ -96,14 +109,17 @@ export function createHeap(heap = [], compare = (a, b) => b - a) {
 		}
 	}
 
-	function peek() {
-		return heap[0];
-	}
-
 	return {
+		get heap() {
+			return heap;
+		},
+
+		get peek() {
+			return heap[0];
+		},
+
 		add,
 		pop,
-		peek,
 
 		*[Symbol.iterator]() {
 			while (heap.length) {
@@ -177,4 +193,8 @@ export function unionRanges(a, b) {
 	}
 
 	return union;
+}
+
+export function withinRange(value, [a, b]) {
+	return value >= a && value <= b;
 }

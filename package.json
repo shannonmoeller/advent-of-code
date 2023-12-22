@@ -1,4 +1,19 @@
 {
   "private": true,
-  "type": "module"
+  "type": "module",
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-sparse-arrays": "off"
+    }
+  }
 }
