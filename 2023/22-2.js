@@ -53,10 +53,11 @@ for (let brick of bricks) {
 		.filter((b) => collide(brick, b));
 }
 
-function collapse(brick, collapsed = new Set([brick])) {
+function collapse(brick, collapsed = new Set()) {
+	collapsed.add(brick);
+
 	for (let upperBrick of brick.restsUnder) {
 		if (upperBrick.restsUpon.every((b) => collapsed.has(b))) {
-			collapsed.add(upperBrick);
 			collapse(upperBrick, collapsed);
 		}
 	}
