@@ -15,7 +15,6 @@ for (let line of lines) {
 
 let layers = [];
 let bricks = [];
-let id = 0;
 
 function getLayer(z) {
 	return (layers[z] ??= []);
@@ -29,7 +28,6 @@ function getCollides(a, b) {
 }
 
 for (let brick of brickHeap) {
-	brick.id = id++;
 	bricks.push(brick);
 
 	while (
@@ -63,34 +61,3 @@ for (let brick of bricks) {
 }
 
 log(value);
-
-// let empty = '░';
-// let maps = [];
-//
-// function getChar(brick) {
-// 	return String.fromCodePoint(brick.id + 48);
-// }
-//
-// for (let z = 1; z <= 5; z++) {
-// 	let layer = layers[z];
-// 	let map = Array(10)
-// 		.fill()
-// 		.map(() => Array(10).fill(empty));
-//
-// 	for (let brick of layer) {
-// 		let char = getChar(brick);
-//
-// 		log(char, 'upon ', ...brick.restsUpon.map(getChar));
-// 		log(char, 'under', ...brick.restsUnder.map(getChar));
-//
-// 		for (let x = brick.x0; x <= brick.x1; x++) {
-// 			for (let y = brick.y0; y <= brick.y1; y++) {
-// 				map[y][x] = char;
-// 			}
-// 		}
-// 	}
-//
-// 	maps.push(map);
-// }
-//
-// logMaps(maps);

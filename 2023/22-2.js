@@ -15,7 +15,6 @@ for (let line of lines) {
 
 let layers = [];
 let bricks = [];
-let id = 0;
 
 function getLayer(z) {
 	return (layers[z] ??= []);
@@ -29,7 +28,6 @@ function getCollides(a, b) {
 }
 
 for (let brick of brickHeap) {
-	brick.id = id++;
 	bricks.push(brick);
 
 	while (
@@ -53,12 +51,12 @@ for (let brick of bricks) {
 		.filter((b) => getCollides(brick, b));
 }
 
-function collapse(brick, collapsed = new Set()) {
+function getCollapsed(brick, collapsed = new Set()) {
 	collapsed.add(brick);
 
 	for (let upperBrick of brick.restsUnder) {
 		if (upperBrick.restsUpon.every((b) => collapsed.has(b))) {
-			collapse(upperBrick, collapsed);
+			getCollapsed(upperBrick, collapsed);
 		}
 	}
 
@@ -66,7 +64,7 @@ function collapse(brick, collapsed = new Set()) {
 }
 
 for (let brick of bricks) {
-	value += collapse(brick).size - 1;
+	value += getCollapsed(brick).size - 1;
 }
 
 log(value);
