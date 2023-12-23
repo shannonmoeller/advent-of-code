@@ -12,6 +12,10 @@ let targetX = map[targetY].indexOf('.');
 let verticies = {};
 let edges = {};
 
+function getTile(x, y) {
+	return Number((map[y]?.[x] ?? '#') !== '#')
+}
+
 function createVertice(x, y) {
 	return verticies[[x, y]] ??= { x, y, to: [] };
 }
@@ -23,9 +27,7 @@ function getVertice(x, y) {
 function createEdge(from, to, dist) {
 	let edge = getEdge(from, to);
 
-	if (!edge) {
-		from.to.push(to);
-	}
+	if (!edge) from.to.push(to);
 
 	edge = edges[[from.x, from.y, to.x, to.y]] ??= { from, to, dist };
 	edge.dist = Math.max(edge.dist, dist);
@@ -37,17 +39,12 @@ function getEdge(from, to) {
 	return edges[[from.x, from.y, to.x, to.y]];
 }
 
-function getTile(x, y) {
-	return Number((map[y]?.[x] ?? '#') !== '#')
-}
-
-let sourceVertice = createVertice(sourceX, sourceY);
-let frontier = createQueue([[sourceX, sourceY, 's', 0, sourceVertice]]);
+let source = createVertice(sourceX, sourceY);
+let frontier = createQueue([[sourceX, sourceY, 's', 0, source]]);
 
 for (let node of frontier) {
 	let [x, y, dir, dist, from] = node;
 
-	let hasEdge = false;
 	let n = getTile(x, y - 1);
 	let s = getTile(x, y + 1);
 	let e = getTile(x + 1, y);
@@ -58,15 +55,15 @@ for (let node of frontier) {
 		(x === targetX && y === targetY)
 	) {
 		let to = createVertice(x, y);
+		let hasEdge = getEdge(from, to);
 
-		hasEdge = getEdge(from, to);
 		createEdge(from, to, dist);
 
-		from = to;
-		dist = 0;
-	}
+		if (hasEdge) continue;
 
-	if (hasEdge) continue;
+		dist = 0;
+		from = to;
+	}
 
 	dist++;
 
@@ -76,7 +73,6 @@ for (let node of frontier) {
 	if (w && dir !== 'e') frontier.add([x - 1, y, 'w', dist, from]);
 }
 
-let source = getVertice(sourceX, sourceY);
 let target = getVertice(targetX, targetY);
 
 function search(node, path = [], dist = 0) {
