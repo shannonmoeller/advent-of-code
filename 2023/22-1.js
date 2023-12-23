@@ -1,4 +1,4 @@
-import { readLines, log, logMaps, createHeap } from './utils.js';
+import { readLines, log, createHeap } from './utils.js';
 
 let lines = readLines('./22.txt');
 let value = 0;
@@ -14,10 +14,10 @@ for (let line of lines) {
 }
 
 let layers = [];
-let bricks = [];
+let bricks = new Set();
 
 function getLayer(z) {
-	return (layers[z] ??= []);
+	return layers[z] ??= [];
 }
 
 function getCollides(a, b) {
@@ -28,7 +28,7 @@ function getCollides(a, b) {
 }
 
 for (let brick of brickHeap) {
-	bricks.push(brick);
+	bricks.add(brick);
 
 	while (
 		brick.z0 > 1 &&
@@ -44,17 +44,17 @@ for (let brick of brickHeap) {
 }
 
 for (let brick of bricks) {
-	brick.restsUpon = getLayer(brick.z0 - 1)
+	brick.lowerBricks = getLayer(brick.z0 - 1)
 		.filter((b) => getCollides(brick, b));
 
-	brick.restsUnder = getLayer(brick.z1 + 1)
+	brick.upperBricks = getLayer(brick.z1 + 1)
 		.filter((b) => getCollides(brick, b));
 }
 
 for (let brick of bricks) {
 	if (
-		!brick.restsUnder.length ||
-		brick.restsUnder.every((b) => b.restsUpon.length > 1)
+		!brick.upperBricks.length ||
+		brick.upperBricks.every((b) => b.lowerBricks.length > 1)
 	) {
 		value += 1;
 	}
