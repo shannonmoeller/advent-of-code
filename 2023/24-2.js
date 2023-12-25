@@ -1,33 +1,38 @@
-import { readLines, log } from './utils.js';
+import { readLines, log, createHeap } from './utils.js';
 
 let lines = readLines('./24.txt');
 let value = 0;
 
-function cast(o, d, t) {
-	let [x0, y0] = o;
-	let [xd, yd] = d;
-	let m = yd / xd;
-	let b = y0 - m * x0;
-	let x1 = x0 + t * xd;
-	let y1 = m * x1 + b;
+function cast(origin, direction, time) {
+	let [x0, y0, z0] = origin;
+	let [xd, yd, zd] = direction;
 
-	return [x0, y0, x1, y1];
+	return [
+		x0 + xd * time,
+		y0 + yd * time,
+		z0 + zd * time,
+	];
 }
 
-let [min, max] = lines.shift().match(/\d+/g).map(Number);
-let time = max - min;
-let rays = [];
+function timeToZ(origin, direction) {
+  let [,, z0] = origin;
+  let [xd, yd, zd] = direction;
+  let zn = xd / Math.sqrt(xd ** 2 + yd ** 2 + zd ** 2);
 
-for (let line of lines) {
-	let [x0, y0, , xd, yd] = line.match(/-?\d+/g).map(Number);
-
-	rays.push([x0, y0, xd, yd]);
+	return zn ? -z0 / zn : Infinity;
 }
 
-for (let i = rays.length; i--;) {
-	for (let j = i; j--;) {
-		log(rays[i], rays[j]);
-	}
+let rays = createHeap([], (a, b) => a[3] - b[3]);
+
+for (let line of lines.slice(1)) {
+	let [x0, y0, z0, xd, yd, zd] = line.match(/-?\d+/g).map(Number);
+	let origin = [x0, y0, z0];
+	let direction = [xd, yd, zd];
+	let time = timeToZ(origin, direction);
+	let dest = cast(origin, direction, time);
+
+	rays.add([origin, direction, dest, time]);
 }
 
-log(value);
+log(rays.pop());
+log(rays.pop());

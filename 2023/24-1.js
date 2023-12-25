@@ -3,15 +3,14 @@ import { readLines, log } from './utils.js';
 let lines = readLines('./24.txt');
 let value = 0;
 
-function cast(o, d, t) {
-	let [x0, y0] = o;
-	let [xd, yd] = d;
-	let m = yd / xd;
-	let b = y0 - m * x0;
-	let x1 = x0 + t * xd;
-	let y1 = m * x1 + b;
+function cast(origin, direction, time) {
+	let [x0, y0] = origin;
+	let [xd, yd] = direction;
 
-	return [x1, y1];
+	return [
+		x0 + xd * time,
+		y0 + yd * time,
+	];
 }
 
 function intersect(a, b) {
@@ -52,11 +51,11 @@ function intersect(a, b) {
 	return [x1, y1];
 }
 
-let [min, max] = lines.shift().match(/\d+/g).map(Number);
+let [min, max] = lines[0].match(/\d+/g).map(Number);
 let time = max - min;
 let rays = [];
 
-for (let line of lines) {
+for (let line of lines.slice(1)) {
 	let [x0, y0, , xd, yd] = line.match(/-?\d+/g).map(Number);
 	let [x1, y1] = cast([x0, y0], [xd, yd], time);
 
