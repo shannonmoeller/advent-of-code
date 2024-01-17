@@ -3,19 +3,13 @@ import { readLines, log } from './utils.js';
 let lines = readLines('./24.txt');
 let value = 0;
 
-function cast(origin, direction, time) {
-	let [x0, y0] = origin;
-	let [xd, yd] = direction;
-
-	return [
-		x0 + xd * time,
-		y0 + yd * time,
-	];
+function cast(point, vector, scalar) {
+	return point.map((axis, i) => axis + vector[i] * scalar)
 }
 
 function intersect(a, b) {
-	let [ax, ay, bx, by] = a;
-	let [cx, cy, dx, dy] = b;
+	let [[ax, ay], [bx, by]] = a;
+	let [[cx, cy], [dx, dy]] = b;
 
 	let bax = bx - ax;
 	let bay = by - ay;
@@ -45,31 +39,30 @@ function intersect(a, b) {
 		return null;
 	}
 
-	let x1 = ax + bax * dcQuotient;
-	let y1 = ay + bay * dcQuotient;
-
-	return [x1, y1];
+	return [
+		ax + bax * dcQuotient,
+		ay + bay * dcQuotient,
+	];
 }
 
 let [min, max] = lines[0].match(/\d+/g).map(Number);
 let time = max - min;
-let rays = [];
+let hail = [];
 
 for (let line of lines.slice(1)) {
-	let [x0, y0, , xd, yd] = line.match(/-?\d+/g).map(Number);
-	let [x1, y1] = cast([x0, y0], [xd, yd], time);
+	let [x, y, z, xd, yd, zd] = line.match(/-?\d+/g).map(Number);
+	let origin = [x, y, z];
+	let direction = [xd, yd, zd];
+	let position = cast(origin, direction, time);
 
-	rays.push([x0, y0, x1, y1]);
+	hail.push([origin, position]);
 }
 
-for (let i = rays.length; i--;) {
+for (let i = hail.length; i--;) {
 	for (let j = i; j--;) {
-		let [x, y] = intersect(rays[i], rays[j]) ?? [];
+		let [x, y] = intersect(hail[i], hail[j]) ?? [];
 
-		if (
-			x >= min && x <= max &&
-			y >= min && y <= max
-		) {
+		if (x >= min && x <= max && y >= min && y <= max) {
 			value++;
 		}
 	}

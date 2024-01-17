@@ -3,13 +3,13 @@
 
 import { readLines, log, createQueue, splitMap } from './utils.js';
 
-let lines = readLines('./21.tst');
+let lines = readLines('./21.txt');
 let value = 0;
 
 let map = splitMap(lines);
 let size = 131;
 let start = 65;
-let tiles = 3;
+let tiles = 1;
 let steps = 26501365;
 
 let distCache = {};

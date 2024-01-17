@@ -1,38 +1,87 @@
 import { readLines, log, createHeap } from './utils.js';
 
-let lines = readLines('./24.txt');
+// Idea: Generate a random cloud of particles
+// within the bounding box created by the given
+// hail. Give each hailstone gravity to attract
+// particles. The particle closest to the final
+// solution should end the simulation with the
+// highest speed and smallest change in direction.
+// Iterate on this by generating smaller clouds
+// around the top N candidates from previous
+// rounds until we find the right one.
+
+let lines = readLines('./24.tst');
 let value = 0;
 
-function cast(origin, direction, time) {
-	let [x0, y0, z0] = origin;
-	let [xd, yd, zd] = direction;
+function add(a, b) {
+	return a.map((ai, i) => ai + b[i]);
+}
+
+function subtract(a, b) {
+	return a.map((ai, i) => ai - b[i]);
+}
+
+function multiply(vector, scalar) {
+	return vector.map((axis) => axis * scalar);
+}
+
+function divide(vector, scalar) {
+	return vector.map((axis) => axis / scalar);
+}
+
+function average(points) {
+	return divide(points.reduce(add), points.length);
+}
+
+function dotProduct(a, b) {
+	return a
+		.map((ai, i) => ai * b[i])
+		.reduce((acc, n) => acc + n);
+}
+
+function crossProduct(a, b) {
+	let [ax, ay, az] = a;
+	let [bx, by, bz] = b;
 
 	return [
-		x0 + xd * time,
-		y0 + yd * time,
-		z0 + zd * time,
+		ay * bz - az * by,
+		az * bx - ax * bz,
+		ax * by - ay * bx
 	];
 }
 
-function timeToZ(origin, direction) {
-  let [,, z0] = origin;
-  let [xd, yd, zd] = direction;
-  let zn = xd / Math.sqrt(xd ** 2 + yd ** 2 + zd ** 2);
-
-	return zn ? -z0 / zn : Infinity;
+function cast(point, vector, scalar) {
+	return point.map((axis, i) => axis + vector[i] * scalar)
 }
 
-let rays = createHeap([], (a, b) => a[3] - b[3]);
+function distance(a, b) {
+	return Math.sqrt(a
+		.map((ai, i) => 2 ** (b[i] - ai))
+		.reduce((acc, n) => acc + n)
+	);
+}
+
+let hail = [];
 
 for (let line of lines.slice(1)) {
-	let [x0, y0, z0, xd, yd, zd] = line.match(/-?\d+/g).map(Number);
-	let origin = [x0, y0, z0];
+	let [x, y, z, xd, yd, zd] = line.match(/-?\d+/g).map(Number);
+	let origin = [x, y, z];
 	let direction = [xd, yd, zd];
-	let time = timeToZ(origin, direction);
-	let dest = cast(origin, direction, time);
 
-	rays.add([origin, direction, dest, time]);
+	hail.push([origin, direction]);
 }
 
-log(rays.pop());
-log(rays.pop());
+let min = Math.min(...hail.flatMap(([origin]) => origin));
+let max = Math.max(...hail.flatMap(([origin]) => origin));
+
+for (let i = 0; i < max; i += 1) {
+	let current = hail.map(([origin, direction]) => cast(origin, direction, i));
+	let center = average(current);
+	let heap = createHeap([], (a, b) => distance(a, center) - distance(b, center));
+
+	current.forEach(heap.add);
+	log('center', center);
+	log('closest', heap.peek);
+	log('distance', distance(heap.peek, center));
+}
+
