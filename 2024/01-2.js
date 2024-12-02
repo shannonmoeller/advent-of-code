@@ -1,18 +1,19 @@
-import { log, readLines } from './utils.js';
+import { exec } from './utils.js';
 
-let lines = readLines('./01.txt');
+function main(lines) {
+  let as = [];
+  let bs = {};
 
-let a = [];
-let b = {};
+  for (let line of lines) {
+    let [a, b] = line.match(/\d+/g).map(Number);
 
-for await (let line of lines) {
-  let [left, right] = line.match(/\d+/g).map(Number);
+    as.push(a);
+    bs[b] ??= 0;
+    bs[b]++;
+  }
 
-  a.push(left);
-  b[right] ??= 0;
-  b[right]++;
+  return as.reduce((acc, a) => acc + a * (bs[a] ?? 0), 0);
 }
 
-let value = a.reduce((acc, x) => acc + x * (b[x] ?? 0), 0);
-
-log(value);
+exec('./01.tst', main, 31);
+exec('./01.txt', main);

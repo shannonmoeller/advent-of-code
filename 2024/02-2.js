@@ -1,10 +1,8 @@
-import { log, readLines } from './utils.js';
+import { exec } from './utils.js';
 
-let lines = readLines('./02.txt');
-let value = 0;
+function test(nodes) {
+  let edgeCount = nodes.length - 1;
 
-function test(report) {
-  let edgeCount = report.length - 1;
   let edges = [];
   let ascEdges = [];
   let descEdges = [];
@@ -12,11 +10,10 @@ function test(report) {
 
   for (let i = 0; i < edgeCount; i++) {
     let j = i + 1;
-    let a = report[i];
-    let b = report[j];
-    let diff = a - b;
+    let edge = { i, j };
+
+    let diff = nodes[i] - nodes[j];
     let abs = Math.abs(diff);
-    let edge = { i, j, a, b, diff };
 
     edges.push(edge);
 
@@ -28,28 +25,36 @@ function test(report) {
   if (!farEdges.length) {
     if (ascEdges.length === edgeCount) return true;
     if (descEdges.length === edgeCount) return true;
+
+    if (ascEdges.length === 1) return ascEdges[0];
+    if (descEdges.length === 1) return descEdges[0];
   }
 
-  if (ascEdges.length === 1) return ascEdges[0];
-  if (descEdges.length === 1) return descEdges[0];
   if (farEdges.length === 1) return farEdges[0];
 
   return false;
 }
 
-for await (let line of lines) {
-  let report = line.match(/\d+/g).map(Number);
-  let result = test(report);
+function main(lines) {
+  let value = 0;
 
-  if (result === false) continue;
+  for (let line of lines) {
+    let report = line.match(/\d+/g).map(Number);
+    let result = test(report);
 
-  if (
-    result === true ||
-    test(report.toSpliced(result.i, 1)) === true ||
-    test(report.toSpliced(result.j, 1)) === true
-  ) {
-    value++;
+    if (result === false) continue;
+
+    if (
+      result === true ||
+      test(report.toSpliced(result.i, 1)) === true ||
+      test(report.toSpliced(result.j, 1)) === true
+    ) {
+      value++;
+    }
   }
+
+  return value;
 }
 
-log(value);
+exec('./02.tst', main, 4);
+exec('./02.txt', main);
