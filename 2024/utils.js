@@ -2,13 +2,11 @@ import { readFileSync } from 'node:fs';
 import { styleText } from 'node:util';
 
 export function exec(path, fn, expected) {
-  console.log('');
-  console.time('     time');
+  console.time('\n     time');
 
   let actual = fn(readLines(path));
 
-  console.log('');
-  console.timeEnd('     time');
+  console.timeEnd('\n     time');
   console.log('   actual:', actual);
 
   if (expected) {
@@ -16,6 +14,8 @@ export function exec(path, fn, expected) {
 
     console.log(' expected:', expected, passFail);
   }
+
+  console.log();
 }
 
 export function readLines(path) {
@@ -53,9 +53,9 @@ export function splitMap(map) {
 }
 
 export function logMap(map, fn) {
-  log('');
+  log();
   log(joinMap(map, fn));
-  log('');
+  log();
 
   return map;
 }
@@ -63,11 +63,11 @@ export function logMap(map, fn) {
 export function logMaps(maps) {
   let height = maps[0].length;
 
-  log('');
+  log();
   for (let y = 0; y < height; y++) {
     log(maps.map((map) => map[y].join('')).join(' '));
   }
-  log('');
+  log();
 
   return maps;
 }
