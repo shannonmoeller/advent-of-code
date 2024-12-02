@@ -25,11 +25,10 @@ function test(nodes) {
   if (!farEdges.length) {
     if (ascEdges.length === edgeCount) return true;
     if (descEdges.length === edgeCount) return true;
-
-    if (ascEdges.length === 1) return ascEdges[0];
-    if (descEdges.length === 1) return descEdges[0];
   }
 
+  if (ascEdges.length === 1) return ascEdges[0];
+  if (descEdges.length === 1) return descEdges[0];
   if (farEdges.length === 1) return farEdges[0];
 
   return false;
