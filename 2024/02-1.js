@@ -1,6 +1,6 @@
-import { log, readLines } from "./utils.js";
+import { log, readLines } from './utils.js';
 
-let lines = readLines("./02.txt");
+let lines = readLines('./02.txt');
 let value = 0;
 
 nextLine: for await (let line of lines) {

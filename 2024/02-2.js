@@ -1,6 +1,6 @@
-import { log, readLines } from "./utils.js";
+import { log, readLines } from './utils.js';
 
-let lines = readLines("./02.txt");
+let lines = readLines('./02.txt');
 let value = 0;
 
 function test(report) {
@@ -41,23 +41,14 @@ for await (let line of lines) {
   let report = line.match(/\d+/g).map(Number);
   let result = test(report);
 
-  if (result === false) {
-    continue;
-  }
+  if (result === false) continue;
 
-  if (result === true) {
+  if (
+    result === true ||
+    test(report.toSpliced(result.i, 1)) === true ||
+    test(report.toSpliced(result.j, 1)) === true
+  ) {
     value++;
-    continue;
-  }
-
-  if (test(report.toSpliced(result.i, 1)) === true) {
-    value++;
-    continue;
-  }
-
-  if (test(report.toSpliced(result.j, 1)) === true) {
-    value++;
-    continue;
   }
 }
 
