@@ -20,7 +20,7 @@ export function exec(path, fn, expected) {
 }
 
 export function readLines(path) {
-  let fullPath = resolve('../../inputs/2024', path);
+  let fullPath = resolve('../inputs/2024', path);
 
   return readFileSync(fullPath, 'utf8').trim().split('\n');
 }
