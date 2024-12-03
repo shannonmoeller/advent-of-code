@@ -22,5 +22,5 @@ function main(lines) {
   return value;
 }
 
-exec('./02.tst', main, 2);
-exec('./02.txt', main);
+exec('./02-a.txt', main, 2);
+exec('./02-1.txt', main);

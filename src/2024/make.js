@@ -15,9 +15,9 @@ function main(lines) {
   return value;
 }
 
-exec('./${stem}.tst', main, 0);
-// exec('./${stem}.txt', main);`;
+exec('./${stem}-a.txt', main, 0);
+// exec('./${stem}-1.txt', main);`;
 
 writeFileSync(`${stem}-1.js`, js);
-writeFileSync(`../../inputs/2024/${stem}.tst`, '');
-writeFileSync(`../../inputs/2024/${stem}.txt`, '');
+writeFileSync(`../../inputs/2024/${stem}-a.txt`, '');
+writeFileSync(`../../inputs/2024/${stem}-1.txt`, '');

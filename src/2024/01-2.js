@@ -15,5 +15,5 @@ function main(lines) {
   return as.reduce((acc, a) => acc + a * (bs[a] ?? 0), 0);
 }
 
-exec('./01.tst', main, 31);
-exec('./01.txt', main);
+exec('./01-a.txt', main, 31);
+exec('./01-1.txt', main);

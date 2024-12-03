@@ -10,5 +10,6 @@ function main(lines) {
   return value;
 }
 
-exec('./04.tst', main, 0);
-// exec('./04.txt', main);
+exec('./04-a.txt', main, 0);
+// exec('./04-1.txt', main);
+
