@@ -6,24 +6,27 @@ import { styleText } from 'node:util';
  * # Logging
  */
 
+['bold', 'green', 'red', 'yellow'].forEach((color) => {
+  Object.defineProperty(String.prototype, color, {
+    get() {
+      return styleText(color, this);
+    },
+  });
+});
+
 export function log(...args) {
   console.log(...args);
 
   return args.at(-1);
 }
 
-export function time(label) {
-  console.time(label);
-
-  return () => console.timeEnd(label);
-}
-
-export function green(value) {
-  return styleText('green', value);
-}
-
-export function red(value) {
-  return styleText('red', value);
+export function time(label, fn) {
+  try {
+    console.time(label);
+    return fn();
+  } finally {
+    console.timeEnd(label);
+  }
 }
 
 /**
@@ -38,18 +41,10 @@ export function readLines(path) {
 
 export function exec(path, fn, expected) {
   let lines = readLines(path);
-  let stop = time('\n     time');
-  let actual = fn(lines);
+  let actual = time('\n     time', () => fn(lines));
 
-  stop();
   log('   actual:', actual);
-
-  if (expected) {
-    const passFail = actual === expected ? green('PASS') : red('FAIL');
-
-    log(' expected:', expected, passFail);
-  }
-
+  if (expected) log(' expected:', expected, actual === expected ? 'PASS'.green : 'FAIL'.red);
   log();
 }
 

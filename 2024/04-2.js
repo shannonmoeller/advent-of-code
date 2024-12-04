@@ -2,8 +2,7 @@ import { exec } from './utils.js';
 
 function main(lines) {
   let value = 0;
-
-  let pattern = {
+  let valid = {
     M: { S: true },
     S: { M: true },
   };
@@ -12,8 +11,8 @@ function main(lines) {
     for (let x = 1; x < lines[0].length - 1; x++) {
       if (
         lines[y][x] === 'A' &&
-        pattern[lines[y - 1][x - 1]]?.[lines[y + 1][x + 1]] &&
-        pattern[lines[y - 1][x + 1]]?.[lines[y + 1][x - 1]]
+        valid[lines[y - 1][x - 1]]?.[lines[y + 1][x + 1]] &&
+        valid[lines[y - 1][x + 1]]?.[lines[y + 1][x - 1]]
       ) {
         value++;
       }
