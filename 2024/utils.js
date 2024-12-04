@@ -2,24 +2,33 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { styleText } from 'node:util';
 
-export function exec(path, fn, expected) {
-  let lines = readLines(path);
+/**
+ * # Logging
+ */
 
-  console.time('\n     time');
+export function log(...args) {
+  console.log(...args);
 
-  let actual = fn(lines);
-
-  console.timeEnd('\n     time');
-  console.log('   actual:', actual);
-
-  if (expected) {
-    const passFail = actual === expected ? styleText('green', 'PASS') : styleText('red', 'FAIL');
-
-    console.log(' expected:', expected, passFail);
-  }
-
-  console.log();
+  return args.at(-1);
 }
+
+export function time(label) {
+  console.time(label);
+
+  return () => console.timeEnd(label);
+}
+
+export function green(value) {
+  return styleText('green', value);
+}
+
+export function red(value) {
+  return styleText('red', value);
+}
+
+/**
+ * # Execution
+ */
 
 export function readLines(path) {
   let fullPath = resolve('../inputs/2024', path);
@@ -27,11 +36,26 @@ export function readLines(path) {
   return readFileSync(fullPath, 'utf8').trim().split('\n');
 }
 
-export function log(...args) {
-  console.log(...args);
+export function exec(path, fn, expected) {
+  let lines = readLines(path);
+  let stop = time('\n     time');
+  let actual = fn(lines);
 
-  return args.at(-1);
+  stop();
+  log('   actual:', actual);
+
+  if (expected) {
+    const passFail = actual === expected ? green('PASS') : red('FAIL');
+
+    log(' expected:', expected, passFail);
+  }
+
+  log();
 }
+
+/**
+ * # Math
+ */
 
 export function gcd(a, b) {
   return a ? gcd(b % a, a) : b;
@@ -41,21 +65,9 @@ export function lcm(a, b) {
   return (a * b) / gcd(a, b);
 }
 
-export function joinMap(map, fn = (x) => x) {
-  if (typeof map[0] !== 'string') {
-    map = map.map((row) => row.map(fn).join(''));
-  }
-
-  return map.join('\n');
-}
-
-export function splitMap(map) {
-  if (typeof map === 'string') {
-    map = map.split('\n');
-  }
-
-  return map.map((row) => row.split(''));
-}
+/**
+ * # 2D grids
+ */
 
 export function logMap(map, fn) {
   log();
@@ -75,6 +87,54 @@ export function logMaps(maps) {
   log();
 
   return maps;
+}
+
+export function joinMap(map, fn = (x) => x) {
+  if (typeof map[0] !== 'string') {
+    map = map.map((row) => row.map(fn).join(''));
+  }
+
+  return map.join('\n');
+}
+
+export function splitMap(map) {
+  if (typeof map === 'string') {
+    map = map.split('\n');
+  }
+
+  return map.map((row) => row.split(''));
+}
+
+/**
+ * # Algos
+ */
+
+export function bfs(root, fn) {
+  let queue = [{ node: root, depth: 0 }];
+
+  while (queue.length) {
+    let { node, depth } = queue.shift();
+
+    if (fn(node, depth)) return { node, depth };
+
+    for (let child of node.children ?? []) {
+      queue.push({ node: child, depth: depth + 1 });
+    }
+  }
+}
+
+export function dfs(root, fn) {
+  let stack = [{ node: root, depth: 0 }];
+
+  while (stack.length) {
+    let { node, depth } = stack.pop();
+
+    if (fn(node, depth)) return { node, depth };
+
+    for (let i = node.children?.length ?? 0; i--; ) {
+      stack.push({ node: node.children[i], depth: depth + 1 });
+    }
+  }
 }
 
 export function createHeap(heap = [], compare = (a, b) => b - a) {
@@ -167,6 +227,27 @@ export function createQueue(queue = []) {
 
     *[Symbol.iterator]() {
       while (queue.length) {
+        yield pop();
+      }
+    },
+  };
+}
+
+export function createStack(stack = []) {
+  function add(item) {
+    stack.push(item);
+  }
+
+  function pop() {
+    return stack.pop();
+  }
+
+  return {
+    add,
+    pop,
+
+    *[Symbol.iterator]() {
+      while (stack.length) {
         yield pop();
       }
     },
