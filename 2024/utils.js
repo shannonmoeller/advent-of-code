@@ -3,10 +3,12 @@ import { resolve } from 'node:path';
 import { styleText } from 'node:util';
 
 export function exec(path, fn, expected) {
+  let lines = readLines(path);
+  
   console.time('\n     time');
-
-  let actual = fn(readLines(path));
-
+  
+  let actual = fn(lines);
+  
   console.timeEnd('\n     time');
   console.log('   actual:', actual);
 
