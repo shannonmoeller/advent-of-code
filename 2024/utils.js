@@ -44,7 +44,9 @@ export function exec(path, fn, expected) {
   let actual = time('\n     time', () => fn(lines));
 
   log('   actual:', actual);
-  if (expected) log(' expected:', expected, actual === expected ? 'PASS'.green : 'FAIL'.red);
+  if (expected != null) {
+    log(' expected:', expected, (actual.value ?? actual) === expected ? 'PASS'.green : 'FAIL'.red);
+  }
   log();
 }
 
@@ -126,8 +128,8 @@ export function dfs(root, fn) {
 
     if (fn(node, depth)) return { node, depth };
 
-    for (let i = node.children?.length ?? 0; i--; ) {
-      stack.push({ node: node.children[i], depth: depth + 1 });
+    for (let child of node.children?.toReversed() ?? []) {
+      stack.push({ node: child, depth: depth + 1 });
     }
   }
 }

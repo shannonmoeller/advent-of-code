@@ -19,5 +19,5 @@ exec('./${stem}-a.txt', main, 0);
 // exec('./${stem}-1.txt', main);`;
 
 writeFileSync(`${stem}-1.js`, js);
-writeFileSync(`../../inputs/2024/${stem}-a.txt`, '');
-writeFileSync(`../../inputs/2024/${stem}-1.txt`, '');
+writeFileSync(`../inputs/2024/${stem}-a.txt`, '');
+writeFileSync(`../inputs/2024/${stem}-1.txt`, '');
