@@ -6,16 +6,16 @@ function main(lines) {
 
   nextLine: for (let line of lines) {
     if (line.includes('|')) {
-      let [left, right] = line.match(/\d+/g).map(Number);
+      let [a, b] = line.split('|').map(Number);
 
-      (order[left] ??= {})[right] = true;
+      (order[a] ??= {})[b] = true;
     }
 
     if (line.includes(',')) {
-      let pages = line.match(/\d+/g).map(Number);
+      let pages = line.split(',').map(Number);
 
       for (let i = pages.length; i--; ) {
-        if (pages.slice(0, i).some((x) => order[pages[i]]?.[x])) {
+        if (pages.slice(0, i).some((a) => order[pages[i]]?.[a])) {
           continue nextLine;
         }
       }
