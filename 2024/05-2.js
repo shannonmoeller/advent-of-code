@@ -2,38 +2,22 @@ import { exec } from './utils.js';
 
 function main(lines) {
   let value = 0;
-  let after = {};
-  let before = {};
+  let order = {};
 
   nextLine: for (let line of lines) {
     if (line.includes('|')) {
       const [left, right] = line.match(/\d+/g).map(Number);
 
-      after[left] ??= {};
-      after[left][right] = true;
-
-      before[right] ??= {};
-      before[right][left] = true;
+      (order[left] ??= {})[right] = true;
     }
 
     if (line.includes(',')) {
       const pages = line.match(/\d+/g).map(Number);
 
       for (let i = pages.length; i--; ) {
-        let page = pages[i];
-
-        if (
-          pages.slice(0, i).some((x) => after[page]?.[x]) ||
-          pages.slice(i + 1).some((x) => before[page]?.[x])
-        ) {
-          pages.sort((a, b) => {
-            if (after[a]?.[b] || before[b]?.[a]) return -1;
-            if (before[a]?.[b] || after[b]?.[a]) return 1;
-            return 0;
-          });
-
+        if (pages.slice(0, i).some((x) => order[pages[i]]?.[x])) {
+          pages.sort((a, b) => (order[a]?.[b] ? -1 : 1));
           value += pages[Math.floor(pages.length / 2)];
-
           continue nextLine;
         }
       }
