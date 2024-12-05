@@ -9,11 +9,11 @@ function main(lines) {
     if (line.includes('|')) {
       const [left, right] = line.match(/\d+/g).map(Number);
 
-      after[left] ??= [];
-      after[left].push(right);
+      after[left] ??= {};
+      after[left][right] = true;
 
-      before[right] ??= [];
-      before[right].push(left);
+      before[right] ??= {};
+      before[right][left] = true;
     }
 
     if (line.includes(',')) {
@@ -23,12 +23,12 @@ function main(lines) {
         let page = pages[i];
 
         if (
-          pages.slice(0, i).some((x) => after[page]?.includes(x)) ||
-          pages.slice(i + 1).some((x) => before[page]?.includes(x))
+          pages.slice(0, i).some((x) => after[page]?.[x]) ||
+          pages.slice(i + 1).some((x) => before[page]?.[x])
         ) {
           pages.sort((a, b) => {
-            if (after[a]?.includes(b) || after[b]?.includes(a)) return -1;
-            if (before[a]?.includes(b) || before[b]?.includes(a)) return 1;
+            if (after[a]?.[b] || before[b]?.[a]) return -1;
+            if (before[a]?.[b] || after[b]?.[a]) return 1;
             return 0;
           });
 
