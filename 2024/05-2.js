@@ -6,13 +6,13 @@ function main(lines) {
 
   nextLine: for (let line of lines) {
     if (line.includes('|')) {
-      const [left, right] = line.match(/\d+/g).map(Number);
+      let [left, right] = line.match(/\d+/g).map(Number);
 
       (order[left] ??= {})[right] = true;
     }
 
     if (line.includes(',')) {
-      const pages = line.match(/\d+/g).map(Number);
+      let pages = line.match(/\d+/g).map(Number);
 
       for (let i = pages.length; i--; ) {
         if (pages.slice(0, i).some((x) => order[pages[i]]?.[x])) {
