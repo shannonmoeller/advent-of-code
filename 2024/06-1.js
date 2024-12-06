@@ -5,15 +5,13 @@ function main(lines) {
 
   let index = lines.join('').indexOf('^');
   let width = lines[0].length;
-
   let xd = [0, 1, 0, -1];
   let yd = [-1, 0, 1, 0];
 
+  let map = splitMap(lines);
   let x = index % width;
   let y = Math.floor(index / width);
   let d = 0;
-
-  let map = splitMap(lines);
 
   while (map[y]?.[x]) {
     if (map[y][x] !== 'X') (map[y][x] = 'X'), value++;

@@ -5,7 +5,6 @@ function main(lines) {
 
   let index = lines.join('').indexOf('^');
   let width = lines[0].length;
-
   let xd = [0, 1, 0, -1];
   let yd = [-1, 0, 1, 0];
 
@@ -14,11 +13,10 @@ function main(lines) {
   let startD = 0;
 
   function walk(fn) {
+    let map = splitMap(lines);
     let x = startX;
     let y = startY;
     let d = startD;
-
-    let map = splitMap(lines);
 
     while (map[y]?.[x]) {
       if (fn(map, x, y, d)) return true;
