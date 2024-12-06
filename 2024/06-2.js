@@ -8,11 +8,8 @@ function main(lines) {
   let xd = [0, 1, 0, -1];
   let yd = [-1, 0, 1, 0];
 
-  function walk(fn) {
+  function walk(x, y, d, fn) {
     let map = splitMap(lines);
-    let x = index % width;
-    let y = Math.floor(index / width);
-    let d = 0;
 
     while (map[y]?.[x]) {
       if (fn(map, x, y, d)) return true;
@@ -23,20 +20,20 @@ function main(lines) {
     }
   }
 
-  function isCycle(obsX, obsY) {
+  function isCycle(ox, oy, od) {
     let visited = {};
 
-    return walk((map, x, y, d) => {
+    return walk(ox - xd[od], oy - yd[od], od, (map, x, y, d) => {
       if (visited[y]?.[x]?.[d]) return true;
 
       ((visited[y] ??= {})[x] ??= {})[d] = true;
-      map[obsY][obsX] = '#';
+      map[oy][ox] = '#';
     });
   }
 
-  walk((map, x, y) => {
+  walk(index % width, Math.floor(index / width), 0, (map, x, y, d) => {
     if ('^X'.includes(map[y][x])) return;
-    if (isCycle(x, y)) value++;
+    if (isCycle(x, y, d)) value++;
 
     map[y][x] = 'X';
   });
