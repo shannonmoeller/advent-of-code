@@ -10,13 +10,12 @@ function main(lines) {
 
   let startX = index % width;
   let startY = Math.floor(index / width);
-  let startD = 0;
 
   function walk(fn) {
     let map = splitMap(lines);
     let x = startX;
     let y = startY;
-    let d = startD;
+    let d = 0;
 
     while (map[y]?.[x]) {
       if (fn(map, x, y, d)) return true;
