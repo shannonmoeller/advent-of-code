@@ -8,13 +8,10 @@ function main(lines) {
   let xd = [0, 1, 0, -1];
   let yd = [-1, 0, 1, 0];
 
-  let startX = index % width;
-  let startY = Math.floor(index / width);
-
   function walk(fn) {
     let map = splitMap(lines);
-    let x = startX;
-    let y = startY;
+    let x = index % width;
+    let y = Math.floor(index / width);
     let d = 0;
 
     while (map[y]?.[x]) {
@@ -38,8 +35,7 @@ function main(lines) {
   }
 
   walk((map, x, y) => {
-    if (x === startX && y === startY) return;
-    if (map[y][x] === 'X') return;
+    if ('^X'.includes(map[y][x])) return;
     if (isCycle(x, y)) value++;
 
     map[y][x] = 'X';
