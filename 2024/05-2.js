@@ -18,7 +18,7 @@ function main(lines) {
         let right = pages[i];
 
         if (pages.slice(0, i).some((left) => order[right]?.[left])) {
-          pages.sort((left, right) => (order[left]?.[right] ? -1 : 1));
+          pages.sort((a, b) => (order[a]?.[b] ? -1 : 1));
 
           value += pages[Math.floor(pages.length / 2)];
 
