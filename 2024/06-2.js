@@ -12,7 +12,7 @@ function main(lines) {
     let map = splitMap(lines);
 
     while (map[y]?.[x]) {
-      if (fn(map, x, y, d)) return true;
+      if (fn(x, y, d, map)) return true;
       while (map[y + yd[d]]?.[x + xd[d]] === '#') d = ++d % 4;
 
       x += xd[d];
@@ -20,10 +20,10 @@ function main(lines) {
     }
   }
 
-  function isCycle(ox, oy, od) {
+  function wouldCycle(ox, oy, od) {
     let visited = {};
 
-    return walk(ox - xd[od], oy - yd[od], od, (map, x, y, d) => {
+    return walk(ox - xd[od], oy - yd[od], od, (x, y, d, map) => {
       if (visited[y]?.[x]?.[d]) return true;
 
       ((visited[y] ??= {})[x] ??= {})[d] = true;
@@ -31,9 +31,9 @@ function main(lines) {
     });
   }
 
-  walk(index % width, Math.floor(index / width), 0, (map, x, y, d) => {
+  walk(index % width, Math.floor(index / width), 0, (x, y, d, map) => {
     if ('^X'.includes(map[y][x])) return;
-    if (isCycle(x, y, d)) value++;
+    if (wouldCycle(x, y, d)) value++;
 
     map[y][x] = 'X';
   });
