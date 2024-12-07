@@ -11,8 +11,6 @@ function main(lines) {
       if (curr > expected) return false;
       if (walk(curr + next, ...rest)) return true;
       if (walk(curr * next, ...rest)) return true;
-
-      return false;
     }
 
     if (walk(...input)) value += expected;
