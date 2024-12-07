@@ -8,7 +8,7 @@ function main(lines) {
 
     function walk(curr, next, ...rest) {
       if (!next) return curr === expected;
-      if (curr >= expected) return false;
+      if (curr > expected) return false;
       if (walk(curr + next, ...rest)) return true;
       if (walk(curr * next, ...rest)) return true;
       if (walk(+('' + curr + next), ...rest)) return true;
