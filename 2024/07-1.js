@@ -4,16 +4,16 @@ function main(lines) {
   let value = 0;
 
   for (let line of lines) {
-    let [expected, ...input] = line.match(/\d+/g).map(Number);
+    let [expected, ...nums] = line.match(/\d+/g).map(Number);
 
     function walk(curr, next, ...rest) {
       if (!next) return curr === expected;
-      if (curr > expected) return false;
+      if (curr >= expected) return false;
       if (walk(curr + next, ...rest)) return true;
       if (walk(curr * next, ...rest)) return true;
     }
 
-    if (walk(...input)) value += expected;
+    if (walk(...nums)) value += expected;
   }
 
   return value;
