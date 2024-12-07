@@ -11,7 +11,7 @@ function main(lines) {
       if (curr > expected) return false;
       if (walk(curr + next, ...rest)) return true;
       if (walk(curr * next, ...rest)) return true;
-      if (walk(Number(String(curr) + String(next)), ...rest)) return true;
+      if (walk(+('' + curr + next), ...rest)) return true;
 
       return false;
     }
