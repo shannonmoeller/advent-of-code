@@ -19,13 +19,14 @@ function main(lines) {
       for (let [ax, ay] of nodes[node]) {
         let xd = x - ax;
         let yd = y - ay;
+
+        antis[[ax, ay]] = true;
+        while (addAnti((ax -= xd), (ay -= yd))) {}
+
         let bx = x;
         let by = y;
 
-        antis[[ax, ay]] = true;
         antis[[bx, by]] = true;
-
-        while (addAnti((ax -= xd), (ay -= yd))) {}
         while (addAnti((bx += xd), (by += yd))) {}
       }
 
