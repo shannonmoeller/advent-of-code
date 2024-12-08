@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { styleText } from 'node:util';
+import { inspect, styleText } from 'node:util';
 
 /**
  * # Logging
@@ -15,7 +15,9 @@ import { styleText } from 'node:util';
 });
 
 export function log(...args) {
-  console.log(...args);
+  console.log(
+    ...args.map((x) => (x !== Object(x) ? x : inspect(x, { colors: true, depth: Infinity }))),
+  );
 
   return args.at(-1);
 }
