@@ -1,39 +1,34 @@
 import { exec } from './utils.js';
 
 function main(lines) {
-  let height = lines.length;
-  let width = lines[0].length;
   let nodes = {};
-  let antinodes = {};
+  let antis = {};
 
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
+  function addAnti(x, y) {
+    if (lines[y]?.[x]) antis[[x, y]] = true;
+  }
+
+  for (let y = 0; y < lines.length; y++) {
+    for (let x = 0; x < lines[0].length; x++) {
       let node = lines[y][x];
 
       if (node === '.') continue;
 
       nodes[node] ??= [];
 
-      for (let [px, py] of nodes[node]) {
-        let xd = x - px;
-        let yd = y - py;
+      for (let [ax, ay] of nodes[node]) {
+        let xd = x - ax;
+        let yd = y - ay;
 
-        let ax = px - xd;
-        let ay = py - yd;
-
-        if (lines[ay]?.[ax]) antinodes[[ax, ay]] = true;
-
-        let bx = x + xd;
-        let by = y + yd;
-
-        if (lines[by]?.[bx]) antinodes[[bx, by]] = true;
+        addAnti(ax - xd, ay - yd);
+        addAnti(x + xd, y + yd);
       }
 
       nodes[node].push([x, y]);
     }
   }
 
-  return Object.keys(antinodes).length;
+  return Object.keys(antis).length;
 }
 
 exec('./08-a.txt', main, 14);

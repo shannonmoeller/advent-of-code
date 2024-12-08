@@ -1,50 +1,39 @@
 import { exec } from './utils.js';
 
 function main(lines) {
-  let height = lines.length;
-  let width = lines[0].length;
   let nodes = {};
-  let antinodes = {};
+  let antis = {};
 
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
+  function addAnti(x, y) {
+    if (lines[y]?.[x]) return (antis[[x, y]] = true);
+  }
+
+  for (let y = 0; y < lines.length; y++) {
+    for (let x = 0; x < lines[0].length; x++) {
       let node = lines[y][x];
 
       if (node === '.') continue;
 
       nodes[node] ??= [];
 
-      for (let [px, py] of nodes[node]) {
-        let xd = x - px;
-        let yd = y - py;
+      for (let [ax, ay] of nodes[node]) {
+        let xd = x - ax;
+        let yd = y - ay;
+        let bx = x;
+        let by = y;
 
-        let ax = px - xd;
-        let ay = py - yd;
+        antis[[ax, ay]] = true;
+        antis[[bx, by]] = true;
 
-        while (lines[ay]?.[ax]) {
-          antinodes[[ax, ay]] = true;
-          ax -= xd;
-          ay -= yd;
-        }
-
-        let bx = x + xd;
-        let by = y + yd;
-
-        while (lines[by]?.[bx]) {
-          antinodes[[bx, by]] = true;
-          bx += xd;
-          by += yd;
-        }
-
-        antinodes[[px, py]] = true;
-        antinodes[[x, y]] = true;
+        while (addAnti((ax -= xd), (ay -= yd))) {}
+        while (addAnti((bx += xd), (by += yd))) {}
       }
 
       nodes[node].push([x, y]);
     }
   }
 
-  return Object.keys(antinodes).length;
+  return Object.keys(antis).length;
 }
 
 exec('./08-a.txt', main, 34);
