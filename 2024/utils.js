@@ -25,8 +25,8 @@ export function log(...args) {
 export function measure(fn) {
   if ('gc' in global) gc();
 
-  let startMemory = process.memoryUsage().heapUsed;
   let timeLabel = '\n     time';
+  let startMemory = process.memoryUsage().heapUsed;
 
   try {
     console.time(timeLabel);
@@ -38,7 +38,7 @@ export function measure(fn) {
       let endMemory = process.memoryUsage().heapUsed;
       let used = (endMemory - startMemory) / 1024;
 
-      console.log(`   memory: ${Math.round(used * 100) / 100} KB`);
+      log('   memory:', Math.round(used * 100) / 100, 'KB');
     }
   }
 }
