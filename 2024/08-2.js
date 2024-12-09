@@ -5,7 +5,7 @@ function main(lines) {
   let antis = {};
 
   function addAnti(x, y) {
-    if (lines[y]?.[x]) return (antis[[x, y]] = true);
+    if (lines[y]?.[x]) return (antis[x + ',' + y] = true);
   }
 
   for (let y = 0; y < lines.length; y++) {
@@ -20,13 +20,13 @@ function main(lines) {
         let xd = x - ax;
         let yd = y - ay;
 
-        antis[[ax, ay]] = true;
+        antis[ax + ',' + ay] = true;
         while (addAnti((ax -= xd), (ay -= yd))) {}
 
         let bx = x;
         let by = y;
 
-        antis[[bx, by]] = true;
+        antis[bx + ',' + by] = true;
         while (addAnti((bx += xd), (by += yd))) {}
       }
 
