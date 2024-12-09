@@ -4,34 +4,28 @@ function main([fs]) {
   let value = 0;
 
   let left = 0;
-  let right = (fs.length - 1) / 2;
+  let right = fs.length;
 
-  let shiftFile = (function* () {
-    for (; left < right; left++) {
-      for (let i = +fs[left * 2]; i--; ) {
-        yield left;
-      }
-    }
-  })();
-
-  let popFile = (function* () {
+  let rightBlock = (function* () {
     for (; left < right; right--) {
-      for (let i = +fs[right * 2]; i--; ) {
-        yield right;
+      if (right % 2) continue;
+      for (let i = +fs[right]; i--; ) {
+        yield right / 2;
       }
     }
   })();
 
-  for (let i = 0, id = 0; left < right; i++) {
-    for (let j = +fs[i]; j--; id++) {
-      let next =
-        (i % 2 ? popFile : shiftFile).next().value ??
-        shiftFile.next().value ??
-        popFile.next().value;
+  let leftBlock = (function* () {
+    for (; left < right; left++) {
+      for (let i = +fs[left]; i--; ) {
+        yield left % 2 ? rightBlock.next().value : left / 2;
+      }
+    }
+  })();
 
-      if (next == null) break;
-
-      value += id * next;
+  for (let blockId = 0, i = 0; left < right; i++) {
+    for (let j = +fs[i]; j--; blockId++) {
+      value += blockId * (leftBlock.next().value ?? rightBlock.next().value ?? 0);
     }
   }
 
