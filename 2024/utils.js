@@ -25,7 +25,7 @@ export function log(...args) {
 export function measure(fn) {
   if ('gc' in global) gc();
 
-  let timeLabel = '\n     time';
+  let timeLabel = '     time';
   let startMemory = process.memoryUsage().heapUsed;
 
   try {
@@ -54,6 +54,8 @@ export function readLines(path) {
 }
 
 export function exec(path, fn, expected) {
+  log('\n     file:', path);
+
   let lines = readLines(path);
   let actual = measure(() => fn(lines));
 
