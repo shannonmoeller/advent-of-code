@@ -22,12 +22,24 @@ export function log(...args) {
   return args.at(-1);
 }
 
-export function time(label, fn) {
+export function measure(fn) {
+  if ('gc' in global) gc();
+
+  let startMemory = process.memoryUsage().heapUsed;
+  let timeLabel = '\n     time';
+
   try {
-    console.time(label);
+    console.time(timeLabel);
     return fn();
   } finally {
-    console.timeEnd(label);
+    console.timeEnd(timeLabel);
+
+    if ('gc' in global) {
+      let endMemory = process.memoryUsage().heapUsed;
+      let used = (endMemory - startMemory) / 1024;
+
+      console.log(`   memory: ${Math.round(used * 100) / 100} KB`);
+    }
   }
 }
 
@@ -43,7 +55,7 @@ export function readLines(path) {
 
 export function exec(path, fn, expected) {
   let lines = readLines(path);
-  let actual = time('\n     time', () => fn(lines));
+  let actual = measure(() => fn(lines));
 
   log('   actual:', actual);
   if (expected != null) {
