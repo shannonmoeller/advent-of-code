@@ -11,7 +11,9 @@ function main([line]) {
 
     if (left % 2) {
       while (leftSize > 0) {
-        let right = fs.findLastIndex((x, i) => !(i % 2) && !visited.has(i) && x && x <= leftSize);
+        let right = fs.findLastIndex(
+          (x, i) => !(i % 2) && i > left && !visited.has(i) && x && x <= leftSize,
+        );
 
         if (right === -1) {
           blockId += leftSize;
@@ -38,4 +40,5 @@ function main([line]) {
 }
 
 exec('./09-a.txt', main, 2858);
+exec('./09-b.txt', main, 12);
 exec('./09-1.txt', main);

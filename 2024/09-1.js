@@ -33,4 +33,5 @@ function main([fs]) {
 }
 
 exec('./09-a.txt', main, 1928);
+exec('./09-a.txt', main, 1928);
 exec('./09-1.txt', main);
