@@ -11,25 +11,22 @@ function main(lines) {
     let y = (trailhead.index / width) | 0;
     let summits = {};
 
-    function walk(x, y, prev) {
+    function walk(x, y, e) {
       let node = +lines[y]?.[x];
 
-      if (node !== prev + 1) return;
+      if (node !== e) return;
       if (node === 9) {
         if (!summits[y]?.[x]) value++;
         (summits[y] ??= {})[x] = true;
       }
 
-      walk(x + 1, y, node);
-      walk(x - 1, y, node);
-      walk(x, y + 1, node);
-      walk(x, y - 1, node);
+      walk(x + 1, y, e + 1);
+      walk(x - 1, y, e + 1);
+      walk(x, y + 1, e + 1);
+      walk(x, y - 1, e + 1);
     }
 
-    walk(x + 1, y, 0);
-    walk(x - 1, y, 0);
-    walk(x, y + 1, 0);
-    walk(x, y - 1, 0);
+    walk(x, y, 0);
   }
 
   return value;
