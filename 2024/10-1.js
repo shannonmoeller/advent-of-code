@@ -1,4 +1,4 @@
-import { exec } from './utils.js';
+import { ROOK, exec } from './utils.js';
 
 function main(lines) {
   let value = 0;
@@ -20,10 +20,7 @@ function main(lines) {
         (summits[y] ??= {})[x] = true;
       }
 
-      walk(x + 1, y, e + 1);
-      walk(x - 1, y, e + 1);
-      walk(x, y + 1, e + 1);
-      walk(x, y - 1, e + 1);
+      for (let [xd, yd] of ROOK) walk(x + xd, y + yd, e + 1);
     }
 
     walk(x, y, 0);

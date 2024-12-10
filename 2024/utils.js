@@ -2,6 +2,27 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { inspect, styleText } from 'node:util';
 
+// prettier-ignore
+export const QUEEN = [
+  [-1, -1], [0, -1], [1, -1],
+  [-1,  0],          [1,  0],
+  [-1,  1], [0,  1], [1,  1],
+];
+
+// prettier-ignore
+export const ROOK = [
+            [0, -1],
+  [-1,  0],          [1,  0],
+            [0,  1],
+];
+
+// prettier-ignore
+export const BISHOP = [
+  [-1, -1],          [1, -1],
+
+  [-1,  1],          [1,  1],
+];
+
 /**
  * # Logging
  */
