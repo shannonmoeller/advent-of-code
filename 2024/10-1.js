@@ -1,4 +1,4 @@
-import { exec, splitMap } from './utils.js';
+import { exec } from './utils.js';
 
 function main(lines) {
   let value = 0;
@@ -14,7 +14,6 @@ function main(lines) {
     function walk(x, y, prev) {
       let node = +lines[y]?.[x];
 
-      if (node == null) return;
       if (node !== prev + 1) return;
       if (node === 9) {
         if (!summits[y]?.[x]) value++;
