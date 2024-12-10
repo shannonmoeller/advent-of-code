@@ -29,5 +29,5 @@ function main(lines) {
   return value;
 }
 
-exec('./05-a.txt', main, 143);
-exec('./05-1.txt', main);
+exec(main, './05-a.txt', 143);
+exec(main, './05-1.txt');

@@ -39,6 +39,6 @@ function main([line]) {
   return value;
 }
 
-exec('./09-a.txt', main, 2858);
-exec('./09-b.txt', main, 12);
-exec('./09-1.txt', main);
+exec(main, './09-a.txt', 2858);
+exec(main, './09-b.txt', 12);
+exec(main, './09-1.txt');

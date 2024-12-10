@@ -29,7 +29,7 @@ function main(lines) {
   return value;
 }
 
-exec('./10-a.txt', main, 2);
-exec('./10-b.txt', main, 4);
-exec('./10-c.txt', main, 36);
-exec('./10-1.txt', main);
+exec(main, './10-a.txt', 2);
+exec(main, './10-b.txt', 4);
+exec(main, './10-c.txt', 36);
+exec(main, './10-1.txt');

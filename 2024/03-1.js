@@ -12,5 +12,5 @@ function main(lines) {
   return value;
 }
 
-exec('./03-a.txt', main, 161);
-exec('./03-1.txt', main);
+exec(main, './03-a.txt', 161);
+exec(main, './03-1.txt');

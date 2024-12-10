@@ -17,5 +17,5 @@ function main(lines) {
   return as.reduce((acc, a, i) => acc + Math.abs(a - bs[i]), 0);
 }
 
-exec('./01-a.txt', main, 11);
-exec('./01-1.txt', main);
+exec(main, './01-a.txt', 11);
+exec(main, './01-1.txt');

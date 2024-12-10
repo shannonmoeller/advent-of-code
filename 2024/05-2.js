@@ -31,5 +31,5 @@ function main(lines) {
   return value;
 }
 
-exec('./05-a.txt', main, 123);
-exec('./05-1.txt', main);
+exec(main, './05-a.txt', 123);
+exec(main, './05-1.txt');

@@ -2,27 +2,6 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { inspect, styleText } from 'node:util';
 
-// prettier-ignore
-export const QUEEN = [
-  [-1, -1], [0, -1], [1, -1],
-  [-1,  0],          [1,  0],
-  [-1,  1], [0,  1], [1,  1],
-];
-
-// prettier-ignore
-export const ROOK = [
-            [0, -1],
-  [-1,  0],          [1,  0],
-            [0,  1],
-];
-
-// prettier-ignore
-export const BISHOP = [
-  [-1, -1],          [1, -1],
-
-  [-1,  1],          [1,  1],
-];
-
 /**
  * # Logging
  */
@@ -43,30 +22,21 @@ export function log(...args) {
   return args.at(-1);
 }
 
-export function measure(fn) {
-  if ('gc' in global) gc();
-
-  let timeLabel = '     time';
-  let startMemory = process.memoryUsage().heapUsed;
-
-  try {
-    console.time(timeLabel);
-    return fn();
-  } finally {
-    console.timeEnd(timeLabel);
-
-    if ('gc' in global) {
-      let endMemory = process.memoryUsage().heapUsed;
-      let used = (endMemory - startMemory) / 1024;
-
-      log('   memory:', Math.round(used * 100) / 100, 'KB');
-    }
-  }
-}
-
 /**
  * # Execution
  */
+
+export function exec(fn, path, expected) {
+  let lines = readLines(path);
+  log('\n     file:', path, lines[0].slice(0, 8));
+
+  let actual = time(() => fn(lines));
+  log('   actual:', actual);
+
+  if (expected != null) {
+    log(' expected:', expected, (actual.value ?? actual) === expected ? 'PASS'.green : 'FAIL'.red);
+  }
+}
 
 export function readLines(path) {
   let fullPath = resolve('../inputs/2024', path);
@@ -74,17 +44,15 @@ export function readLines(path) {
   return readFileSync(fullPath, 'utf8').trim().split('\n');
 }
 
-export function exec(path, fn, expected) {
-  log('\n     file:', path);
+export function time(fn) {
+  let timeLabel = '     time';
 
-  let lines = readLines(path);
-  let actual = measure(() => fn(lines));
-
-  log('   actual:', actual);
-  if (expected != null) {
-    log(' expected:', expected, (actual.value ?? actual) === expected ? 'PASS'.green : 'FAIL'.red);
+  try {
+    console.time(timeLabel);
+    return fn();
+  } finally {
+    console.timeEnd(timeLabel);
   }
-  log();
 }
 
 /**
@@ -102,6 +70,33 @@ export function lcm(a, b) {
 /**
  * # 2D grids
  */
+
+// prettier-ignore
+export const CLOCK = [
+  [0, -1], [ 1, 0],
+  [0,  1], [-1, 0],
+];
+
+// prettier-ignore
+export const QUEEN = [
+  [-1, -1], [0, -1], [1, -1],
+  [-1,  0],          [1,  0],
+  [-1,  1], [0,  1], [1,  1],
+];
+
+// prettier-ignore
+export const ROOK = [
+            [0, -1],
+  [-1,  0],          [1,  0],
+            [0,  1],
+];
+
+// prettier-ignore
+export const BISHOP = [
+  [-1, -1],          [1, -1],
+
+  [-1,  1],          [1,  1],
+];
 
 export function logMap(map, fn) {
   log();

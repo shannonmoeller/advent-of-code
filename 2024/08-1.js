@@ -31,7 +31,7 @@ function main(lines) {
   return Object.keys(antis).length;
 }
 
-exec('./08-a.txt', main, 14);
-exec('./08-b.txt', main, 2);
-exec('./08-c.txt', main, 4);
-exec('./08-1.txt', main);
+exec(main, './08-a.txt', 14);
+exec(main, './08-b.txt', 2);
+exec(main, './08-c.txt', 4);
+exec(main, './08-1.txt');

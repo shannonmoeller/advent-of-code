@@ -20,5 +20,5 @@ function main(lines) {
   return value;
 }
 
-exec('./07-a.txt', main, 11387);
-exec('./07-1.txt', main);
+exec(main, './07-a.txt', 11387);
+exec(main, './07-1.txt');
