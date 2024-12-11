@@ -1,4 +1,4 @@
-import { exec, log } from './utils.js';
+import { exec } from './utils.js';
 
 // 0 1             125
 //                  |
@@ -21,7 +21,7 @@ import { exec, log } from './utils.js';
 //    512 [1, 1]
 //     72 [1, 2]
 //   2024 [1, 2]
-//
+
 // f(n, d) = f(...c, d - 1)
 // f(n, 0) = 1
 //
@@ -43,18 +43,18 @@ function main([line]) {
     return (...args) => (cache[args] ??= fn(...args));
   }
 
-  const parse = memo((num, depth) => {
+  const walk = memo((num, depth) => {
     if (!depth--) return 1;
-    if (num === '0') return parse('1', depth);
-    if (num.length % 2) return parse('' + num * 2024, depth);
-    let a = parse(num.slice(0, num.length / 2), depth);
-    let b = parse('' + +num.slice(num.length / 2), depth);
+    if (num === '0') return walk('1', depth);
+    if (num.length % 2) return walk('' + num * 2024, depth);
+    let a = walk(num.slice(0, num.length / 2), depth);
+    let b = walk('' + +num.slice(num.length / 2), depth);
     return a + b;
   });
 
   return line
     .match(/\d+/g)
-    .map((x) => parse(x, 75))
+    .map((x) => walk(x, 75))
     .reduce((a, b) => a + b);
 }
 
