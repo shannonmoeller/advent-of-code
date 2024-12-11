@@ -138,6 +138,10 @@ export function splitMap(map) {
  * # Algos
  */
 
+export function memo(fn, cache = {}) {
+  return (...args) => (cache[JSON.stringify(args)] ??= fn(...args));
+}
+
 export function bfs(root, fn) {
   let queue = [{ node: root, depth: 0 }];
 

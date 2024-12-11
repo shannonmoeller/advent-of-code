@@ -1,4 +1,4 @@
-import { exec } from './utils.js';
+import { exec, memo } from './utils.js';
 
 // 0 1             125
 //                  |
@@ -38,27 +38,27 @@ import { exec } from './utils.js';
 //           = f(1036228, 0) + f(7, 0) + f(2, 0) + f(20, 0) + f(24, 0);
 //           = 1             + 1       + 1       + 1        + 1
 
-function main([line]) {
-  function memo(fn, cache = {}) {
-    return (...args) => (cache[args] ??= fn(...args));
-  }
+function main(blinks) {
+  return ([line]) => {
+    const walk = memo((num, i) => {
+      if (!i--) return 1;
+      if (num === '0') return walk('1', i);
+      if (num.length % 2) return walk('' + num * 2024, i);
+      let a = walk(num.slice(0, num.length / 2), i);
+      let b = walk('' + +num.slice(num.length / 2), i);
+      return a + b;
+    });
 
-  const walk = memo((num, depth) => {
-    if (!depth--) return 1;
-    if (num === '0') return walk('1', depth);
-    if (num.length % 2) return walk('' + num * 2024, depth);
-    let a = walk(num.slice(0, num.length / 2), depth);
-    let b = walk('' + +num.slice(num.length / 2), depth);
-    return a + b;
-  });
-
-  return line
-    .match(/\d+/g)
-    .map((x) => walk(x, 75))
-    .reduce((a, b) => a + b);
+    return line
+      .match(/\d+/g)
+      .map((x) => walk(x, blinks))
+      .reduce((a, b) => a + b);
+  };
 }
 
-exec(main, './11-a.txt');
-exec(main, './11-b.txt');
-exec(main, './11-c.txt');
-exec(main, './11-1.txt');
+exec(main(5), './11-a.txt', 5);
+exec(main(25), './11-a.txt', 19025);
+exec(main(25), './11-b.txt', 36287);
+exec(main(25), './11-c.txt', 55312);
+exec(main(25), './11-1.txt');
+exec(main(75), './11-1.txt');
