@@ -72,30 +72,27 @@ export function lcm(a, b) {
  */
 
 // prettier-ignore
-export const CLOCK = [
-  [0, -1], [ 1, 0],
-  [0,  1], [-1, 0],
-];
-
-// prettier-ignore
 export const QUEEN = [
-  [-1, -1], [0, -1], [1, -1],
-  [-1,  0],          [1,  0],
-  [-1,  1], [0,  1], [1,  1],
+  [ 0, -1], [ 1, -1],
+  [ 1,  0], [ 1,  1],
+  [ 0,  1], [-1,  1],
+  [-1,  0], [-1, -1],
 ];
 
 // prettier-ignore
 export const ROOK = [
-            [0, -1],
-  [-1,  0],          [1,  0],
-            [0,  1],
+  [ 0, -1],
+  [ 1,  0],
+  [ 0,  1],
+  [-1,  0],
 ];
 
 // prettier-ignore
 export const BISHOP = [
-  [-1, -1],          [1, -1],
-
-  [-1,  1],          [1,  1],
+            [ 1, -1],
+            [ 1,  1],
+            [-1,  1],
+            [-1, -1],
 ];
 
 export function logMap(map, fn) {

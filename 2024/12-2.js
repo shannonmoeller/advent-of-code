@@ -1,12 +1,4 @@
-import { ROOK, exec, log, splitMap } from './utils.js';
-
-function countContiguous(set) {
-  return Array.from(set)
-    .sort((a, b) => a - b)
-    .reduce((acc, x, i, l) => {
-      return acc + (x !== l[i - 1] + 1 ? 1 : 0);
-    }, 0);
-}
+import { QUEEN, exec, splitMap } from './utils.js';
 
 function main(lines) {
   let value = 0;
@@ -21,37 +13,31 @@ function main(lines) {
     (visited[y] ??= {})[x] = true;
     region.plots++;
 
-    for (let [xd, yd] of ROOK) {
-      if (map[y + yd]?.[x + xd] !== region.plant) {
-        if (xd) (region.xSides[x + xd] ??= new Set()).add(y * xd);
-        if (yd) (region.ySides[y + yd] ??= new Set()).add(x * yd);
-      } else {
-        walk(x + xd, y + yd, region);
-      }
+    for (let i = 0; i < 8; i += 2) {
+      let [axd, ayd] = QUEEN[i];
+      let [bxd, byd] = QUEEN[(i + 1) % 8];
+      let [cxd, cyd] = QUEEN[(i + 2) % 8];
+
+      let a = map[y + ayd]?.[x + axd] === region.plant;
+      let b = map[y + byd]?.[x + bxd] === region.plant;
+      let c = map[y + cyd]?.[x + cxd] === region.plant;
+
+      if ((!a && !c) || (a && !b && c)) region.corners++;
+      if (a) walk(x + axd, y + ayd, region);
     }
   }
 
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[0].length; x++) {
       if (visited[y]?.[x]) continue;
-      let region = { plant: map[y][x], plots: 0, xSides: {}, ySides: {} };
+      let region = { plant: map[y][x], plots: 0, corners: 0 };
       regions.push(region);
       walk(x, y, region);
     }
   }
 
   for (let region of regions) {
-    let sides = 0;
-
-    for (let set of Object.values(region.xSides)) {
-      sides += countContiguous(set);
-    }
-
-    for (let set of Object.values(region.ySides)) {
-      sides += countContiguous(set);
-    }
-
-    value += region.plots * sides;
+    value += region.plots * region.corners;
   }
 
   return value;

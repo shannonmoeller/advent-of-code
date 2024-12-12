@@ -1,4 +1,4 @@
-import { ROOK, exec, log, splitMap } from './utils.js';
+import { ROOK, exec, splitMap } from './utils.js';
 
 function main(lines) {
   let value = 0;
