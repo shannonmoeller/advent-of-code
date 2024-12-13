@@ -19,12 +19,12 @@ function main(lines) {
     let [bx, by] = lines[i + 1].match(/\d+/g);
     let [px, py] = lines[i + 2].match(/\d+/g);
 
-    for (let lab = 0; lab <= 100; lab++) {
-      let pax = px - ax * lab;
-      let pay = py - ay * lab;
+    for (let ap = 0; ap <= 100; ap++) {
+      let bpx = (px - ax * ap) / bx;
+      let bpy = (py - ay * ap) / by;
 
-      if (!(pax % bx) && !(pay % by) && pax / bx === pay / by) {
-        value += lab * 3 + pax / bx;
+      if (bpx === bpy && Number.isInteger(bpx)) {
+        value += ap * 3 + bpx;
         break;
       }
     }
@@ -34,4 +34,4 @@ function main(lines) {
 }
 
 exec(main, './13-a.txt', 480);
-//exec(main, './13-1.txt');
+exec(main, './13-1.txt');

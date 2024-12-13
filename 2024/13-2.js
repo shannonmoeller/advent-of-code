@@ -1,4 +1,4 @@
-import { exec, log } from './utils.js';
+import { exec } from './utils.js';
 
 // T = len(A, B) * 3 + len(B, P)
 //
@@ -22,11 +22,19 @@ function main(lines) {
     return [x, y];
   }
 
-  function test(lab, [ax, ay], [bx, by], [px, py]) {
-    let pax = px - ax * lab;
-    let pay = py - ay * lab;
+  function pressA(a, b, p) {
+    let [ax] = rotate(a, a);
+    let [bx, by] = rotate(a, b);
+    let [px, py] = rotate(a, p);
 
-    return !(pax % bx) && !(pay % by) && pax / bx === pay / by && pax / bx;
+    return Math.floor((px - py / (by / bx)) / ax);
+  }
+
+  function pressB(ab, [ax, ay], [bx, by], [px, py]) {
+    let bpx = (px - ax * ab) / bx;
+    let bpy = (py - ay * ab) / by;
+
+    return bpx === bpy && Number.isInteger(bpx) && bpx;
   }
 
   for (let i = 0; i < lines.length; i += 4) {
@@ -34,17 +42,13 @@ function main(lines) {
     let b = lines[i + 1].match(/\d+/g).map(Number);
     let p = lines[i + 2].match(/\d+/g).map((x) => +x + 10000000000000);
 
-    let [ax] = rotate(a, a);
-    let [bx, by] = rotate(a, b);
-    let [px, py] = rotate(a, p);
+    let ap = pressA(a, b, p);
 
-    let lab = Math.floor((px - py / (by / bx)) / ax);
+    for (let i = -2; i < 2; i++) {
+      let bp = pressB(ap + i, a, b, p);
 
-    for (let i = lab - 3; i < lab + 3; i++) {
-      let result = test(i, a, b, p);
-
-      if (result !== false) {
-        value += i * 3 + result;
+      if (bp !== false) {
+        value += (ap + i) * 3 + bp;
         break;
       }
     }
