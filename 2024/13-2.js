@@ -15,14 +15,14 @@ function main(lines) {
   let value = 0;
 
   function rotate([vx, vy], [px, py]) {
-    let a = -Math.atan2(vy, vx);
-    let x = px * Math.cos(a) - py * Math.sin(a);
-    let y = px * Math.sin(a) + py * Math.cos(a);
+    let rads = -Math.atan2(vy, vx);
+    let x = px * Math.cos(rads) - py * Math.sin(rads);
+    let y = px * Math.sin(rads) + py * Math.cos(rads);
 
     return [x, y];
   }
 
-  function pressA(a, b, p) {
+  function mashA(a, b, p) {
     let [ax] = rotate(a, a);
     let [bx, by] = rotate(a, b);
     let [px, py] = rotate(a, p);
@@ -30,7 +30,7 @@ function main(lines) {
     return Math.floor((px - py / (by / bx)) / ax);
   }
 
-  function pressB(ab, [ax, ay], [bx, by], [px, py]) {
+  function mashB(ab, [ax, ay], [bx, by], [px, py]) {
     let bpx = (px - ax * ab) / bx;
     let bpy = (py - ay * ab) / by;
 
@@ -42,10 +42,10 @@ function main(lines) {
     let b = lines[i + 1].match(/\d+/g).map(Number);
     let p = lines[i + 2].match(/\d+/g).map((x) => +x + 10000000000000);
 
-    let ap = pressA(a, b, p);
+    let ap = mashA(a, b, p);
 
     for (let i = -2; i < 2; i++) {
-      let bp = pressB(ap + i, a, b, p);
+      let bp = mashB(ap + i, a, b, p);
 
       if (bp !== false) {
         value += (ap + i) * 3 + bp;
