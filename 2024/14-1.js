@@ -1,4 +1,4 @@
-import { exec, log } from './utils.js';
+import { exec, log } from '../utils.js';
 
 function main(lines) {
   let value = 0;
@@ -12,4 +12,3 @@ function main(lines) {
 
 exec(main, './14-a.txt', 0);
 // exec(main, './14-1.txt');
-

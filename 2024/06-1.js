@@ -1,4 +1,4 @@
-import { exec, splitMap } from './utils.js';
+import { exec, splitMap } from '../utils.js';
 
 function main(lines) {
   let value = 0;

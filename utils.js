@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { basename, resolve } from 'node:path';
 import { inspect, styleText } from 'node:util';
+
+let dir = basename(process.cwd());
 
 /**
  * # Logging
@@ -39,7 +41,7 @@ export function exec(fn, path, expected) {
 }
 
 export function readLines(path) {
-  let fullPath = resolve('../inputs/2024', path);
+  let fullPath = resolve('../inputs', dir, path);
 
   return readFileSync(fullPath, 'utf8').trim().split('\n');
 }
