@@ -10,7 +10,7 @@ function main(w, h) {
       return ROOK.reduce((acc, [xd, yd]) => acc + walk(x + xd, y + yd, map, seen), 1);
     }
 
-    for (let i = 1; i <= 100_000; i++) {
+    for (let i = 1; i <= w * h; i++) {
       let map = createMap(w, h, '.');
 
       for (let robot of robots) {

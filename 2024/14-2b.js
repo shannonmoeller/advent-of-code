@@ -7,7 +7,7 @@ function main(w, h) {
   return (lines) => {
     let robots = lines.map((line) => line.match(/-?\d+/g).map(Number));
 
-    for (let i = 1; i <= 100_000; i++) {
+    for (let i = 1; i <= w * h; i++) {
       let map = Array(w * h).fill('.');
 
       for (let robot of robots) {
