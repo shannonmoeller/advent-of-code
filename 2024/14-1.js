@@ -1,6 +1,6 @@
 import { exec } from '../utils.js';
 
-function main(s, w, h) {
+function main(w, h) {
   return (lines) => {
     let wh = Math.floor(w / 2);
     let hh = Math.floor(h / 2);
@@ -12,8 +12,8 @@ function main(s, w, h) {
 
     for (let line of lines) {
       let [ax, ay, vx, vy] = line.match(/-?\d+/g).map(Number);
-      let bx = (ax + vx * s + w * s) % w;
-      let by = (ay + vy * s + h * s) % h;
+      let bx = (ax + vx * 100 + w * 100) % w;
+      let by = (ay + vy * 100 + h * 100) % h;
 
       if (bx < wh) {
         if (by < hh) a++;
@@ -29,5 +29,5 @@ function main(s, w, h) {
   };
 }
 
-exec(main(100, 11, 7), './14-a.txt', 12);
-exec(main(100, 101, 103), './14-1.txt');
+exec(main(11, 7), './14-a.txt', 12);
+exec(main(101, 103), './14-1.txt');

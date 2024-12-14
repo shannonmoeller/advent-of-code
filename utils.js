@@ -117,6 +117,12 @@ export function logMaps(maps) {
   return maps;
 }
 
+export function createMap(w, h, fill = null) {
+  return Array(h)
+    .fill(null)
+    .map(() => Array(w).fill(fill));
+}
+
 export function joinMap(map, fn = (x) => x) {
   if (typeof map[0] !== 'string') {
     map = map.map((row) => row.map(fn).join(''));

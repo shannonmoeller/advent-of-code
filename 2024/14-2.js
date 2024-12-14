@@ -1,20 +1,17 @@
-import { exec, logMap } from '../utils.js';
+import { ROOK, createMap, exec } from '../utils.js';
 
 function main(w, h) {
   return (lines) => {
     let robots = lines.map((line) => line.match(/-?\d+/g).map(Number));
 
-    for (let i = 1; i <= 100_000; i++) {
-      let visited = {};
-      let map = Array(h)
-        .fill(0)
-        .map(() => Array(w).fill('.'));
+    function walk(x, y, map, seen = {}) {
+      if (seen[y]?.[x] || map[y]?.[x] !== 'X') return 0;
+      (seen[y] ??= {})[x] = true;
+      return ROOK.reduce((acc, [xd, yd]) => acc + walk(x + xd, y + yd, map, seen), 1);
+    }
 
-      let walk = (x, y) => {
-        if (visited[y]?.[x] || map[y]?.[x] !== 'X') return 0;
-        (visited[y] ??= {})[x] = true;
-        return 1 + walk(x, y - 1) + walk(x + 1, y) + walk(x, y + 1) + walk(x - 1, y);
-      };
+    for (let i = 1; i <= 100_000; i++) {
+      let map = createMap(w, h, '.');
 
       for (let robot of robots) {
         robot[0] = (robot[0] + robot[2] + w) % w;
@@ -24,10 +21,7 @@ function main(w, h) {
 
       for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
-          if (walk(x, y) > 20) {
-            logMap(map);
-            return i;
-          }
+          if (walk(x, y, map) > 20) return i;
         }
       }
     }
