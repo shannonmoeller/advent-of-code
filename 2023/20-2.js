@@ -1,6 +1,6 @@
 import { readLines, log, lcm, createQueue } from './utils.js';
 
-let lines = readLines('./20.txt');
+let lines = readLines('./20-1.txt');
 let modules = {};
 
 for (let line of lines) {

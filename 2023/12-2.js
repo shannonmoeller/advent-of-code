@@ -3,7 +3,7 @@
 
 import { log, readLines } from './utils.js';
 
-let lines = readLines('./12.txt');
+let lines = readLines('./12-1.txt');
 let value = 0;
 
 let repeat = 5;

@@ -1,6 +1,6 @@
 import { log, readLines } from './utils.js';
 
-let [line, ...restLines] = readLines('./05.txt');
+let [line, ...restLines] = readLines('./05-1.txt');
 let value = Infinity;
 
 function createRange(start, length) {

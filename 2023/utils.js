@@ -21,7 +21,7 @@ export function lcm(a, b) {
   return (a * b) / gcd(a, b);
 }
 
-export function joinMap(map, fn = (x) => x) {
+export function joinGrid(map, fn = (x) => x) {
   if (typeof map[0] !== 'string') {
     map = map.map((row) => row.map(fn).join(''));
   }
@@ -29,7 +29,7 @@ export function joinMap(map, fn = (x) => x) {
   return map.join('\n');
 }
 
-export function splitMap(map) {
+export function splitGrid(map) {
   if (typeof map === 'string') {
     map = map.split('\n');
   }
@@ -37,15 +37,15 @@ export function splitMap(map) {
   return map.map((row) => row.split(''));
 }
 
-export function logMap(map, fn) {
+export function logGrid(map, fn) {
   log('');
-  log(joinMap(map, fn));
+  log(joinGrid(map, fn));
   log('');
 
   return map;
 }
 
-export function logMaps(maps) {
+export function logGrids(maps) {
   let height = maps[0].length;
 
   log('');

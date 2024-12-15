@@ -1,12 +1,12 @@
-import { ARROWS, exec, getPos, splitMap, logMap } from '../utils.js';
+import { ARROWS, exec, getPos, splitGrid } from '../utils.js';
 
 function main(lines, dirs) {
-  let map = splitMap(lines);
-  let width = map[0].length;
+  let grid = splitGrid(lines);
+  let width = grid[0].length;
   let [rx, ry] = getPos(width, lines.join('').indexOf('@'));
 
   function walk(ax, ay, xd, yd) {
-    let node = map[ay][ax];
+    let node = grid[ay][ax];
 
     if (node === '#') return;
     if (node === '.') return true;
@@ -15,7 +15,7 @@ function main(lines, dirs) {
     let by = ay + yd;
 
     if (walk(bx, by, xd, yd)) {
-      [map[ay][ax], map[by][bx]] = [map[by][bx], map[ay][ax]];
+      [grid[ay][ax], grid[by][bx]] = [grid[by][bx], grid[ay][ax]];
       return true;
     }
   }
@@ -29,7 +29,7 @@ function main(lines, dirs) {
     }
   }
 
-  return Array.from(map.flat().join('').matchAll(/O/g))
+  return Array.from(grid.flat().join('').matchAll(/O/g))
     .map(({ index }) => getPos(width, index))
     .reduce((acc, [x, y]) => acc + 100 * y + x, 0);
 }

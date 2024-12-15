@@ -1,67 +1,65 @@
 import { log, readLines } from './utils.js';
 
-let lines = readLines('./13.txt');
+let lines = readLines('./13-1.txt');
 let value = 0;
 
-function rotate(map) {
-	let rotated = [];
+function rotate(grid) {
+  let rotated = [];
 
-	for (let x = 0; x < map[0].length; x++) {
-		let col = '';
+  for (let x = 0; x < grid[0].length; x++) {
+    let col = '';
 
-		for (let y = 0; y < map.length; y++) {
-			col += map[y][x];
-		}
+    for (let y = 0; y < grid.length; y++) {
+      col += grid[y][x];
+    }
 
-		rotated.push(col);
-	}
+    rotated.push(col);
+  }
 
-	return rotated;
+  return rotated;
 }
 
-function reflect(map) {
-	for (let i = 0; i < map.length; i++) {
-		if (map[i] !== map[i - 1]) {
-			continue;
-		}
+function reflect(grid) {
+  for (let i = 0; i < grid.length; i++) {
+    if (grid[i] !== grid[i - 1]) {
+      continue;
+    }
 
-		let slice = i <= map.length / 2
-			? map.slice(0, i * 2)
-			: map.slice((map.length - i) * -2);
+    let slice = i <= grid.length / 2 ? grid.slice(0, i * 2) : grid.slice((grid.length - i) * -2);
 
-		if (isPalindrome(slice)) {
-			return i;
-		}
-	}
+    if (isPalindrome(slice)) {
+      return i;
+    }
+  }
 
-	return 0;
+  return 0;
 }
 
 function isPalindrome(list) {
-	let { length } = list;
+  let { length } = list;
 
-	for (let i = 0; i < length / 2; i++) {
-		if (list[i] !== list[length - 1 - i]) {
-			return false;
-		}
-	}
+  for (let i = 0; i < length / 2; i++) {
+    if (list[i] !== list[length - 1 - i]) {
+      return false;
+    }
+  }
 
-	return true;
+  return true;
 }
 
-let map = [];
-let maps = [map];
+let grid = [];
+let maps = [grid];
 
 for (let line of lines) {
-	if (line) {
-		map.push(line);
-	} else {
-		maps.push(map = []);
-	}
+  if (line) {
+    grid.push(line);
+  } else {
+    maps.push((grid = []));
+  }
 }
 
-for (let map of maps) {
-	value += reflect(map) * 100 || reflect(rotate(map));
+for (let grid of maps) {
+  value += reflect(grid) * 100 || reflect(rotate(grid));
 }
 
 log(value);

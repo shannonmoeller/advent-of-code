@@ -1,6 +1,6 @@
 import { readLines, log } from './utils.js';
 
-let lines = readLines('./18.txt');
+let lines = readLines('./18-1.txt');
 let value = 0;
 
 let x = 0;

@@ -1,4 +1,4 @@
-let request = await fetch('./25.txt');
+let request = await fetch('./25-1.txt');
 let data = await request.text();
 let lines = data.trim().split('\n');
 

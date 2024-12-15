@@ -1,28 +1,28 @@
-import { ROOK, exec, splitMap } from '../utils.js';
+import { ROOK, exec, splitGrid } from '../utils.js';
 
 function main(lines) {
   let value = 0;
 
-  let map = splitMap(lines);
+  let grid = splitGrid(lines);
   let visited = {};
   let regions = [];
 
   function walk(x, y, region) {
-    if (map[y]?.[x] !== region.plant || visited[y]?.[x]) return;
+    if (grid[y]?.[x] !== region.plant || visited[y]?.[x]) return;
 
     (visited[y] ??= {})[x] = true;
     region.plots++;
 
     for (let [xd, yd] of ROOK) {
-      if (map[y + yd]?.[x + xd] !== region.plant) region.perimeters++;
+      if (grid[y + yd]?.[x + xd] !== region.plant) region.perimeters++;
       else walk(x + xd, y + yd, region);
     }
   }
 
-  for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[0].length; x++) {
+  for (let y = 0; y < grid.length; y++) {
+    for (let x = 0; x < grid[0].length; x++) {
       if (visited[y]?.[x]) continue;
-      let region = { plant: map[y][x], plots: 0, perimeters: 0 };
+      let region = { plant: grid[y][x], plots: 0, perimeters: 0 };
       regions.push(region);
       walk(x, y, region);
     }

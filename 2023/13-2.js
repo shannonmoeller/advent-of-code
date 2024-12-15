@@ -1,86 +1,84 @@
 import { log, readLines } from './utils.js';
 
-let lines = readLines('./13.txt');
+let lines = readLines('./13-1.txt');
 let value = 0;
 
-function rotate(map) {
-	let rotated = [];
+function rotate(grid) {
+  let rotated = [];
 
-	for (let x = 0; x < map[0].length; x++) {
-		let col = '';
+  for (let x = 0; x < grid[0].length; x++) {
+    let col = '';
 
-		for (let y = 0; y < map.length; y++) {
-			col += map[y][x];
-		}
+    for (let y = 0; y < grid.length; y++) {
+      col += grid[y][x];
+    }
 
-		rotated.push(col);
-	}
+    rotated.push(col);
+  }
 
-	return rotated;
+  return rotated;
 }
 
-function reflect(map) {
-	for (let i = 1; i < map.length; i++) {
-		if (compare(map[i], map[i - 1]) > 1) {
-			continue;
-		}
+function reflect(grid) {
+  for (let i = 1; i < grid.length; i++) {
+    if (compare(grid[i], grid[i - 1]) > 1) {
+      continue;
+    }
 
-		let slice = i <= map.length / 2
-			? map.slice(0, i * 2)
-			: map.slice((map.length - i) * -2);
+    let slice = i <= grid.length / 2 ? grid.slice(0, i * 2) : grid.slice((grid.length - i) * -2);
 
-		if (isPalindrome(slice)) {
-			return i;
-		}
-	}
+    if (isPalindrome(slice)) {
+      return i;
+    }
+  }
 
-	return 0;
+  return 0;
 }
 
 function isPalindrome(list) {
-	let { length } = list;
-	let dist = 0;
+  let { length } = list;
+  let dist = 0;
 
-	for (let i = 0; i < Math.ceil(length / 2); i++) {
-		dist += compare(list[i], list[length - 1 - i]);
+  for (let i = 0; i < Math.ceil(length / 2); i++) {
+    dist += compare(list[i], list[length - 1 - i]);
 
-		if (dist > 1) {
-			break;
-		}
-	}
+    if (dist > 1) {
+      break;
+    }
+  }
 
-	return dist === 1;
+  return dist === 1;
 }
 
 function compare(a, b) {
-	let dist = 0;
+  let dist = 0;
 
-	for (let i = 0; i < a.length; i++) {
-		if (a[i] !== b[i]) {
-			dist++;
-		}
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      dist++;
+    }
 
-		if (dist > 1) {
-			break;
-		}
-	}
+    if (dist > 1) {
+      break;
+    }
+  }
 
-	return dist;
+  return dist;
 }
 
-let map = [];
-let maps = [map];
+let grid = [];
+let maps = [grid];
 
 for (let line of lines) {
-	if (line) {
-		map.push(line);
-	} else {
-		maps.push(map = []);
-	}
+  if (line) {
+    grid.push(line);
+  } else {
+    maps.push((grid = []));
+  }
 }
 
-for (let map of maps) {
-	value += reflect(map) * 100 || reflect(rotate(map));
+for (let grid of maps) {
+  value += reflect(grid) * 100 || reflect(rotate(grid));
 }
 
 log(value);

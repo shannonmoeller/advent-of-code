@@ -1,6 +1,6 @@
 import { readLines, log } from './utils.js';
 
-let lines = readLines('./15.txt');
+let lines = readLines('./15-1.txt');
 let value = 0;
 
 function hash(str) {

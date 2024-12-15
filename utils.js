@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
 import { inspect, styleText } from 'node:util';
+import { deepEqual } from 'node:assert';
 
 let dir = basename(process.cwd());
 
@@ -37,6 +38,10 @@ export function exec(fn, path, expected) {
 
   if (expected != null) {
     log(' expected:', expected, (actual.value ?? actual) === expected ? 'PASS'.green : 'FAIL'.red);
+
+    if (process.env.NODE_TEST_CONTEXT && actual !== expected) {
+      deepEqual(actual, expected, basename(process.argv[1]));
+    }
   }
 }
 
@@ -108,15 +113,15 @@ export const BISHOP = [
             [-1, -1],
 ];
 
-export function logMap(map, fn) {
+export function logGrid(map, fn) {
   log();
-  log(joinMap(map, fn));
+  log(joinGrid(map, fn));
   log();
 
   return map;
 }
 
-export function logMaps(maps) {
+export function logGrids(maps) {
   let height = maps[0].length;
 
   log();
@@ -128,13 +133,13 @@ export function logMaps(maps) {
   return maps;
 }
 
-export function createMap(w, h, fill = null) {
+export function createGrid(w, h, fill = null) {
   return Array(h)
     .fill(null)
     .map(() => Array(w).fill(fill));
 }
 
-export function joinMap(map, fn = (x) => x) {
+export function joinGrid(map, fn = (x) => x) {
   if (typeof map[0] !== 'string') {
     map = map.map((row) => row.map(fn).join(''));
   }
@@ -142,7 +147,7 @@ export function joinMap(map, fn = (x) => x) {
   return map.join('\n');
 }
 
-export function splitMap(map) {
+export function splitGrid(map) {
   if (typeof map === 'string') {
     map = map.split('\n');
   }

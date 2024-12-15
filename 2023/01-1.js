@@ -1,6 +1,6 @@
 import { readLines } from './utils.js';
 
-let lines = readLines('./01.txt');
+let lines = readLines('./01-1.txt');
 let value = 0;
 
 for (let line of lines) {
