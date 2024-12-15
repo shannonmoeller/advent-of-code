@@ -1,6 +1,8 @@
 import { ARROWS, exec, getPos, splitGrid } from '../utils.js';
 
 function main(lines, dirs) {
+  let value = 0;
+
   let grid = splitGrid(lines);
   let width = grid[0].length;
   let [rx, ry] = getPos(width, lines.join('').indexOf('@'));
@@ -29,10 +31,15 @@ function main(lines, dirs) {
     }
   }
 
-  return Array.from(grid.flat().join('').matchAll(/O/g))
-    .map(({ index }) => getPos(width, index))
-    .reduce((acc, [x, y]) => acc + 100 * y + x, 0);
+  for (let { index } of grid.flat().join('').matchAll(/O/g)) {
+    let [x, y] = getPos(width, index);
+
+    value += 100 * y + x;
+  }
+
+  return value;
 }
 
 exec(main, './15-a.txt', 2028);
+exec(main, './15-b.txt', 10092);
 exec(main, './15-1.txt');

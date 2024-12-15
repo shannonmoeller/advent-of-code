@@ -65,6 +65,8 @@ export function time(fn) {
   }
 }
 
+export function question() {}
+
 /**
  * # Math
  */
@@ -113,46 +115,46 @@ export const BISHOP = [
             [-1, -1],
 ];
 
-export function logGrid(map, fn) {
-  log();
-  log(joinGrid(map, fn));
-  log();
-
-  return map;
-}
-
-export function logGrids(maps) {
-  let height = maps[0].length;
-
-  log();
-  for (let y = 0; y < height; y++) {
-    log(maps.map((map) => map[y].join('')).join(' '));
-  }
-  log();
-
-  return maps;
-}
-
 export function createGrid(w, h, fill = null) {
   return Array(h)
     .fill(null)
     .map(() => Array(w).fill(fill));
 }
 
-export function joinGrid(map, fn = (x) => x) {
-  if (typeof map[0] !== 'string') {
-    map = map.map((row) => row.map(fn).join(''));
+export function splitGrid(grid) {
+  if (typeof grid === 'string') {
+    grid = grid.split('\n');
   }
 
-  return map.join('\n');
+  return grid.map((row) => row.split(''));
 }
 
-export function splitGrid(map) {
-  if (typeof map === 'string') {
-    map = map.split('\n');
+export function joinGrid(grid, fn = (x) => x) {
+  if (typeof grid[0] !== 'string') {
+    grid = grid.map((row) => row.map(fn).join(''));
   }
 
-  return map.map((row) => row.split(''));
+  return grid.join('\n');
+}
+
+export function logGrid(grid, fn) {
+  log();
+  log(joinGrid(grid, fn));
+  log();
+
+  return grid;
+}
+
+export function logGrids(grids) {
+  let height = grids[0].length;
+
+  log();
+  for (let y = 0; y < height; y++) {
+    log(grids.map((grid) => grid[y].join('')).join(' '));
+  }
+  log();
+
+  return grids;
 }
 
 export function getPos(width, i) {
