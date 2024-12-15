@@ -1,6 +1,6 @@
-import { readLines, log, joinMap, splitMap, logMap } from './utils.js';
+import { readLines, log, joinGrid, splitGrid, logGrid } from './utils.js';
 
-let lines = readLines('./15.txt');
+let lines = readLines('./15-1.txt');
 let value = 0;
 
 function hash(str) {

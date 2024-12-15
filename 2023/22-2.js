@@ -1,6 +1,6 @@
 import { readLines, log, createHeap } from './utils.js';
 
-let lines = readLines('./22.txt');
+let lines = readLines('./22-1.txt');
 let value = 0;
 
 let brickHeap = createHeap([], (a, b) => (

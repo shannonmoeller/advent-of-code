@@ -1,14 +1,14 @@
-import { QUEEN, exec, splitMap } from '../utils.js';
+import { QUEEN, exec, splitGrid } from '../utils.js';
 
 function main(lines) {
   let value = 0;
 
-  let map = splitMap(lines);
+  let grid = splitGrid(lines);
   let visited = {};
   let regions = [];
 
   function walk(x, y, region) {
-    if (map[y]?.[x] !== region.plant || visited[y]?.[x]) return;
+    if (grid[y]?.[x] !== region.plant || visited[y]?.[x]) return;
 
     (visited[y] ??= {})[x] = true;
     region.plots++;
@@ -18,19 +18,19 @@ function main(lines) {
       let [bxd, byd] = QUEEN[(i + 1) % 8];
       let [cxd, cyd] = QUEEN[(i + 2) % 8];
 
-      let a = map[y + ayd]?.[x + axd] === region.plant;
-      let b = map[y + byd]?.[x + bxd] === region.plant;
-      let c = map[y + cyd]?.[x + cxd] === region.plant;
+      let a = grid[y + ayd]?.[x + axd] === region.plant;
+      let b = grid[y + byd]?.[x + bxd] === region.plant;
+      let c = grid[y + cyd]?.[x + cxd] === region.plant;
 
       if ((!a && !c) || (a && !b && c)) region.corners++;
       if (a) walk(x + axd, y + ayd, region);
     }
   }
 
-  for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[0].length; x++) {
+  for (let y = 0; y < grid.length; y++) {
+    for (let x = 0; x < grid[0].length; x++) {
       if (visited[y]?.[x]) continue;
-      let region = { plant: map[y][x], plots: 0, corners: 0 };
+      let region = { plant: grid[y][x], plots: 0, corners: 0 };
       regions.push(region);
       walk(x, y, region);
     }

@@ -11,7 +11,7 @@ import { exec } from '../utils.js';
 // |                   /   |
 // A------------------B----+-----
 
-function main(lines) {
+function main(...machines) {
   let value = 0;
 
   function rotate([vx, vy], [px, py]) {
@@ -37,10 +37,10 @@ function main(lines) {
     return bpx === bpy && Number.isInteger(bpx) && bpx;
   }
 
-  for (let i = 0; i < lines.length; i += 4) {
-    let a = lines[i].match(/\d+/g).map(Number);
-    let b = lines[i + 1].match(/\d+/g).map(Number);
-    let p = lines[i + 2].match(/\d+/g).map((x) => +x + 10000000000000);
+  for (let machine of machines) {
+    let a = machine[0].match(/\d+/g).map(Number);
+    let b = machine[1].match(/\d+/g).map(Number);
+    let p = machine[2].match(/\d+/g).map((x) => +x + 10000000000000);
 
     let ap = mashA(a, b, p);
 

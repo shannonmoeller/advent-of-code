@@ -1,6 +1,6 @@
 import { log, readLines } from './utils.js';
 
-let lines = readLines('./07.txt');
+let lines = readLines('./07-1.txt');
 let value = 0;
 
 let hands = [];

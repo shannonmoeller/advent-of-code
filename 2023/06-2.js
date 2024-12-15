@@ -1,6 +1,6 @@
 import { log, readLines } from './utils.js';
 
-let lines = readLines('./06.txt');
+let lines = readLines('./06-1.txt');
 
 // Good: this code
 // Better: Binary search

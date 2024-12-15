@@ -1,6 +1,6 @@
 import { log, readLines } from './utils.js';
 
-let lines = readLines('./09.txt');
+let lines = readLines('./09-1.txt');
 let value = 0;
 
 function prev(nums) {

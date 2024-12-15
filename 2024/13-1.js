@@ -11,13 +11,11 @@ import { exec } from '../utils.js';
 // |                   /   |
 // A------------------B----+-----
 
-function main(lines) {
+function main(...machines) {
   let value = 0;
 
-  for (let i = 0; i < lines.length; i += 4) {
-    let [ax, ay] = lines[i].match(/\d+/g);
-    let [bx, by] = lines[i + 1].match(/\d+/g);
-    let [px, py] = lines[i + 2].match(/\d+/g);
+  for (let machine of machines) {
+    let [ax, ay, bx, by, px, py] = machine.join('').match(/\d+/g);
 
     for (let ap = 0; ap <= 100; ap++) {
       let bpx = (px - ax * ap) / bx;

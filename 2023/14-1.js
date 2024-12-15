@@ -1,34 +1,32 @@
-import { readLines, log, logMap } from './utils.js';
+import { readLines, log, logGrid } from './utils.js';
 
-let lines = readLines('./14.txt');
+let lines = readLines('./14-1.txt');
 let value = 0;
 
-let map = lines.map((line) => line.split(''));
-let height = map.length;
-let width = map[0].length;
+let grid = lines.map((line) => line.split(''));
+let height = grid.length;
+let width = grid[0].length;
 let movement = 1;
 
 while (movement) {
-	movement = 0;
+  movement = 0;
 
-	for (let y = 0; y < height; y++) {
-		for (let x = 0; x < width; x++) {
-			if (map[y][x] === 'O' && map[y - 1]?.[x] === '.') {
-				[map[y - 1][x], map[y][x]] = [map[y][x], map[y - 1][x]];
-				movement++;
-			}
-		}
-	}
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (grid[y][x] === 'O' && grid[y - 1]?.[x] === '.') {
+        [grid[y - 1][x], grid[y][x]] = [grid[y][x], grid[y - 1][x]];
+        movement++;
+      }
+    }
+  }
 
-	if (!movement) {
-		break;
-	}
+  if (!movement) {
+    break;
+  }
 }
 
 for (let y = 0; y < height; y++) {
-	value += map[y]
-		.filter((x) => x === 'O')
-		.length * (height - y);
+  value += grid[y].filter((x) => x === 'O').length * (height - y);
 }
 
 log(value);

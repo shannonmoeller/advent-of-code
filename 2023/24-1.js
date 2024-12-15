@@ -1,6 +1,6 @@
 import { readLines, log } from './utils.js';
 
-let lines = readLines('./24.txt');
+let lines = readLines('./24-1.txt');
 let value = 0;
 
 function cast(point, vector, scalar) {

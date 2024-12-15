@@ -1,4 +1,4 @@
-import { exec, splitMap } from '../utils.js';
+import { exec, splitGrid } from '../utils.js';
 
 function main(lines) {
   let value = 0;
@@ -8,14 +8,14 @@ function main(lines) {
   let xd = [0, 1, 0, -1];
   let yd = [-1, 0, 1, 0];
 
-  let map = splitMap(lines);
+  let grid = splitGrid(lines);
   let x = index % width;
   let y = Math.floor(index / width);
   let d = 0;
 
-  while (map[y]?.[x]) {
-    if (map[y][x] !== 'X') (map[y][x] = 'X'), value++;
-    if (map[y + yd[d]]?.[x + xd[d]] === '#') d = ++d % 4;
+  while (grid[y]?.[x]) {
+    if (grid[y][x] !== 'X') (grid[y][x] = 'X'), value++;
+    if (grid[y + yd[d]]?.[x + xd[d]] === '#') d = ++d % 4;
 
     x += xd[d];
     y += yd[d];

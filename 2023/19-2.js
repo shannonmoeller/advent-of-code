@@ -1,6 +1,6 @@
 import { readLines, log } from './utils.js';
 
-let lines = readLines('./19.txt');
+let lines = readLines('./19-1.txt');
 let value = 0;
 
 let delimiter = lines.indexOf('');

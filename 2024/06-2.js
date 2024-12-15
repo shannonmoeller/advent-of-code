@@ -1,4 +1,4 @@
-import { exec, splitMap } from '../utils.js';
+import { exec, splitGrid } from '../utils.js';
 
 function main(lines) {
   let value = 0;
@@ -9,11 +9,11 @@ function main(lines) {
   let yd = [-1, 0, 1, 0];
 
   function walk(x, y, d, fn) {
-    let map = splitMap(lines);
+    let grid = splitGrid(lines);
 
-    while (map[y]?.[x]) {
-      if (fn(x, y, d, map)) return true;
-      while (map[y + yd[d]]?.[x + xd[d]] === '#') d = ++d % 4;
+    while (grid[y]?.[x]) {
+      if (fn(x, y, d, grid)) return true;
+      while (grid[y + yd[d]]?.[x + xd[d]] === '#') d = ++d % 4;
 
       x += xd[d];
       y += yd[d];
@@ -23,19 +23,19 @@ function main(lines) {
   function wouldCycle(ox, oy, od) {
     let visited = {};
 
-    return walk(ox - xd[od], oy - yd[od], od, (x, y, d, map) => {
+    return walk(ox - xd[od], oy - yd[od], od, (x, y, d, grid) => {
       if (visited[y]?.[x]?.[d]) return true;
 
       ((visited[y] ??= {})[x] ??= {})[d] = true;
-      map[oy][ox] = '#';
+      grid[oy][ox] = '#';
     });
   }
 
-  walk(index % width, Math.floor(index / width), 0, (x, y, d, map) => {
-    if ('^X'.includes(map[y][x])) return;
+  walk(index % width, Math.floor(index / width), 0, (x, y, d, grid) => {
+    if ('^X'.includes(grid[y][x])) return;
     if (wouldCycle(x, y, d)) value++;
 
-    map[y][x] = 'X';
+    grid[y][x] = 'X';
   });
 
   return value;
