@@ -1,5 +1,7 @@
-import { log, readLines } from '../2023/utils.js';
+import { exec } from '../utils/index.js';
 
-let lines = readLines('./01.txt');
+function main(lines) {
+  return lines.map(Number).reduce((a, b) => a + b);
+}
 
-log(lines.map(Number).reduce((a, b) => a + b));
+exec(main, './01.txt', 531);

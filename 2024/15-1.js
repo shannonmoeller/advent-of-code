@@ -1,4 +1,4 @@
-import { ARROWS, exec, getPos, splitGrid } from '../utils.js';
+import { ARROW, exec, getPos, splitGrid } from '../utils/index.js';
 
 function main(lines, dirs) {
   let value = 0;
@@ -23,7 +23,7 @@ function main(lines, dirs) {
   }
 
   for (let dir of dirs.join('')) {
-    let [xd, yd] = ARROWS[dir];
+    let [xd, yd] = ARROW[dir];
 
     if (walk(rx, ry, xd, yd)) {
       rx += xd;

@@ -1,4 +1,4 @@
-import { exec } from '../utils.js';
+import { exec } from '../utils/index.js';
 
 function main(lines) {
   let value = 0;

@@ -1,22 +1,21 @@
-import { readFile } from 'fs/promises';
+import { exec } from '../utils/index.js';
 
-async function main() {
-	const data = await readFile('01.txt', 'utf8');
-	const numbers = data.trim().split('\n').map(Number);
+function main(lines) {
+  const numbers = lines.map(Number);
 
-	for (let i = 0; i < numbers.length; i++) {
-		const a = numbers[i];
+  for (let i = 0; i < numbers.length; i++) {
+    const a = numbers[i];
 
-		for (let j = i + 1; j < numbers.length; j++) {
-			const b = numbers[j];
+    for (let j = i + 1; j < numbers.length; j++) {
+      const b = numbers[j];
 
-			if (a + b === 2020) {
-				return a * b;
-			}
-		}
-	}
+      if (a + b === 2020) {
+        return a * b;
+      }
+    }
+  }
 
-	return null;
+  return null;
 }
 
-main().then(console.log).catch(console.error);
+exec(main, '01.txt');

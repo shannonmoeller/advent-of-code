@@ -1,4 +1,4 @@
-import { exec } from '../utils.js';
+import { exec } from '../utils/index.js';
 
 // Refactor after Leyan mentioned you only have to test for a series of X.
 // https://github.com/leyanlo/advent-of-code/blob/main/2024/day-14.js

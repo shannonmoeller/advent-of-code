@@ -1,4 +1,4 @@
-import { ROOK, createGrid, exec } from '../utils.js';
+import { ROOK, createGrid, exec } from '../utils/index.js';
 
 function main(w, h) {
   return (lines) => {

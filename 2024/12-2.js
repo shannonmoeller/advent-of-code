@@ -1,4 +1,4 @@
-import { QUEEN, exec, splitGrid } from '../utils.js';
+import { QUEEN, exec, splitGrid } from '../utils/index.js';
 
 function main(lines) {
   let value = 0;

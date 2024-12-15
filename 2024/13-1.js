@@ -1,4 +1,4 @@
-import { exec } from '../utils.js';
+import { exec } from '../utils/index.js';
 
 // T = len(A, B) * 3 + len(B, P)
 //

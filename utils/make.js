@@ -5,7 +5,7 @@ let [, , day] = process.argv;
 let stem = day.padStart(2, '0');
 let dir = basename(process.cwd());
 
-let js = `import { exec, log } from '../utils.js';
+let js = `import { exec, log } from '../utils/index.js';
 
 function main(lines) {
   let value = 0;

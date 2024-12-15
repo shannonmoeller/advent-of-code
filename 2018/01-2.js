@@ -1,18 +1,21 @@
-import { log, readLines } from '../2023/utils.js';
+import { exec } from '../utils/index.js';
 
-let lines = readLines('./01.txt');
-let value = 0;
+function main(lines) {
+  let value = 0;
 
-let cache = new Set();
+  let cache = new Set();
 
-forever: while (true) for (let line of lines) {
-	value += Number(line);
+  forever: while (true) {
+    for (let line of lines) {
+      value += Number(line);
 
-	if (cache.has(value)) {
-		break forever;
-	}
+      if (cache.has(value)) break forever;
 
-	cache.add(value);
+      cache.add(value);
+    }
+  }
+
+  return value;
 }
 
-log(value);
+exec(main, './01.txt', 76787);

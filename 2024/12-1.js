@@ -1,4 +1,4 @@
-import { ROOK, exec, splitGrid } from '../utils.js';
+import { ROOK, exec, splitGrid } from '../utils/index.js';
 
 function main(lines) {
   let value = 0;

@@ -1,13 +1,7 @@
-import { exec } from '../utils.js';
+import { ARROW, exec } from '../utils/index.js';
 
 function main([line]) {
   let visited = new Set();
-  let dirs = {
-    '^': [0, -1],
-    '>': [1, 0],
-    v: [0, 1],
-    '<': [-1, 0],
-  };
 
   let x1 = 0;
   let y1 = 0;
@@ -15,8 +9,8 @@ function main([line]) {
   let y2 = 0;
 
   for (let i = 0; i < line.length; i += 2) {
-    let [xd1, yd1] = dirs[line[i]];
-    let [xd2, yd2] = dirs[line[i + 1]];
+    let [xd1, yd1] = ARROW[line[i]];
+    let [xd2, yd2] = ARROW[line[i + 1]];
 
     x1 += xd1;
     y1 += yd1;

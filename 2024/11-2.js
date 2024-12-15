@@ -1,4 +1,4 @@
-import { exec, memo } from '../utils.js';
+import { exec, memo } from '../utils/index.js';
 
 // 0 1             125
 //                  |

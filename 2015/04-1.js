@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { exec } from '../utils.js';
+import { exec } from '../utils/index.js';
 
 function main([line]) {
   function md5(data) {

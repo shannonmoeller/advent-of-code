@@ -1,4 +1,4 @@
-import { exec } from '../utils.js';
+import { exec } from '../utils/index.js';
 
 function main(w, h) {
   return (lines) => {
