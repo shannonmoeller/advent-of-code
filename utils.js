@@ -29,10 +29,10 @@ export function log(...args) {
  */
 
 export function exec(fn, path, expected) {
-  let lines = readLines(path);
-  log('\n     file:', path, lines[0].slice(0, 8));
+  let input = readInput(path);
+  log('\n     file:', path, input[0][0].slice(0, 8));
 
-  let actual = time(() => fn(lines));
+  let actual = time(() => fn(...input));
   log('   actual:', actual);
 
   if (expected != null) {
@@ -40,10 +40,13 @@ export function exec(fn, path, expected) {
   }
 }
 
-export function readLines(path) {
+export function readInput(path) {
   let fullPath = resolve('../inputs', dir, path);
 
-  return readFileSync(fullPath, 'utf8').trim().split('\n');
+  return readFileSync(fullPath, 'utf8')
+    .trim()
+    .split(/\n\n+/)
+    .map((x) => x.split(/\n/));
 }
 
 export function time(fn) {
@@ -72,6 +75,14 @@ export function lcm(a, b) {
 /**
  * # 2D grids
  */
+
+// prettier-ignore
+export const ARROWS = {
+  '^': [0, -1],
+  '>': [1, 0],
+  'v': [0, 1],
+  '<': [-1, 0],
+};
 
 // prettier-ignore
 export const QUEEN = [
@@ -137,6 +148,10 @@ export function splitMap(map) {
   }
 
   return map.map((row) => row.split(''));
+}
+
+export function getPos(width, i) {
+  return [i % width, Math.floor(i / width)];
 }
 
 /**
