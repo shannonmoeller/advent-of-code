@@ -1,3 +1,5 @@
+import { log } from './log.js';
+
 // prettier-ignore
 export const ARROW = {
   '^': [0, -1],
