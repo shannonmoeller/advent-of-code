@@ -32,5 +32,5 @@ function main(...machines) {
   return value;
 }
 
-exec(main, './13-a.txt', 480);
-exec(main, './13-1.txt');
+exec(main, '13-a', 480);
+exec(main, '13-1');

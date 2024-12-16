@@ -38,8 +38,8 @@ function main(lines) {
   return Object.keys(antis).length;
 }
 
-exec(main, './08-a.txt', 34);
-exec(main, './08-b.txt', 5);
-exec(main, './08-c.txt', 8);
-exec(main, './08-d.txt', 9);
-exec(main, './08-1.txt');
+exec(main, '08-a', 34);
+exec(main, '08-b', 5);
+exec(main, '08-c', 8);
+exec(main, '08-d', 9);
+exec(main, '08-1');

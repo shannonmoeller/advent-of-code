@@ -25,5 +25,5 @@ function main([line]) {
   return visited.size;
 }
 
-exec(main, './03-a.txt', 3);
-exec(main, './03-1.txt');
+exec(main, '03-a', 3);
+exec(main, '03-1');

@@ -26,7 +26,7 @@ function main(lines) {
   return value;
 }
 
-exec(main, './10-a.txt', 2);
-exec(main, './10-b.txt', 13);
-exec(main, './10-c.txt', 81);
-exec(main, './10-1.txt');
+exec(main, '10-a', 2);
+exec(main, '10-b', 13);
+exec(main, '10-c', 81);
+exec(main, '10-1');

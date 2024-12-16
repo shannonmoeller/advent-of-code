@@ -28,5 +28,5 @@ function main(rules, books) {
   return value;
 }
 
-exec(main, './05-a.txt', 143);
-exec(main, './05-1.txt');
+exec(main, '05-a', 143);
+exec(main, '05-1');

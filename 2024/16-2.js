@@ -9,9 +9,9 @@ function main(lines) {
   let [sx, sy] = getPos(width, lines.join('').indexOf('S'));
   let [ex, ey] = getPos(width, lines.join('').indexOf('E'));
 
-  let paths = {};
-  let scores = createGrid(width, height, Infinity);
   let queue = [{ x: sx, y: sy, d: 1, s: 0, p: [`${sx},${sy}`] }];
+  let scores = createGrid(width, height, Infinity);
+  let paths = {};
 
   while (queue.length) {
     let node = queue.shift();
@@ -42,6 +42,6 @@ function main(lines) {
   return paths[scores[ey][ex]].size;
 }
 
-exec(main, './16-a.txt', 45);
-exec(main, './16-b.txt', 64);
-exec(main, './16-1.txt');
+exec(main, '16-a', 45);
+exec(main, '16-b', 64);
+exec(main, '16-1');

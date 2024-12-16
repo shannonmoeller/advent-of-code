@@ -15,5 +15,5 @@ function main([line]) {
   }
 }
 
-// exec(main, './04-a.txt');
-exec(main, './04-1.txt');
+// exec(main, '04-a');
+exec(main, '04-1');

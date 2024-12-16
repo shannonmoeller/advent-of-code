@@ -44,8 +44,8 @@ function main(lines) {
   return value;
 }
 
-exec(main, './12-a.txt', 80);
-exec(main, './12-b.txt', 436);
-exec(main, './12-d.txt', 236);
-exec(main, './12-e.txt', 368);
-exec(main, './12-1.txt');
+exec(main, '12-a', 80);
+exec(main, '12-b', 436);
+exec(main, '12-d', 236);
+exec(main, '12-e', 368);
+exec(main, '12-1');

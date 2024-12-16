@@ -34,6 +34,6 @@ function main([fs]) {
   return value;
 }
 
-exec(main, './09-a.txt', 1928);
-exec(main, './09-b.txt', 12);
-exec(main, './09-1.txt');
+exec(main, '09-a', 1928);
+exec(main, '09-b', 12);
+exec(main, '09-1');

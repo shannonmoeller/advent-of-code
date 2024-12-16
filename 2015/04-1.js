@@ -15,5 +15,5 @@ function main([line]) {
   }
 }
 
-exec(main, './04-a.txt', 609043);
-exec(main, './04-1.txt');
+exec(main, '04-a', 609043);
+exec(main, '04-1');

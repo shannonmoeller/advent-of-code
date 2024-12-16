@@ -8,9 +8,9 @@ import { inspect, styleText } from 'node:util';
  * # Exec
  */
 
-let script = process.argv[1];
-let __dirname = basename(dirname(script));
-let __filename = basename(script);
+let src = process.argv[1];
+let srcDir = basename(dirname(src));
+let srcFile = basename(src);
 log();
 
 /**
@@ -23,11 +23,11 @@ log();
  * @param {number} [expected]
  */
 export function exec(fn, path, expected) {
-  test(`${__dirname}/${__filename}: ${path}: ${expected ?? 'any'}`, () => {
+  function run() {
     let input = readInput(path);
     log('     file:', path, input[0][0].slice(0, 8));
 
-    let actual = time(() => fn(...input));
+    let actual = time('     time', () => fn(...input));
     log('   actual:', actual);
 
     if (expected != null) {
@@ -38,14 +38,20 @@ export function exec(fn, path, expected) {
     }
 
     log();
-  });
+  }
+
+  if (process.env.NODE_TEST_CONTEXT) {
+    test(`${srcDir}/${srcFile}: ${path}: ${expected ?? 'any'}`, run);
+  } else {
+    run();
+  }
 }
 
 /**
  * @param {string} path
  */
 export function readInput(path) {
-  let fullPath = new URL(join('../inputs', __dirname, path), import.meta.url).pathname;
+  let fullPath = new URL(join('../inputs', srcDir, `${path}.txt`), import.meta.url).pathname;
 
   return readFileSync(fullPath, 'utf8')
     .trim()
@@ -54,16 +60,15 @@ export function readInput(path) {
 }
 
 /**
+ * @param {string} label
  * @param {(...args: Array<unknown>) => unknown} fn
  */
-export function time(fn) {
-  let timeLabel = '     time';
-
+export function time(label, fn) {
   try {
-    console.time(timeLabel);
+    console.time(label);
     return fn();
   } finally {
-    console.timeEnd(timeLabel);
+    console.timeEnd(label);
   }
 }
 

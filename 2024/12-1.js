@@ -36,7 +36,7 @@ function main(lines) {
   return value;
 }
 
-exec(main, './12-a.txt', 140);
-exec(main, './12-b.txt', 772);
-exec(main, './12-c.txt', 1930);
-exec(main, './12-1.txt');
+exec(main, '12-a', 140);
+exec(main, '12-b', 772);
+exec(main, '12-c', 1930);
+exec(main, '12-1');

@@ -74,5 +74,5 @@ function main(...machines) {
   return value;
 }
 
-exec(main, './13-a.txt', 875318608908);
-exec(main, './13-1.txt');
+exec(main, '13-a', 875318608908);
+exec(main, '13-1');

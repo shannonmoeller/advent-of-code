@@ -9,8 +9,8 @@ function main(lines) {
   let [sx, sy] = getPos(width, lines.join('').indexOf('S'));
   let [ex, ey] = getPos(width, lines.join('').indexOf('E'));
 
-  let score = createGrid(width, height, Infinity);
   let queue = [{ x: sx, y: sy, d: 1, s: 0 }];
+  let scores = createGrid(width, height, Infinity);
 
   while (queue.length) {
     let node = queue.shift();
@@ -24,16 +24,16 @@ function main(lines) {
       if (grid[y][x] === '#') continue;
 
       let s = node.s + Math.abs(i) * 1000 + 1;
-      if (s >= score[y][x]) continue;
+      if (s >= scores[y][x]) continue;
 
-      score[y][x] = s;
+      scores[y][x] = s;
       queue.push({ x, y, d, s });
     }
   }
 
-  return score[ey][ex];
+  return scores[ey][ex];
 }
 
-exec(main, './16-a.txt', 7036);
-exec(main, './16-b.txt', 11048);
-exec(main, './16-1.txt');
+exec(main, '16-a', 7036);
+exec(main, '16-b', 11048);
+exec(main, '16-1');

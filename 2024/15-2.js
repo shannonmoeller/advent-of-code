@@ -49,7 +49,7 @@ function main(lines, dirs) {
   return value;
 }
 
-exec(main, './15-a.txt', 1751);
-exec(main, './15-b.txt', 9021);
-exec(main, './15-c.txt', 618);
-exec(main, './15-1.txt');
+exec(main, '15-a', 1751);
+exec(main, '15-b', 9021);
+exec(main, '15-c', 618);
+exec(main, '15-1');

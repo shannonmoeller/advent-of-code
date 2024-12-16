@@ -2,11 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./shared/make.js",
+    "start": "node ./helpers/make.js",
     "test": "node --test",
     "lint": "npm run lint:js; npm run lint:format; npm run lint:types",
-    "lint:js": "eslint --fix \"{shared,20*}/*.js\"",
-    "lint:format": "prettier --write \"{shared,20*}/*.js\"",
+    "lint:js": "eslint --fix \"{20*,helpers}/*.js\"",
+    "lint:format": "prettier --write \"{20*,helpers}/*.js\"",
     "lint:types": "tsc"
   },
   "devDependencies": {

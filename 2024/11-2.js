@@ -58,9 +58,9 @@ function main(blinks) {
   };
 }
 
-exec(main(5), './11-a.txt', 5);
-exec(main(25), './11-a.txt', 19025);
-exec(main(25), './11-b.txt', 36287);
-exec(main(25), './11-c.txt', 55312);
-exec(main(25), './11-1.txt');
-exec(main(75), './11-1.txt');
+exec(main(5), '11-a', 5);
+exec(main(25), '11-a', 19025);
+exec(main(25), '11-b', 36287);
+exec(main(25), '11-c', 55312);
+exec(main(25), '11-1');
+exec(main(75), '11-1');

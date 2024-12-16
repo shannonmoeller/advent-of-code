@@ -34,5 +34,5 @@ function main(w, h) {
   };
 }
 
-exec(main(11, 7), './14-a.txt', 12);
-exec(main(101, 103), './14-1.txt');
+exec(main(11, 7), '14-a', 12);
+exec(main(101, 103), '14-1');

@@ -25,5 +25,5 @@ function main(lines) {
   return value;
 }
 
-exec(main, './06-a.txt', 41);
-exec(main, './06-1.txt');
+exec(main, '06-a', 41);
+exec(main, '06-1');
