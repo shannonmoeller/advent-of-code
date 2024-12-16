@@ -1,4 +1,4 @@
-import { log, readLines } from './utils.js';
+import { readLines } from './utils.js';
 
 let [line, ...restLines] = readLines('./05-1.txt');
 let value = Infinity;

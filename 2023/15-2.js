@@ -1,4 +1,4 @@
-import { readLines, log } from './utils.js';
+import { log, readLines } from './utils.js';
 
 let lines = readLines('./15-1.txt');
 let value = 0;
@@ -34,7 +34,7 @@ for (let chunk of lines[0].split(',')) {
 }
 
 Object.entries(boxes).forEach(([key, lenses]) => {
-  Object.entries(lenses).forEach(([label, f], i) => {
+  Object.entries(lenses).forEach(([, f], i) => {
     value += (1 + Number(key)) * (1 + i) * f;
   });
 });

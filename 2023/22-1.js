@@ -1,4 +1,4 @@
-import { readLines, log, createHeap } from './utils.js';
+import { createHeap, log, readLines } from './utils.js';
 
 let lines = readLines('./22-1.txt');
 let value = 0;

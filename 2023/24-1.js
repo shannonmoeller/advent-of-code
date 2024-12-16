@@ -1,4 +1,4 @@
-import { readLines, log } from './utils.js';
+import { log, readLines } from './utils.js';
 
 let lines = readLines('./24-1.txt');
 let value = 0;

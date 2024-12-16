@@ -1,4 +1,4 @@
-import { readLines, log, createHeap } from './utils.js';
+import { createHeap, log, readLines } from './utils.js';
 
 // Idea: Generate a random cloud of particles
 // within the bounding box created by the given

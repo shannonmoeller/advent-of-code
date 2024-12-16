@@ -10,7 +10,7 @@ async function main() {
 
   return groups
     .map((x) => x.replace(/\n/g, '').split(''))
-    .map((x) => x.reduce(union).length)
+    .map((x) => x.reduce(union, []).length)
     .reduce((a, b) => a + b);
 }
 

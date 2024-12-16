@@ -4,7 +4,7 @@ let lines = readLines('./10-1.txt');
 let value = 0;
 
 let width = lines[0].length;
-let path = lines.map((line) => Array(width).fill('.'));
+let path = lines.map(() => Array(width).fill('.'));
 
 let grid = lines.map((line) => line.split(''));
 let y = grid.findIndex((row) => row.includes('S'));

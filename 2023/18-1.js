@@ -1,4 +1,4 @@
-import { readLines, log } from './utils.js';
+import { log, readLines } from './utils.js';
 
 let lines = readLines('./18-1.txt');
 let value = 0;
@@ -8,27 +8,26 @@ let y = 0;
 
 for (let line of lines) {
   let [dir, len] = line.split(' ');
-
-  len = Number(len);
+  let i = Number(len);
 
   let x0 = x;
   let y0 = y;
   switch (dir) {
     case 'U':
-      y -= len;
+      y -= i;
       break;
     case 'D':
-      y += len;
+      y += i;
       break;
     case 'L':
-      x -= len;
+      x -= i;
       break;
     case 'R':
-      x += len;
+      x += i;
       break;
   }
 
-  value += x0 * y - x * y0 + len;
+  value += x0 * y - x * y0 + i;
 }
 
 log(value / 2 + 1);

@@ -1,7 +1,7 @@
 // I couldn't figure this one out, so the following is based on:
 // https://youtube.com/watch?v=C2dmxCGGH1s&t=4165
 
-import { readLines, log, createQueue, splitGrid } from './utils.js';
+import { createQueue, log, readLines, splitGrid } from './utils.js';
 
 let lines = readLines('./21-1.txt');
 let value = 0;
@@ -37,7 +37,7 @@ for (let [tx, ty, x, y, dist] of distQueue) {
   }
 
   if (grid[y][x] === '#') continue;
-  if ([tx, ty, x, y] in distCache) continue;
+  if ([tx, ty, x, y].join(',') in distCache) continue;
   if (Math.abs(tx) > tiles || Math.abs(ty) > tiles) continue;
 
   distCache[[tx, ty, x, y]] = dist;
@@ -50,7 +50,7 @@ for (let [tx, ty, x, y, dist] of distQueue) {
 let edgeCache = {};
 
 function fromEdge(dist, isCorner) {
-  if ([dist, isCorner] in edgeCache) {
+  if ([dist, isCorner].join(',') in edgeCache) {
     return edgeCache[[dist, isCorner]];
   }
 

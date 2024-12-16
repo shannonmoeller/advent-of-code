@@ -1,6 +1,6 @@
+import { deepEqual } from 'node:assert';
 import { readFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
-import { deepEqual } from 'node:assert';
 import { test } from 'node:test';
 import { inspect, styleText } from 'node:util';
 

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+
 import { exec } from '../helpers/utils.js';
 
 function main([line]) {

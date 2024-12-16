@@ -1,4 +1,4 @@
-import { readLines, log, createQueue } from './utils.js';
+import { createQueue, log, readLines } from './utils.js';
 
 let lines = readLines('./20-1.txt');
 let modules = {};

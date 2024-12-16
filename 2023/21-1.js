@@ -1,4 +1,4 @@
-import { readLines, log, logGrid, splitGrid } from './utils.js';
+import { log, logGrid, readLines, splitGrid } from './utils.js';
 
 let lines = readLines('./21-1.txt');
 let value = 0;

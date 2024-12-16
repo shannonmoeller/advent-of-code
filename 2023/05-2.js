@@ -1,4 +1,4 @@
-import { log, readLines } from './utils.js';
+import { readLines } from './utils.js';
 
 let [line, ...restLines] = readLines('./05-1.txt');
 let value = Infinity;
@@ -32,7 +32,7 @@ for (let [seedStart, seedEnd] of seedRanges) {
     skip = Infinity;
 
     for (let map of maps) {
-      for (let [[srcStart, srcEnd], [destStart, destEnd]] of map) {
+      for (let [[srcStart, srcEnd], [destStart]] of map) {
         if (mapped >= srcStart && mapped <= srcEnd) {
           skip = Math.min(skip, srcEnd - mapped + 1);
           mapped = mapped - srcStart + destStart;

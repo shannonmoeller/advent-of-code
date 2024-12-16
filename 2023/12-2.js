@@ -50,10 +50,7 @@ function count(chars, sizes) {
 for (let line of lines) {
   let [chars, ...sizes] = line.split(/[\s,]/);
 
-  chars = Array(repeat).fill(chars).join('?');
-  sizes = Array(repeat).fill(sizes).flat().map(Number);
-
-  value += count(chars, sizes);
+  value += count(Array(repeat).fill(chars).join('?'), Array(repeat).fill(sizes).flat().map(Number));
 }
 
 log(value);

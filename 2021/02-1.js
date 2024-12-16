@@ -10,19 +10,17 @@ async function main() {
   for (let instruction of instructions) {
     let [command, number] = instruction.split(' ');
 
-    number = Number(number);
-
     switch (command) {
       case 'forward': {
-        distance += number;
+        distance += +number;
         break;
       }
       case 'up': {
-        depth -= number;
+        depth -= +number;
         break;
       }
       case 'down': {
-        depth += number;
+        depth += +number;
         break;
       }
       default: {

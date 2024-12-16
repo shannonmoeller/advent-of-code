@@ -1,4 +1,4 @@
-import { log, readLines, lcm } from './utils.js';
+import { lcm, readLines } from './utils.js';
 
 let lines = readLines('./08-1.txt');
 let value = 0;

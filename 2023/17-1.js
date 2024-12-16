@@ -1,7 +1,7 @@
 // I couldn't figure this one out, so the following is based on
 // https://github.com/Prestaul/advent-of-code/blob/main/2023/day-17.js
 
-import { readLines, log, splitGrid, createHeap } from './utils.js';
+import { createHeap, log, readLines, splitGrid } from './utils.js';
 
 let lines = readLines('./17-1.txt');
 let value = 0;
