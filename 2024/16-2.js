@@ -7,7 +7,8 @@ function main(lines) {
 
   let [sx, sy] = getPos(width, lines.join('').indexOf('S'));
   let [ex, ey] = getPos(width, lines.join('').indexOf('E'));
-  
+
+  let paths = {};
   let score = createGrid(width, height, Infinity);
   let queue = [{ x: sx, y: sy, d: 1, s: 0, p: [`${sx},${sy}`] }];
 
@@ -17,27 +18,26 @@ function main(lines) {
     for (let i = -1; i <= 1; i++) {
       let d = (node.d + i + 4) % 4;
       let [xd, yd] = ROOK[d];
-      
+
       let x = node.x + xd;
       let y = node.y + yd;
       if (grid[y][x] === '#') continue;
-      
-      let s = node.s + Math.abs(i) * 1000 + 1;
-      if (s > score[y][x]) continue;
 
-      score[y][x] = s;
-      
-      let p = node.p.concat(`${bx},${by}`);
+      let s = node.s + Math.abs(i) * 1000 + 1;
+      if (s > score[y][x] + 1001) continue;
+      if (s < score[y][x]) score[y][x] = s;
+
+      let p = node.p.concat(`${x},${y}`);
       if (x === ex && y === ey) {
-        paths[s] = (paths[s] || []).concat(p);
+        paths[s] = new Set([...(paths[s] || []), ...p]);
         continue;
       }
-      
+
       queue.push({ x, y, d, s, p });
     }
   }
 
-  return paths[score[ey][ex]].length;
+  return paths[score[ey][ex]].size;
 }
 
 exec(main, './16-a.txt', 45);

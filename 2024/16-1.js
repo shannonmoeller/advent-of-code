@@ -8,26 +8,25 @@ function main(lines) {
   let [sx, sy] = getPos(width, lines.join('').indexOf('S'));
   let [ex, ey] = getPos(width, lines.join('').indexOf('E'));
 
-  let queue = [{ x: sx, y: sy, d: 1, s: 0 }];
   let score = createGrid(width, height, Infinity);
+  let queue = [{ x: sx, y: sy, d: 1, s: 0 }];
 
   while (queue.length) {
-    let { x, y, d, s } = queue.shift();
+    let node = queue.shift();
 
     for (let i = -1; i <= 1; i++) {
-      let bd = (d + i + 4) % 4;
-      let [xd, yd] = ROOK[bd];
-      let bx = x + xd;
-      let by = y + yd;
+      let d = (node.d + i + 4) % 4;
+      let [xd, yd] = ROOK[d];
 
-      let node = grid[by][bx];
-      if (node === '#') continue;
+      let x = node.x + xd;
+      let y = node.y + yd;
+      if (grid[y][x] === '#') continue;
 
-      let bs = s + Math.abs(i) * 1000 + 1;
-      if (score[by][bx] <= bs) continue;
+      let s = node.s + Math.abs(i) * 1000 + 1;
+      if (s >= score[y][x]) continue;
 
-      score[by][bx] = bs;
-      queue.push({ x: bx, y: by, d: bd, s: bs });
+      score[y][x] = s;
+      queue.push({ x, y, d, s });
     }
   }
 

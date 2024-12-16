@@ -48,7 +48,7 @@ export function splitGrid(grid) {
 
 export function joinGrid(grid, fn = (x) => x) {
   if (typeof grid[0] !== 'string') {
-    grid = grid.map((row) => row.map(fn).join(''));
+    grid = grid.map((row, y) => row.map((col, x) => fn(col, x, y)).join(''));
   }
 
   return grid.join('\n');
