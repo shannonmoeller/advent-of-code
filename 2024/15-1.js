@@ -8,15 +8,11 @@ function main(lines, dirs) {
   let [rx, ry] = getPos(width, lines.join('').indexOf('@'));
 
   function walk(ax, ay, xd, yd) {
-    let node = grid[ay][ax];
-
-    if (node === '#') return;
-    if (node === '.') return true;
-
     let bx = ax + xd;
     let by = ay + yd;
+    let node = grid[by][bx];
 
-    if (walk(bx, by, xd, yd)) {
+    if (node === '.' || (node === 'O' && walk(bx, by, xd, yd))) {
       [grid[ay][ax], grid[by][bx]] = [grid[by][bx], grid[ay][ax]];
       return true;
     }

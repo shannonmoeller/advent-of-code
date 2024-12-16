@@ -1,4 +1,4 @@
-import { ARROW, exec, getPos, memo, splitGrid } from '../utils/index.js';
+import { ARROW, exec, getPos, splitGrid } from '../utils/index.js';
 
 let COL = { '#': ['#', '#'], '.': ['.', '.'], 'O': ['[', ']'], '@': ['@', '.'] };
 let SIB = { '[': 1, ']': -1 };
@@ -12,23 +12,22 @@ function main(lines, dirs) {
 
   for (let dir of dirs.join('')) {
     let [xd, yd] = ARROW[dir];
+    let seen = {};
     let swaps = [];
 
-    let walk = memo((ax, ay) => {
-      let node = grid[ay][ax];
-
-      if (node === '#') return;
-      if (node === '.') return true;
+    let walk = (ax, ay) => {
+      if (seen[ay]?.[ax]) return true;
+      (seen[ay] ??= {})[ax] = true;
 
       let bx = ax + xd;
       let by = ay + yd;
-      let next = grid[by][bx];
+      let node = grid[by][bx];
 
-      if (walk(bx, by) && !(yd && SIB[next] && !walk(bx + SIB[next], by))) {
+      if (node === '.' || (SIB[node] && walk(bx, by) && walk(bx + SIB[node], by))) {
         swaps.push([ax, ay, bx, by]);
         return true;
       }
-    });
+    };
 
     if (walk(rx, ry)) {
       for (let [ax, ay, bx, by] of swaps) {
