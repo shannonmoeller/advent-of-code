@@ -6,27 +6,24 @@ let pointsById = {};
 let edgesById = {};
 
 for (let line of lines) {
-	let ids = line.match(/\w{3}/g);
-	let [left, ...rights] = ids;
+  let ids = line.match(/\w{3}/g);
+  let [left, ...rights] = ids;
 
-	for (let id of ids) {
-		pointsById[id] ??= {
-			id,
-			x: Math.random() * 1200,
-			y: Math.random() * 1200,
-			mass: 0.5,
-			radius: 50,
-		};
-	}
+  for (let id of ids) {
+    pointsById[id] ??= {
+      id,
+      x: Math.random() * 1200,
+      y: Math.random() * 1200,
+      mass: 0.5,
+      radius: 50,
+    };
+  }
 
-	for (let right of rights) {
-		let [a, b] = [left, right].sort();
+  for (let right of rights) {
+    let [a, b] = [left, right].sort();
 
-		edgesById[[a, b]] ??= [
-			pointsById[a],
-			pointsById[b],
-		];
-	}
+    edgesById[[a, b]] ??= [pointsById[a], pointsById[b]];
+  }
 }
 
 // delete edgesById['hfx,pzl'];
@@ -178,20 +175,23 @@ let svg = document.querySelector('svg');
 // 	);
 // }
 
-for (let i = 3; i--;) {
-	// constrainBalls(points);
+for (let i = 3; i--; ) {
+  // constrainBalls(points);
 
-	for (let j = 20; j--;) {
-		for (let [a, b] of edges) {
-			constrainStick(a, b, { length: 50 });
-		}
-	}
+  for (let j = 20; j--; ) {
+    for (let [a, b] of edges) {
+      constrainStick(a, b, { length: 50 });
+    }
+  }
 }
 
 for (let [a, b] of edges) {
-	svg.insertAdjacentHTML('beforeend', `
+  svg.insertAdjacentHTML(
+    'beforeend',
+    `
 		<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}">
 			<title>${a.id},${b.id}</title>
 		</line>
-	`);
+	`,
+  );
 }

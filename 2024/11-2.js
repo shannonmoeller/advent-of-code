@@ -1,4 +1,4 @@
-import { exec, memo } from '../utils/index.js';
+import { exec, memo } from '../helpers/utils.js';
 
 // 0 1             125
 //                  |
@@ -38,7 +38,9 @@ import { exec, memo } from '../utils/index.js';
 //           = f(1036228, 0) + f(7, 0) + f(2, 0) + f(20, 0) + f(24, 0);
 //           = 1             + 1       + 1       + 1        + 1
 
+/** @param {number} blinks */
 function main(blinks) {
+  /** @type {import('../helpers/utils.js').Main} */
   return ([line]) => {
     const walk = memo((num, i) => {
       if (!i--) return 1;

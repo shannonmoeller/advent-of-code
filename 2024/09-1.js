@@ -1,5 +1,6 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main([fs]) {
   let value = 0;
 
@@ -25,7 +26,8 @@ function main([fs]) {
 
   for (let blockId = 0, i = 0; left < right; i++) {
     for (let j = +fs[i]; j--; blockId++) {
-      value += blockId * (leftBlock.next().value ?? rightBlock.next().value ?? 0);
+      let next = leftBlock.next().value ?? rightBlock.next().value;
+      value += blockId * (next || 0);
     }
   }
 

@@ -1,4 +1,4 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
 // T = len(A, B) * 3 + len(B, P)
 //
@@ -11,9 +11,14 @@ import { exec } from '../utils/index.js';
 // |                   /   |
 // A------------------B----+-----
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(...machines) {
   let value = 0;
 
+  /**
+   * @param {Array<number>} v
+   * @param {Array<number>} p
+   */
   function rotate([vx, vy], [px, py]) {
     let rads = -Math.atan2(vy, vx);
     let x = px * Math.cos(rads) - py * Math.sin(rads);
@@ -22,6 +27,11 @@ function main(...machines) {
     return [x, y];
   }
 
+  /**
+   * @param {Array<number>} a
+   * @param {Array<number>} b
+   * @param {Array<number>} p
+   */
   function mashA(a, b, p) {
     let [ax] = rotate(a, a);
     let [bx, by] = rotate(a, b);
@@ -30,6 +40,13 @@ function main(...machines) {
     return Math.floor((px - py / (by / bx)) / ax);
   }
 
+  /**
+   * @param {number} ab
+   * @param {Array<number>} a
+   * @param {Array<number>} b
+   * @param {Array<number>} p
+   * @returns {false | number}
+   */
   function mashB(ab, [ax, ay], [bx, by], [px, py]) {
     let bpx = (px - ax * ab) / bx;
     let bpy = (py - ay * ab) / by;

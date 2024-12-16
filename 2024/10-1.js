@@ -1,5 +1,6 @@
-import { ROOK, exec } from '../utils/index.js';
+import { ROOK, exec } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let value = 0;
 
@@ -11,7 +12,7 @@ function main(lines) {
     let y = (trailhead.index / width) | 0;
     let summits = {};
 
-    function walk(x, y, e) {
+    let walk = (x, y, e) => {
       let node = +lines[y]?.[x];
 
       if (node !== e) return;
@@ -21,7 +22,7 @@ function main(lines) {
       }
 
       for (let [xd, yd] of ROOK) walk(x + xd, y + yd, e + 1);
-    }
+    };
 
     walk(x, y, 0);
   }

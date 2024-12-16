@@ -1,5 +1,6 @@
-import { ROOK, createGrid, exec, getPos, splitGrid } from '../utils/index.js';
+import { ROOK, createGrid, exec, getPos, splitGrid } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let grid = splitGrid(lines);
   let height = grid.length;

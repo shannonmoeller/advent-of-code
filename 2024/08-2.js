@@ -1,5 +1,6 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let nodes = {};
   let antis = {};
@@ -21,13 +22,13 @@ function main(lines) {
         let yd = y - ay;
 
         antis[ax + ',' + ay] = true;
-        while (addAnti((ax -= xd), (ay -= yd))) {}
+        while (addAnti((ax -= xd), (ay -= yd)));
 
         let bx = x;
         let by = y;
 
         antis[bx + ',' + by] = true;
-        while (addAnti((bx += xd), (by += yd))) {}
+        while (addAnti((bx += xd), (by += yd)));
       }
 
       nodes[node].push([x, y]);

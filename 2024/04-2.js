@@ -1,5 +1,6 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let value = 0;
   let valid = {

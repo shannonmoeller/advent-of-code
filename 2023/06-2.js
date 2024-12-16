@@ -11,17 +11,17 @@ let d;
 let low = 1;
 
 while (true) {
-	d = low * (time - low);
-	if (d > dist) break;
-	low++;
+  d = low * (time - low);
+  if (d > dist) break;
+  low++;
 }
 
 let high = time - 1;
 
 while (true) {
-	d = high * (time - high);
-	if (d > dist) break;
-	high--;
+  d = high * (time - high);
+  if (d > dist) break;
+  high--;
 }
 
 console.log(high - low + 1);

@@ -1,5 +1,6 @@
-import { QUEEN, exec, splitGrid } from '../utils/index.js';
+import { QUEEN, exec, splitGrid } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let value = 0;
 

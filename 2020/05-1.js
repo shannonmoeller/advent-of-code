@@ -30,17 +30,17 @@ import { readFile } from 'fs/promises';
 // A friend pointed out to me that the seat ids are just binary numbers,
 // so you don't have to search anything. You just have to convert them.
 function getSeatId(seat) {
-	const binary = seat.replace(/F|L/g, '0').replace(/B|R/g, '1');
+  const binary = seat.replace(/F|L/g, '0').replace(/B|R/g, '1');
 
-	return parseInt(binary, 2);
+  return parseInt(binary, 2);
 }
 
 async function main() {
-	const data = await readFile('05.txt', 'utf8');
-	const seats = data.trim().split('\n');
-	const seatIds = seats.map(getSeatId);
+  const data = await readFile('05.txt', 'utf8');
+  const seats = data.trim().split('\n');
+  const seatIds = seats.map(getSeatId);
 
-	return Math.max(...seatIds);
+  return Math.max(...seatIds);
 }
 
 main().then(console.log).catch(console.error);

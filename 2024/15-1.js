@@ -1,5 +1,6 @@
-import { ARROW, exec, getPos, splitGrid } from '../utils/index.js';
+import { ARROW, exec, getPos, splitGrid } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines, dirs) {
   let value = 0;
 

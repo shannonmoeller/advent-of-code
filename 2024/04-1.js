@@ -1,8 +1,16 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let value = 0;
 
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} xd
+   * @param {number} yd
+   * @param {string | Array<string>} list
+   */
   function walk(x, y, xd, yd, [next, ...rest]) {
     if (lines[y]?.[x] !== next) return;
     if (!rest.length) return value++;

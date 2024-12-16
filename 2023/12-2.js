@@ -9,56 +9,51 @@ let value = 0;
 let repeat = 5;
 
 function count(chars, sizes) {
-	let cache = {};
+  let cache = {};
 
-	function walk(ci, si) {
-		cache[ci] ??= {};
+  function walk(ci, si) {
+    cache[ci] ??= {};
 
-		if (si in cache[ci]) {
-			return cache[ci][si];
-		}
+    if (si in cache[ci]) {
+      return cache[ci][si];
+    }
 
-		if (ci >= chars.length) {
-			return Number(si >= sizes.length);
-		}
+    if (ci >= chars.length) {
+      return Number(si >= sizes.length);
+    }
 
-		if (si >= sizes.length) {
-			return Number(!chars.includes('#', ci));
-		}
+    if (si >= sizes.length) {
+      return Number(!chars.includes('#', ci));
+    }
 
-		let result = 0;
-		let char = chars[ci];
-		let size = sizes[si];
+    let result = 0;
+    let char = chars[ci];
+    let size = sizes[si];
 
-		if ('.?'.includes(char)) {
-			result += walk(ci + 1, si);
-		}
+    if ('.?'.includes(char)) {
+      result += walk(ci + 1, si);
+    }
 
-		let chunk = chars.slice(ci, ci + size);
-		let next = chars[ci + size];
+    let chunk = chars.slice(ci, ci + size);
+    let next = chars[ci + size];
 
-		if (
-			'#?'.includes(char) &&
-			chunk.length === size &&
-			!chunk.includes('.') &&
-			next !== '#'
-		) {
-			result += walk(ci + size + 1, si + 1);
-		}
+    if ('#?'.includes(char) && chunk.length === size && !chunk.includes('.') && next !== '#') {
+      result += walk(ci + size + 1, si + 1);
+    }
 
-		return cache[ci][si] = result;
-	}
+    return (cache[ci][si] = result);
+  }
 
-	return walk(0, 0);
+  return walk(0, 0);
 }
 
 for (let line of lines) {
-	let [chars, ...sizes] = line.split(/[\s,]/);
+  let [chars, ...sizes] = line.split(/[\s,]/);
 
-	chars = Array(repeat).fill(chars).join('?');
-	sizes = Array(repeat).fill(sizes).flat().map(Number);
+  chars = Array(repeat).fill(chars).join('?');
+  sizes = Array(repeat).fill(sizes).flat().map(Number);
 
-	value += count(chars, sizes);
+  value += count(chars, sizes);
 }
 
 log(value);

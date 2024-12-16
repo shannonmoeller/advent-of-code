@@ -1,6 +1,11 @@
-import { ROOK, createGrid, exec } from '../utils/index.js';
+import { ROOK, createGrid, exec } from '../helpers/utils.js';
 
+/**
+ * @param {number} w
+ * @param {number} h
+ */
 function main(w, h) {
+  /** @type {import('../helpers/utils.js').Main} */
   return (lines) => {
     let robots = lines.map((line) => line.match(/-?\d+/g).map(Number));
 

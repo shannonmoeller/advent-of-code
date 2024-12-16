@@ -1,4 +1,20 @@
 {
   "private": true,
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "start": "node ./shared/make.js",
+    "test": "node --test",
+    "lint": "npm run lint:js; npm run lint:format; npm run lint:types",
+    "lint:js": "eslint --fix \"{shared,20*}/*.js\"",
+    "lint:format": "prettier --write \"{shared,20*}/*.js\"",
+    "lint:types": "tsc"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "globals": "^15.13.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
 }

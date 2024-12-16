@@ -1,4 +1,4 @@
-import { ARROW, exec } from '../utils/index.js';
+import { ARROW, exec } from '../helpers/utils.js';
 
 function main([line]) {
   let visited = new Set();

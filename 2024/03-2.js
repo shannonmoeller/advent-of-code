@@ -1,5 +1,6 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines) {
   let value = 0;
   let enabled = true;
@@ -8,7 +9,7 @@ function main(lines) {
     for (let [base, a, b] of line.matchAll(/do\(\)|don't\(\)|mul\((\d+),(\d+)\)/g)) {
       if (base === 'do()') enabled = true;
       else if (base === `don't()`) enabled = false;
-      else if (enabled) value += a * b;
+      else if (enabled) value += +a * +b;
     }
   }
 

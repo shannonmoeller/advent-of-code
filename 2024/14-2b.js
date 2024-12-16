@@ -1,9 +1,14 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
 // Refactor after Leyan mentioned you only have to test for a series of X.
 // https://github.com/leyanlo/advent-of-code/blob/main/2024/day-14.js
 
+/**
+ * @param {number} w
+ * @param {number} h
+ */
 function main(w, h) {
+  /** @type {import('../helpers/utils.js').Main} */
   return (lines) => {
     let robots = lines.map((line) => line.match(/-?\d+/g).map(Number));
     let grid = Array(w * h).fill('.');

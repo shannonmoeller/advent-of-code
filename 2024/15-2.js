@@ -1,8 +1,9 @@
-import { ARROW, exec, getPos, splitGrid } from '../utils/index.js';
+import { ARROW, exec, getPos, splitGrid } from '../helpers/utils.js';
 
 let COL = { '#': ['#', '#'], '.': ['.', '.'], 'O': ['[', ']'], '@': ['@', '.'] };
 let SIB = { '[': 1, ']': -1 };
 
+/** @type {import('../helpers/utils.js').Main} */
 function main(lines, dirs) {
   let value = 0;
 

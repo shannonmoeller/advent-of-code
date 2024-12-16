@@ -1,6 +1,11 @@
-import { exec } from '../utils/index.js';
+import { exec } from '../helpers/utils.js';
 
+/**
+ * @param {number} w
+ * @param {number} h
+ */
 function main(w, h) {
+  /** @type {import('../helpers/utils.js').Main} */
   return (lines) => {
     let wh = Math.floor(w / 2);
     let hh = Math.floor(h / 2);
