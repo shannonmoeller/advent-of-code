@@ -29,7 +29,7 @@ function main(lines) {
 
       let p = node.p.concat(`${x},${y}`);
       if (x === ex && y === ey) {
-        paths[s] = new Set([...(paths[s] || []), ...p]);
+        paths[s] = new Set((paths[s] || []).concat(p));
         continue;
       }
 
