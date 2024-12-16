@@ -1,19 +1,10 @@
 import { ARROW, exec, getPos, memo, splitGrid } from '../utils/index.js';
 
+let COL = { '#': ['#', '#'], '.': ['.', '.'], 'O': ['[', ']'], '@': ['@', '.'] };
+let SIB = { '[': 1, ']': -1 };
+
 function main(lines, dirs) {
   let value = 0;
-
-  let COL = {
-    '#': ['#', '#'],
-    '.': ['.', '.'],
-    'O': ['[', ']'],
-    '@': ['@', '.'],
-  };
-
-  let SIB = {
-    '[': 1,
-    ']': -1,
-  };
 
   let grid = splitGrid(lines).map((row) => row.flatMap((col) => COL[col]));
   let width = grid[0].length;
@@ -31,15 +22,9 @@ function main(lines, dirs) {
 
       let bx = ax + xd;
       let by = ay + yd;
-
-      let frontier = [[bx, by]];
       let next = grid[by][bx];
 
-      if (yd && next in SIB) {
-        frontier.push([bx + SIB[next], by]);
-      }
-
-      if (frontier.every((leaf) => walk(...leaf))) {
+      if (walk(bx, by) && !(yd && SIB[next] && !walk(bx + SIB[next], by))) {
         swaps.push([ax, ay, bx, by]);
         return true;
       }
