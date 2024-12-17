@@ -9,7 +9,7 @@ function main(_registers, program) {
   let j = 0n;
 
   forever: while (true) {
-    let next = BigInt(`0b${(j += 1n).toString(2)}${value.toString(2)}`);
+    let next = BigInt(`0b${(j += 1n).toString(2)}${value ? value.toString(2) : ''}`);
 
     if (next <= value) {
       log('eject', { j, value, next, maxPointer });
@@ -17,7 +17,6 @@ function main(_registers, program) {
     }
 
     let pointer = 0;
-
     let a = next;
     let b = 0n;
     let c = 0n;
@@ -60,7 +59,7 @@ function main(_registers, program) {
             log(pointer, instructions[pointer]);
             log();
             log('     j', String(j).padStart(64, '.'));
-            log('     j', j.toString(2).padStart(64 - Number(value.toString(2).length), '.'));
+            log('     j', j.toString(2).padStart(64 - Number(value ? value.toString(2).length : 0), '.'));
             log(' value', String(value).padStart(64, '.'));
             log(' value', value.toString(2).padStart(64, '.'));
             log('  next', String(next).padStart(64, '.'));
