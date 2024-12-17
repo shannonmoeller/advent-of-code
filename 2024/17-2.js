@@ -27,18 +27,11 @@ function main(_registers, program) {
       let literal = instructions[i + 1];
       let combo = literal;
 
+      // prettier-ignore
       switch (combo) {
-        case 4n:
-          combo = a;
-          break;
-
-        case 5n:
-          combo = b;
-          break;
-
-        case 6n:
-          combo = c;
-          break;
+        case 4n: combo = a; break;
+        case 5n: combo = b; break;
+        case 6n: combo = c; break;
       }
 
       if (a < 0n || b < 0n || c < 0n || code < 0 || literal < 0 || combo < 0) {
@@ -46,26 +39,16 @@ function main(_registers, program) {
         break forever;
       }
 
+      // prettier-ignore
       switch (code) {
-        case 0n:
-          a = a / 2n ** combo;
-          break;
+        case 0n: a = a / 2n ** combo; break;
+        case 6n: b = a / 2n ** combo; break;
+        case 7n: c = a / 2n ** combo; break;
 
-        case 1n:
-          b = b ^ literal;
-          break;
-
-        case 2n:
-          b = combo % 8n;
-          break;
-
-        case 3n:
-          if (a) i = Number(literal) - 2;
-          break;
-
-        case 4n:
-          b = b ^ c;
-          break;
+        case 1n: b = b ^ literal; break;
+        case 2n: b = combo % 8n; break;
+        case 3n: if (a) i = Number(literal) - 2; break;
+        case 4n: b = b ^ c; break;
 
         case 5n:
           if (instructions[pointer] !== combo % 8n) continue forever;
@@ -89,14 +72,6 @@ function main(_registers, program) {
           }
 
           pointer++;
-          break;
-
-        case 6n:
-          b = a / 2n ** combo;
-          break;
-
-        case 7n:
-          c = a / 2n ** combo;
           break;
       }
     }

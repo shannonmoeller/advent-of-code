@@ -12,52 +12,25 @@ function main(registers, program) {
     let literal = instructions[i + 1];
     let combo = literal;
 
+    // prettier-ignore
     switch (combo) {
-      case 4:
-        combo = a;
-        break;
-
-      case 5:
-        combo = b;
-        break;
-
-      case 6:
-        combo = c;
-        break;
+      case 4: combo = a; break;
+      case 5: combo = b; break;
+      case 6: combo = c; break;
     }
 
+    // prettier-ignore
     switch (code) {
-      case 0:
-        a = (a / 2 ** combo) | 0;
-        break;
+      case 0: a = (a / 2 ** combo) | 0; break;
+      case 6: b = (a / 2 ** combo) | 0; break;
+      case 7: c = (a / 2 ** combo) | 0; break;
 
-      case 1:
-        b ^= literal;
-        break;
+      case 1: b ^= literal;             break;
+      case 2: b = combo % 8;            break;
+      case 3: if (a) i = literal - 2;   break;
+      case 4: b ^= c;                   break;
 
-      case 2:
-        b = combo % 8;
-        break;
-
-      case 3:
-        if (a) i = literal - 2;
-        break;
-
-      case 4:
-        b ^= c;
-        break;
-
-      case 5:
-        value.push(combo % 8);
-        break;
-
-      case 6:
-        b = (a / 2 ** combo) | 0;
-        break;
-
-      case 7:
-        c = (a / 2 ** combo) | 0;
-        break;
+      case 5: value.push(combo % 8);    break;
     }
   }
 
