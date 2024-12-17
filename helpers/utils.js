@@ -14,13 +14,13 @@ let srcFile = basename(src);
 log();
 
 /**
- * @typedef {(...args: Array<Array<string>>) => number} Main
+ * @typedef {(...args: Array<Array<string>>) => bigint | number | string} Main
  */
 
 /**
  * @param {Main} fn
  * @param {string} path
- * @param {number} [expected]
+ * @param {bigint | number | string} [expected]
  */
 export function exec(fn, path, expected) {
   function run() {
@@ -87,6 +87,7 @@ export function red(value) {
 }
 
 /**
+ * @template T
  * @param {...unknown} args
  */
 export function log(...args) {
@@ -94,7 +95,7 @@ export function log(...args) {
     ...args.map((x) => (x !== Object(x) ? x : inspect(x, { colors: true, depth: Infinity }))),
   );
 
-  return args.at(-1);
+  return /** @type {T} */ (args.at(-1));
 }
 
 /**

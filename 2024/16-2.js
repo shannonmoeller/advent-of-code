@@ -39,6 +39,12 @@ function main(lines) {
     }
   }
 
+  // logGrid(scores, (s, x, y) =>
+  //   (paths[scores[ey][ex]].has(`${x},${y}`) ? green : red)(
+  //     s < Infinity ? String(s).padStart(5, ' ') : '    .',
+  //   ),
+  // );
+
   return paths[scores[ey][ex]].size;
 }
 
