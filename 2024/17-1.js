@@ -8,6 +8,8 @@ function main(registers, program) {
   let instructions = program.join('').match(/\d+/g).map(Number);
 
   for (let i = 0; i < instructions.length; i += 2) {
+    console.log(a.toString(2), { a, b, c, i, o: instructions[i] });
+
     let code = instructions[i];
     let literal = instructions[i + 1];
     let combo = literal;
@@ -22,15 +24,13 @@ function main(registers, program) {
     // prettier-ignore
     switch (code) {
       case 0: a = (a / 2 ** combo) | 0; break;
-      case 6: b = (a / 2 ** combo) | 0; break;
-      case 7: c = (a / 2 ** combo) | 0; break;
-
       case 1: b ^= literal;             break;
       case 2: b = combo % 8;            break;
       case 3: if (a) i = literal - 2;   break;
       case 4: b ^= c;                   break;
-
       case 5: value.push(combo % 8);    break;
+      case 6: b = (a / 2 ** combo) | 0; break;
+      case 7: c = (a / 2 ** combo) | 0; break;
     }
   }
 
@@ -38,7 +38,5 @@ function main(registers, program) {
 }
 
 exec(main, '17-a', '4,6,3,5,6,3,5,2,1,0');
-// exec(main, '17-b', '');
-// exec(main, '17-c', '');
-// exec(main, '17-d', '');
+exec(main, '17-e', '0,3,5,4,3,0');
 exec(main, '17-1');

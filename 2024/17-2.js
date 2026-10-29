@@ -1,85 +1,84 @@
-import { exec, log } from '../helpers/utils.js';
+import { exec, green, log, red } from '../helpers/utils.js';
 
 /** @type {import('../helpers/utils.js').Main} */
-function main(_registers, program) {
-  let instructions = program.join('').match(/\d+/g).map(BigInt);
-
-  let maxPointer = 0;
+function main(_, program) {
   let value = 0n;
-  let j = 0n;
 
-  forever: while (true) {
-    let next = BigInt(`0b${(j += 1n).toString(2)}${value ? value.toString(2) : ''}`);
-
-    if (next <= value) {
-      log('eject', { j, value, next, maxPointer });
-      break forever;
-    }
-
-    let pointer = 0;
-    let a = next;
-    let b = 0n;
-    let c = 0n;
+  /**
+   * @param {Array<bigint>} args
+   */
+  function solve(args) {
+    let [a, b, c] = args;
+    let series = [];
 
     for (let i = 0; i < instructions.length; i += 2) {
       let code = instructions[i];
-      let literal = instructions[i + 1];
-      let combo = literal;
+      let literal = BigInt(instructions[i + 1]);
+      let combo = BigInt(literal);
 
       // prettier-ignore
-      switch (combo) {
-        case 4n: combo = a; break;
-        case 5n: combo = b; break;
-        case 6n: combo = c; break;
-      }
-
-      if (a < 0n || b < 0n || c < 0n || code < 0 || literal < 0 || combo < 0) {
-        log('eject', { a, b, c, code, literal, combo });
-        break forever;
+      switch (Number(combo)) {
+        case 4: combo = a; break;
+        case 5: combo = b; break;
+        case 6: combo = c; break;
       }
 
       // prettier-ignore
       switch (code) {
-        case 0n: a = a / 2n ** combo; break;
-        case 6n: b = a / 2n ** combo; break;
-        case 7n: c = a / 2n ** combo; break;
-
-        case 1n: b = b ^ literal; break;
-        case 2n: b = combo % 8n; break;
-        case 3n: if (a) i = Number(literal) - 2; break;
-        case 4n: b = b ^ c; break;
-
-        case 5n:
-          if (instructions[pointer] !== combo % 8n) continue forever;
-
-          if (pointer > maxPointer) {
-            log();
-            log(instructions.join());
-            log(instructions.slice(0, pointer + 1).join());
-            log(pointer, instructions[pointer]);
-            log();
-            log('     j', String(j).padStart(64, '.'));
-            log('     j', j.toString(2).padStart(64 - Number(value ? value.toString(2).length : 0), '.'));
-            log(' value', String(value).padStart(64, '.'));
-            log(' value', value.toString(2).padStart(64, '.'));
-            log('  next', String(next).padStart(64, '.'));
-            log('  next', next.toString(2).padStart(64, '.'));
-
-            maxPointer = pointer;
-            value = next;
-            j = 0n;
-          }
-
-          pointer++;
-          break;
+        case 0: a = (a / 2n ** combo);          break;
+        case 1: b ^= literal;                   break;
+        case 2: b = combo % 8n;                 break;
+        case 3: if (a) i = Number(literal) - 2; break;
+        case 4: b ^= c;                         break;
+        case 5: series.push(combo % 8n);        break;
+        case 6: b = (a / 2n ** combo);          break;
+        case 7: c = (a / 2n ** combo);          break;
       }
     }
 
-    if (pointer === instructions.length) break;
+    return series.join('');
+  }
+
+  /**
+   * @param {number} number
+   */
+  function toOctal(number) {
+    return number.toString(2).padStart(3, '0').slice(-3);
+  }
+
+  let instructions = program.join('').match(/\d+/g).map(Number);
+  let target = instructions.join('');
+  let length = instructions.length;
+  let octals = Array(length).fill(0);
+  let mins = Array(length).fill(0);
+
+  octals[length - 2] = 3;
+
+  for (let i = instructions.length - 2; i--; ) {
+    for (let j = mins[i]; j < 8; j++) {
+      octals[i] = j;
+      let binary = octals.toReversed().map(toOctal).join('');
+      let bigint = BigInt('0b' + binary + '000');
+      let output = solve([bigint, 0n, 0n]);
+      log({ binary, i, j });
+      log({ output });
+      log({ target });
+      log(output.slice(i + 1), target.slice(i + 1));
+      if (output.slice(i + 1) === target.slice(i + 1)) {
+        log(green('YEP'), { octals, mins, j, i, length });
+        mins[i] = j + 1;
+        break;
+      }
+      if (j === 7) {
+        i++;
+        log(red('EOL'), { octals, mins, j, i, length });
+        return -1;
+      }
+    }
   }
 
   return value;
 }
 
 exec(main, '17-e', 117440n);
-exec(main, '17-1');
+//exec(main, '17-1');
